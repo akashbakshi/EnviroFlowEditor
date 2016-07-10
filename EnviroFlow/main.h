@@ -4,12 +4,18 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <glew.h>
 
+#include "wglext.h"
 
 //boolean to keep loop going
-bool running;
+extern bool running;
 
 //MainWindow declaration 
-HWND MainWindow;
+extern HWND MainWindow;
+extern HWND RenderWindow;
 
-HINSTANCE hInst
+
+extern HINSTANCE hInst;
+extern HGLRC hRC;
+extern HDC hDC;
