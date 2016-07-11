@@ -165,9 +165,7 @@ int AppWindow::CreateWindows(string name, int width, int height)
 	}
 
 	//Function To create Extra GUI such as Child dialog windows and toolbars etc...
-	//GUI->CreateToolbars();
-
-
+	GUI->CreateToolbars();
 	return 0;
 }
 

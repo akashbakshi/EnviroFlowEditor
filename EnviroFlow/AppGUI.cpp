@@ -19,7 +19,7 @@ LRESULT CALLBACK PropertiesToolbar(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lP
 
 	}
 
-	return DefWindowProc(hWnd, msg, wParam, lParam);
+	return (0);
 }
 void AppGUI::CreateToolbars()
 {
@@ -33,5 +33,5 @@ void AppGUI::CreateToolbars()
 	SetParent(SecWin[0], MainWindow);
 
 	//Change Background color of Window to a light gray.
-	SetClassLongPtr(SecWin[0], GCLP_HBRBACKGROUND, (LONG)CreateSolidBrush(RGB(72,72,72)));
+	//SetClassLongPtr(SecWin[0], GCLP_HBRBACKGROUND, (LONG)CreateSolidBrush(RGB(72,72,72)));
 }
