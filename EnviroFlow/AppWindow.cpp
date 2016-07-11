@@ -7,6 +7,7 @@ PFNWGLCREATECONTEXTATTRIBSARBPROC wglCreateContextAttribsARB = NULL;
 bool running=true;
 HWND MainWindow;
 HWND RenderWindow;
+
 HINSTANCE hInst;
 
 HDC hDC;

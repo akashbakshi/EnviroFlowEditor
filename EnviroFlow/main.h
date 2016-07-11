@@ -7,6 +7,8 @@
 #include <glew.h>
 
 #include "wglext.h"
+#include "resource.h"
+
 
 //boolean to keep loop going
 extern bool running;
