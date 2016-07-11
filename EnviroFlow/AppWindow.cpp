@@ -84,7 +84,7 @@ bool AppWindow::InitAPI(HWND hWnd, HDC &hDC, HGLRC &hRC)
 	{
 		MessageBox(MainWindow, "ERROR: Cannot Create Context Attributes", "ERROR!", MB_OK);
 		hRC = tempContext;
-		//	running = false;
+		running = false;
 	}
 	else
 	{
