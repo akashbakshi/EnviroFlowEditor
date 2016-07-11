@@ -155,13 +155,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AppGUI.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="EFRender.h" />
+    <ClInclude Include="Input.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="AppWindow.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AppGUI.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="EFRender.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="AppWindow.cpp" />

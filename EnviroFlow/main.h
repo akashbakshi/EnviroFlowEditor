@@ -21,3 +21,4 @@ extern HWND RenderWindow;
 extern HINSTANCE hInst;
 extern HGLRC hRC;
 extern HDC hDC;
+extern bool GetKey[256];

@@ -37,6 +37,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		PostQuitMessage(0);
 		break;
 
+	case WM_KEYDOWN:
+		GetKey[wParam] = true;
+		break;
+	case WM_KEYUP:
+		GetKey[wParam] = false;
+		break;
 
 	}
 	return DefWindowProc(hWnd, msg, wParam, lParam);
@@ -96,8 +102,9 @@ bool AppWindow::InitAPI(HWND hWnd, HDC &hDC, HGLRC &hRC)
 	}
 	wglMakeCurrent(hDC, hRC);
 	glewInit();
-	Draw->Init();
+
 	glewExperimental = TRUE;
+	Draw->Init();
 
 
 	return true;
@@ -158,9 +165,8 @@ int AppWindow::CreateWindows(string name, int width, int height)
 	}
 
 	//Function To create Extra GUI such as Child dialog windows and toolbars etc...
-	GUI->CreateToolbars();
+	//GUI->CreateToolbars();
 
-	SetFocus(MainWindow);
 
 	return 0;
 }
