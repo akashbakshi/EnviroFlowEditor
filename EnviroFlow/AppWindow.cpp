@@ -136,7 +136,7 @@ int AppWindow::CreateWindows(string name, int width, int height)
 		return 1;
 	}
 
-	RenderWindow = CreateWindow("STATIC", " ", WS_CHILD | WS_VISIBLE, 50, 50, 1440, 900, MainWindow, NULL, hInst, NULL);
+	RenderWindow = CreateWindow("STATIC", " ", WS_CHILD | WS_VISIBLE, 100, 50, 1440, 900, MainWindow, NULL, hInst, NULL);
 
 	if (!RenderWindow) {
 		MessageBox(NULL, "Fatal Error: Cannot Create Render Window, Try Restarting The Application", "FATAL ERROR!", MB_OK);
