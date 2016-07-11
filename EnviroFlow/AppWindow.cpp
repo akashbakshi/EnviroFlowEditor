@@ -1,5 +1,6 @@
 #include "AppWindow.h"
 #include "EFRender.h"
+#include "AppGUI.h"
 
 using namespace std;
 
@@ -14,6 +15,8 @@ HDC hDC;
 HGLRC hRC;
 
 EFRender *Draw = NULL;
+AppGUI *GUI = NULL;
+
 AppWindow::AppWindow()
 {
 }
@@ -28,8 +31,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	case WM_CREATE:
 		break;
 	case WM_DESTROY:
-		PostQuitMessage(0);
 		running = false;
+		PostQuitMessage(0);
 		break;
 
 
@@ -144,7 +147,14 @@ int AppWindow::CreateWindows(string name, int width, int height)
 		return 1;
 	}
 
-	AppWindow::InitAPI(RenderWindow, hDC, hRC);
+	if (!AppWindow::InitAPI(RenderWindow, hDC, hRC)) {
+		MessageBox(NULL, "Fatal Error: Cannot Initialize OpenGL Context! Restart Application", "FATAL ERROR!", MB_OK);
+		return 1;
+	}
+
+	GUI->CreateToolbars();
+
+
 	return 0;
 }
 
