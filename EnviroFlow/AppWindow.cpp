@@ -5,15 +5,17 @@
 using namespace std;
 
 PFNWGLCREATECONTEXTATTRIBSARBPROC wglCreateContextAttribsARB = NULL;
+
 bool running=true;
+
+//GUI Varibales plus Device Context stuf
 HWND MainWindow;
 HWND RenderWindow;
-
 HINSTANCE hInst;
-
 HDC hDC;
 HGLRC hRC;
 
+// pointers for classes
 EFRender *Draw = NULL;
 AppGUI *GUI = NULL;
 
@@ -134,12 +136,14 @@ int AppWindow::CreateClass()
    
 int AppWindow::CreateWindows(string name, int width, int height)
 {
+	//Create Main Outer Window For Application.
 	MainWindow = CreateWindowEx(WS_EX_APPWINDOW, "EF", name.c_str(), WS_OVERLAPPEDWINDOW | WS_VISIBLE, 0, 0, width, height, NULL, NULL, hInst, NULL);
 	if (!MainWindow) {
 		MessageBox(NULL, "Fatal Error: Cannot Create Main Window, Try Restarting The Application", "FATAL ERROR!", MB_OK);
 		return 1;
 	}
 
+	//Create Child Window inside Main Window to render to
 	RenderWindow = CreateWindow("STATIC", " ", WS_CHILD | WS_VISIBLE, 100, 50, 1440, 900, MainWindow, NULL, hInst, NULL);
 
 	if (!RenderWindow) {
@@ -147,13 +151,16 @@ int AppWindow::CreateWindows(string name, int width, int height)
 		return 1;
 	}
 
+	//Initialize OpenGL by calling function Refer to InitAPI
 	if (!AppWindow::InitAPI(RenderWindow, hDC, hRC)) {
 		MessageBox(NULL, "Fatal Error: Cannot Initialize OpenGL Context! Restart Application", "FATAL ERROR!", MB_OK);
 		return 1;
 	}
 
+	//Function To create Extra GUI such as Child dialog windows and toolbars etc...
 	GUI->CreateToolbars();
 
+	SetFocus(MainWindow);
 
 	return 0;
 }
@@ -171,6 +178,7 @@ int AppWindow::WinLoop(MSG msg)
 
 		else
 		{
+			//Render Loop plus swapping buffers
 			Draw->Render();
 			SwapBuffers(hDC);
 		}
