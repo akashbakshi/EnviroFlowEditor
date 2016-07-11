@@ -10,3 +10,7 @@ AppGUI::AppGUI()
 AppGUI::~AppGUI()
 {
 }
+
+void AppGUI::CreateToolbars()
+{
+}
