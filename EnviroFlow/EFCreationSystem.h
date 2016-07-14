@@ -8,6 +8,8 @@ struct EF_TRIANGLE {
 
 	vector<GLfloat>vertices;
 	vector<GLuint>indices;
+
+	GLuint vbo, vio;
 };
 
 struct EF_QUAD {
@@ -42,7 +44,7 @@ public:
 	~EFCreationSystem();
 
 	void CreateBuffers(int obj, int tri);
-	void CreateQuad(int obj, int tri, GLfloat x, GLfloat y, GLfloat z, GLfloat x2, GLfloat y2, GLfloat z2);
+	void CreateQuad(int obj, int tri, GLfloat x[3], GLfloat y[3], GLfloat z[3], GLfloat x2[3], GLfloat y2[3], GLfloat z2[3]);
 	void CreateTri(int obj, GLfloat x, GLfloat y, GLfloat z);
 	void CreateCube(int obj);
 };
