@@ -3,6 +3,7 @@
 #include <Windows.h>
 #include <iostream>
 #include <string>
+#include <vector>
 #include <fstream>
 #include <glew.h>
 
@@ -22,3 +23,4 @@ extern HINSTANCE hInst;
 extern HGLRC hRC;
 extern HDC hDC;
 extern bool GetKey[256];
+
