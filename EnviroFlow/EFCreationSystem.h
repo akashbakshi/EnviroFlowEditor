@@ -40,7 +40,9 @@ struct EF_MESH {
 
 extern EF_TRIANGLE *triangle;
 extern EF_QUAD *quad;
-
+extern int tris;
+extern int quads;
+extern int objects;
 class EFCreationSystem
 {
 public:

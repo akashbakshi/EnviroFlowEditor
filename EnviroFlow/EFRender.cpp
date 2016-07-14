@@ -131,7 +131,7 @@ void EFRender::Render() {
 	glLoadIdentity();
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.4747, 0.4747, 0.4747, 0.0f);
+	glClearColor(0.4747f, 0.4747f, 0.4747f, 0.0f);
 	glLoadIdentity();
 
 	gluLookAt(-0.5, 1.0, 7.0, 0.0, 0.0, -10.0, 0.0, 1.0, 0.0);
@@ -141,13 +141,13 @@ void EFRender::Render() {
 
 	DisplayGrid();
 	DrawXYZ();
-
-	RenderMesh(0);
+	for (int i =0; i < objects; i++)
+		RenderMesh(i);
 }
 
 void EFRender::RenderMesh(int obj)
 {
-		for(int i=0;i<2;i++){
+		for(int i=0;i<tris;i++){
 		glPushMatrix();
 		glBindBuffer(GL_ARRAY_BUFFER, quad[obj].tri[i].vbo);
 		glVertexPointer(3, GL_FLOAT, 0, 0);
