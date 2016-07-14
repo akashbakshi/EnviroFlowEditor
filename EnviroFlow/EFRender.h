@@ -10,5 +10,6 @@ public:
 	void Init();
 	void Render();
 
+	void RenderMesh(int obj);
 };
 

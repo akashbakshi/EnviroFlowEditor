@@ -1,9 +1,11 @@
 #include "EFRender.h"
+#include "EFCreationSystem.h"
 #include "Camera.h"
 #include "Input.h"
 
 Cam Camera;
 bool GetKey[256];
+EFCreationSystem *Create = NULL;
 
 EFRender::EFRender()
 {
@@ -17,6 +19,9 @@ EFRender::~EFRender()
 void EFRender::Init() {
 
 	glEnable(GL_DEPTH_TEST);
+
+	//Create Cube
+	Create->CreateCube(0);
 }
 
 // Draw the XYZ lines in scene
@@ -132,8 +137,24 @@ void EFRender::Render() {
 	gluLookAt(-0.5, 1.0, 7.0, 0.0, 0.0, -10.0, 0.0, 1.0, 0.0);
 	//Initialize Camera Render
 	Camera.Render();
-
 	//Draw XYZ and Grid to the scene
+	RenderMesh(0);
 	DisplayGrid();
 	DrawXYZ();
+}
+
+void EFRender::RenderMesh(int obj)
+{
+	glPushMatrix();
+	glBindBuffer(GL_ARRAY_BUFFER, triangle[obj].vbo);
+
+	glVertexPointer(3, GL_FLOAT, 0, 0);
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,triangle[obj].vio);
+	glDrawElements(GL_TRIANGLES,triangle[obj].indices.size(), GL_UNSIGNED_INT, 0);
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glPopMatrix();
 }

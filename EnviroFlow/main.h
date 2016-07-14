@@ -24,4 +24,3 @@ extern HGLRC hRC;
 extern HDC hDC;
 extern bool GetKey[256];
 
-extern 

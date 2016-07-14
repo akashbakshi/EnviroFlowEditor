@@ -1,6 +1,9 @@
 #pragma once
 #include "main.h"
 
+
+using namespace std;
+
 struct EF_TRIANGLE {
 
 	GLfloat xyz[3];
@@ -15,7 +18,6 @@ struct EF_TRIANGLE {
 struct EF_QUAD {
 	GLfloat xyz[3];
 	GLfloat rgba[4];
-	GLfloat rot[3];
 	GLfloat rot[3];
 	GLfloat scale[3];
 
@@ -36,6 +38,7 @@ struct EF_MESH {
 	vector<GLfloat>m_ind;
 };
 
+extern EF_TRIANGLE *triangle;
 
 class EFCreationSystem
 {
