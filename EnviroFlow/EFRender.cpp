@@ -138,23 +138,27 @@ void EFRender::Render() {
 	//Initialize Camera Render
 	Camera.Render();
 	//Draw XYZ and Grid to the scene
-	RenderMesh(0);
+
 	DisplayGrid();
 	DrawXYZ();
+
+	RenderMesh(0);
 }
 
 void EFRender::RenderMesh(int obj)
 {
-	glPushMatrix();
-	glBindBuffer(GL_ARRAY_BUFFER, triangle[obj].vbo);
+		for(int i=0;i<2;i++){
+		glPushMatrix();
+		glBindBuffer(GL_ARRAY_BUFFER, quad[obj].tri[i].vbo);
+		glVertexPointer(3, GL_FLOAT, 0, 0);
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, quad[obj].tri[i].vio);
 
-	glVertexPointer(3, GL_FLOAT, 0, 0);
+		glColor3f(quad[obj].tri[i].rgba[0], quad[obj].tri[i].rgba[1], quad[obj].tri[i].rgba[2]);
 
-	glEnableClientState(GL_VERTEX_ARRAY);
+		glDrawElements(GL_TRIANGLES, quad[obj].tri[i].indices.size(), GL_UNSIGNED_INT, 0);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,triangle[obj].vio);
-	glDrawElements(GL_TRIANGLES,triangle[obj].indices.size(), GL_UNSIGNED_INT, 0);
-
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glPopMatrix();
+		glDisableClientState(GL_VERTEX_ARRAY);
+		glPopMatrix();
+	}
 }
