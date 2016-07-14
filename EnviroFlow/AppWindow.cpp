@@ -8,6 +8,15 @@ PFNWGLCREATECONTEXTATTRIBSARBPROC wglCreateContextAttribsARB = NULL;
 
 bool running=true;
 
+//Main Window variables
+int mwWidth = 1920;
+int mwHeight = 1080;
+
+//Render Window variables
+int rwWidth = 1280;
+int rwHeight = 720;
+
+
 //GUI Varibales plus Device Context stuf
 HWND MainWindow;
 HWND RenderWindow;
@@ -144,14 +153,14 @@ int AppWindow::CreateClass()
 int AppWindow::CreateWindows(string name, int width, int height)
 {
 	//Create Main Outer Window For Application.
-	MainWindow = CreateWindowEx(WS_EX_APPWINDOW, "EF", name.c_str(), WS_OVERLAPPEDWINDOW | WS_VISIBLE, 0, 0, width, height, NULL, NULL, hInst, NULL);
+	MainWindow = CreateWindowEx(WS_EX_APPWINDOW, "EF", name.c_str(), WS_OVERLAPPEDWINDOW | WS_VISIBLE, 0, 0, mwWidth, mwHeight, NULL, NULL, hInst, NULL);
 	if (!MainWindow) {
 		MessageBox(NULL, "Fatal Error: Cannot Create Main Window, Try Restarting The Application", "FATAL ERROR!", MB_OK);
 		return 1;
 	}
 
-	//Create Child Window inside Main Window to render to
-	RenderWindow = CreateWindow("STATIC", " ", WS_CHILD | WS_VISIBLE, 100, 50, 1440, 900, MainWindow, NULL, hInst, NULL);
+	//Create Child Window inside Main Window to render 
+	RenderWindow = CreateWindow("STATIC", " ", WS_CHILD | WS_VISIBLE, 100, 50, rwWidth, rwHeight, MainWindow, NULL, hInst, NULL);
 
 	if (!RenderWindow) {
 		MessageBox(NULL, "Fatal Error: Cannot Create Render Window, Try Restarting The Application", "FATAL ERROR!", MB_OK);

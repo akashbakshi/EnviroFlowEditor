@@ -17,6 +17,13 @@ extern bool running;
 extern HWND MainWindow;
 extern HWND RenderWindow;
 
+//Main Window variables
+extern int mwWidth;
+extern int mwHeight;
+
+//Render Window variables
+extern int rwWidth;
+extern int rwHeight;
 
 extern HINSTANCE hInst;
 extern HGLRC hRC;

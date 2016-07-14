@@ -18,6 +18,7 @@ LRESULT CALLBACK PropertiesToolbar(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lP
 	}break;
 
 	case WM_CTLCOLORDLG:
+			//Change Background color of Window to a light gray.
 			return (INT_PTR)CreateSolidBrush(RGB(74, 74, 74));
 		break;
 
@@ -36,5 +37,4 @@ void AppGUI::CreateToolbars()
 	ShowWindow(SecWin[0], SW_SHOW);
 	SetParent(SecWin[0], MainWindow);
 
-	//Change Background color of Window to a light gray.
 }
