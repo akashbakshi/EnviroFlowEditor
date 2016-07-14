@@ -126,7 +126,7 @@ void EFRender::Render() {
 	glLoadIdentity();
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.329412f, 0.329412f, 0.329412f, 0.0f);
+	glClearColor(0.4747, 0.4747, 0.4747, 0.0f);
 	glLoadIdentity();
 
 	gluLookAt(-0.5, 1.0, 7.0, 0.0, 0.0, -10.0, 0.0, 1.0, 0.0);

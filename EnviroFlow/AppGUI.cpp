@@ -18,7 +18,7 @@ LRESULT CALLBACK PropertiesToolbar(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lP
 	}break;
 
 	}
-
+	 
 	return (0);
 }
 void AppGUI::CreateToolbars()
