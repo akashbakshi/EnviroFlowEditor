@@ -18,7 +18,7 @@ LRESULT CALLBACK PropertiesToolbar(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lP
 	}break;
 
 	case WM_CTLCOLORDLG:
-			return (INT_PTR)CreateSolidBrush(RGB(52, 52, 52));
+			return (INT_PTR)CreateSolidBrush(RGB(74, 74, 74));
 		break;
 
 	}
