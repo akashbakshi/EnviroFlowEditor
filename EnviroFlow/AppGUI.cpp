@@ -13,9 +13,13 @@ AppGUI::~AppGUI()
 
 LRESULT CALLBACK PropertiesToolbar(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	switch (msg) {
-	case WM_INITDIALOG:{
+	case WM_INITDIALOG: {
 
 	}break;
+
+	case WM_CTLCOLORDLG:
+			return (INT_PTR)CreateSolidBrush(RGB(52, 52, 52));
+		break;
 
 	}
 
@@ -33,5 +37,4 @@ void AppGUI::CreateToolbars()
 	SetParent(SecWin[0], MainWindow);
 
 	//Change Background color of Window to a light gray.
-	//SetClassLongPtr(SecWin[0], GCLP_HBRBACKGROUND, (LONG)CreateSolidBrush(RGB(72,72,72)));
 }
