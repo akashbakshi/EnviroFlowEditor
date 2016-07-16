@@ -18,6 +18,7 @@ HGLRC hRC;
 // pointers for classes
 EFRender *Draw = NULL;
 AppGUI *GUI = NULL;
+HMENU Menu;
 
 AppWindow::AppWindow()
 {
@@ -28,6 +29,39 @@ AppWindow::~AppWindow()
 {
 }
 
+void WMCommand(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+	if (wParam == (WPARAM)ID_FILE_QUIT) {
+		PostQuitMessage(0);
+	}
+	else if (wParam == (WPARAM)ID_TWEAKMODE_FACETWEAK) {
+		init_quad = true;
+	}
+	else if (wParam == (WPARAM)ID_TWEAKMODE_MESHTWEAK) {
+		init_quad = false;
+	}
+	else if (wParam == (WPARAM)ID_VIEW_TEXTURED) {
+		glEnable(GL_TEXTURE_2D);
+		v_wireframe = false;
+		v_solid = false;
+		v_textured = true;
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
+	else if (wParam == (WPARAM)ID_VIEW_SOLID) {
+		glDisable(GL_TEXTURE_2D);
+		v_wireframe = false;
+		v_solid = true;
+		v_textured = false;
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
+	else if (wParam == (WPARAM)ID_VIEW_WIREFRAME) {
+		glDisable(GL_TEXTURE_2D);
+		v_wireframe = true;
+		v_solid = false;
+		v_textured = false;
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	}
+	
+}
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	switch (msg) {
 	case WM_CREATE:
@@ -36,7 +70,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		running = false;
 		PostQuitMessage(0);
 		break;
-
+	case WM_COMMAND:
+		WMCommand(hWnd, msg, wParam, lParam);
+		break;
 	case WM_KEYDOWN:
 		GetKey[wParam] = true;
 		break;
@@ -166,6 +202,9 @@ int AppWindow::CreateWindows(string name, int width, int height)
 
 	//Function To create Extra GUI such as Child dialog windows and toolbars etc...
 	GUI->CreateToolbars();
+	
+	Menu = LoadMenu(hInst, MAKEINTRESOURCE(IDR_MENU1));
+	SetMenu(MainWindow, Menu);
 	return 0;
 }
 

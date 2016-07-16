@@ -1,8 +1,19 @@
 #pragma once
 #include "main.h"
+#include "EFTGALoader.h"
 
 
 using namespace std;
+
+struct EF_TEXTURE {
+
+	string filename;
+
+	GLfloat st[2];
+	GLuint TexID;
+	GLuint vto;
+	vector<GLfloat>uv;
+};
 
 struct EF_VERTEX {
 	GLfloat xyz[3];
@@ -29,6 +40,7 @@ struct EF_QUAD {
 	int tri_count;
 
 	EF_TRIANGLE tri[2];
+	EF_TEXTURE tex[1];
 
 	vector<GLfloat> q_vertices;
 	vector<GLuint> q_indices;

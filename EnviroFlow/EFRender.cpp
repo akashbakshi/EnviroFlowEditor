@@ -6,7 +6,12 @@
 Cam Camera;
 bool GetKey[256];
 EFCreationSystem *Create = NULL;
+
 bool init_quad = false;
+bool v_wireframe = false;
+bool v_solid = true;
+bool v_textured = false;
+
 EFRender::EFRender()
 {
 }
@@ -19,7 +24,6 @@ EFRender::~EFRender()
 void EFRender::Init() {
 
 	glEnable(GL_DEPTH_TEST);
-
 	//Create Cube
 	Create->CreateCube(0);
 }
@@ -136,7 +140,7 @@ void EFRender::Render() {
 	glLoadIdentity();
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.4747f, 0.4747f, 0.4747f, 0.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glLoadIdentity();
 
 	gluLookAt(-0.5, 1.0, 7.0, 0.0, 0.0, -10.0, 0.0, 1.0, 0.0);
@@ -150,8 +154,8 @@ void EFRender::Render() {
 		RenderMesh(i);
 }
 
-void EFRender::RenderMesh(int obj)
-{
+void EFRender::RenderMesh(int obj){
+
 	for(int i =0;i<mesh[obj].quad_count;i++){
 		glPushMatrix();
 		glBindBuffer(GL_ARRAY_BUFFER, mesh[obj].m_quad[i].vbo);
@@ -161,11 +165,16 @@ void EFRender::RenderMesh(int obj)
 
 		if(init_quad == true)
 			glColor3ub(mesh[obj].m_quad[i].rgba[0], mesh[obj].m_quad[i].rgba[1], mesh[obj].m_quad[i].rgba[2]);
-		if(init_quad == false)
+		if (v_solid == true || v_wireframe == true)
 			glColor3ub(mesh[obj].rgba[0], mesh[obj].rgba[1], mesh[obj].rgba[2]);
+		if (v_textured == true)
+			glColor3ub(255, 255, 255);
 
+		glBindBuffer(GL_ARRAY_BUFFER,mesh[obj].m_quad[i].tex[0].vto);
+		glTexCoordPointer(2, GL_FLOAT, 0, 0);
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glBindTexture(GL_TEXTURE_2D, mesh[obj].m_quad[i].tex[0].TexID);
 		glDrawElements(GL_QUADS, mesh[obj].m_quad[i].q_indices.size(), GL_UNSIGNED_INT, 0);
-
 		glDisableClientState(GL_VERTEX_ARRAY);
 		glPopMatrix();
 	}

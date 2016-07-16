@@ -13,3 +13,4 @@ public:
 	void RenderMesh(int obj);
 };
 
+extern bool init_quad;

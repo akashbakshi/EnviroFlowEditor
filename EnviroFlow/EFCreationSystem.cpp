@@ -9,7 +9,7 @@ EF_MESH *mesh;
 int objects = 0;
 int tris = 0;
 GLfloat tempx[4], tempy[4], tempz[4];
-
+GLuint LoadTGATexture(char *TexName);
 
 bool ColorCheck(int obj, GLubyte r, GLubyte g, GLubyte b)
 {
@@ -163,6 +163,25 @@ void EFCreationSystem::CreateQuad(int obj, int quad_num, GLfloat x[4], GLfloat y
 
 }
 
+void SetTexCoord(int obj,int nq,GLfloat s, GLfloat t) {
+	
+	mesh[obj].m_quad[nq].tex[0].st[0] = s;
+	mesh[obj].m_quad[nq].tex[0].st[1] = t;
+
+	mesh[obj].m_quad[nq].tex[0].uv.push_back(mesh[obj].m_quad[nq].tex[0].st[0]);
+	mesh[obj].m_quad[nq].tex[0].uv.push_back(mesh[obj].m_quad[nq].tex[0].st[0]);
+	mesh[obj].m_quad[nq].tex[0].uv.push_back(mesh[obj].m_quad[nq].tex[0].st[1]);
+	mesh[obj].m_quad[nq].tex[0].uv.push_back(mesh[obj].m_quad[nq].tex[0].st[0]);
+	mesh[obj].m_quad[nq].tex[0].uv.push_back(mesh[obj].m_quad[nq].tex[0].st[1]);
+	mesh[obj].m_quad[nq].tex[0].uv.push_back(mesh[obj].m_quad[nq].tex[0].st[1]);
+	mesh[obj].m_quad[nq].tex[0].uv.push_back(mesh[obj].m_quad[nq].tex[0].st[0]);
+	mesh[obj].m_quad[nq].tex[0].uv.push_back(mesh[obj].m_quad[nq].tex[0].st[1]);
+
+	glGenBuffers(1, &mesh[obj].m_quad[nq].tex[0].vto);
+	glBindBuffer(GL_ARRAY_BUFFER, mesh[obj].m_quad[nq].tex[0].vto);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*mesh[obj].m_quad[nq].tex[0].uv.size(), &mesh[obj].m_quad[nq].tex[0].uv[0], GL_STATIC_DRAW);
+
+}
 void EFCreationSystem::CreateCube(int obj) {
 
 
@@ -180,6 +199,8 @@ void EFCreationSystem::CreateCube(int obj) {
 	mesh[obj].m_quad[mesh[obj].quad_count] = quad[0];
 	delete[]quad;
 	CreateBuffers(obj, mesh[obj].quad_count);
+	mesh[obj].m_quad[mesh[obj].quad_count].tex[0].TexID = LoadTGATexture("front.tga");
+	SetTexCoord(obj, mesh[obj].quad_count, 0.0001, 0.9999);
 	mesh[obj].quad_count += 1;
 	
 	SetQuadCoordinates(-1.0f, 1.0f, 0.0f, -1.0f, 1.0f, 2.0f, 1.0f, 1.0f, 2.0f, 1.0f, 1.0f, 0.0f);
@@ -187,6 +208,9 @@ void EFCreationSystem::CreateCube(int obj) {
 	mesh[obj].m_quad[mesh[obj].quad_count] = quad[0];
 	delete[]quad;
 	CreateBuffers(obj, mesh[obj].quad_count);
+
+	mesh[obj].m_quad[mesh[obj].quad_count].tex[0].TexID = LoadTGATexture("top.tga");
+	SetTexCoord(obj, mesh[obj].quad_count, 0.0001, 0.9999);
 	mesh[obj].quad_count += 1;
 	
 	SetQuadCoordinates(-1.0f, -1.0f, 2.0f, 1.0f, -1.0f, 2.0f, 1.0f, 1.0f, 2.0f, -1.0f, 1.0f, 2.0f);
@@ -194,6 +218,9 @@ void EFCreationSystem::CreateCube(int obj) {
 	mesh[obj].m_quad[mesh[obj].quad_count] = quad[0];
 	delete[]quad;
 	CreateBuffers(obj, mesh[obj].quad_count);
+
+	mesh[obj].m_quad[mesh[obj].quad_count].tex[0].TexID = LoadTGATexture("back.tga");
+	SetTexCoord(obj, mesh[obj].quad_count, 0.0001, 0.9999);
 	mesh[obj].quad_count += 1;
 
 	SetQuadCoordinates(-1.0f, -1.0f, 0.0f, -1.0f, -1.0f, 2.0f, 1.0f, -1.0f, 2.0f, 1.0f, -1.0f, 0.0f);
@@ -201,6 +228,8 @@ void EFCreationSystem::CreateCube(int obj) {
 	mesh[obj].m_quad[mesh[obj].quad_count] = quad[0];
 	delete[]quad;
 	CreateBuffers(obj, mesh[obj].quad_count);
+	mesh[obj].m_quad[mesh[obj].quad_count].tex[0].TexID = LoadTGATexture("bottom.tga");
+	SetTexCoord(obj, mesh[obj].quad_count, 0.0001, 0.9999);
 	mesh[obj].quad_count += 1;
 
 	SetQuadCoordinates(-1.0f, -1.0f, 0.0f, -1.0f, -1.0f, 2.0f, -1.0f, 1.0f, 2.0f, -1.0f, 1.0f, 0.0f);
@@ -208,6 +237,8 @@ void EFCreationSystem::CreateCube(int obj) {
 	mesh[obj].m_quad[mesh[obj].quad_count] = quad[0];
 	delete[]quad;
 	CreateBuffers(obj, mesh[obj].quad_count);
+	mesh[obj].m_quad[mesh[obj].quad_count].tex[0].TexID = LoadTGATexture("left.tga");
+	SetTexCoord(obj, mesh[obj].quad_count, 0.0001, 0.9999);
 	mesh[obj].quad_count += 1;
 
 	SetQuadCoordinates(1.0f, -1.0f, 0.0f, 1.0f, -1.0f, 2.0f, 1.0f, 1.0f, 2.0f, 1.0f, 1.0f, 0.0f);
@@ -215,6 +246,8 @@ void EFCreationSystem::CreateCube(int obj) {
 	mesh[obj].m_quad[mesh[obj].quad_count] = quad[0];
 	delete[]quad;
 	CreateBuffers(obj, mesh[obj].quad_count);
+	mesh[obj].m_quad[mesh[obj].quad_count].tex[0].TexID = LoadTGATexture("Right.tga");
+	SetTexCoord(obj, mesh[obj].quad_count, 0.0001, 0.9999);
 	mesh[obj].quad_count += 1;
 
 	GenerateColors(obj, mesh[obj].rgba[0], mesh[obj].rgba[1], mesh[obj].rgba[2]);

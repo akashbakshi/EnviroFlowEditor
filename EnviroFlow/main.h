@@ -24,3 +24,9 @@ extern HGLRC hRC;
 extern HDC hDC;
 extern bool GetKey[256];
 
+extern GLuint LoadTGATexture(char *TexName);
+
+//view type bools
+extern bool v_textured;
+extern bool v_solid;
+extern bool v_wireframe;
