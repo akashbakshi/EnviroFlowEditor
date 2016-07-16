@@ -22,7 +22,7 @@ struct EF_TRIANGLE {
 
 struct EF_QUAD {
 	GLfloat xyz[3];
-	GLfloat rgba[4];
+	GLubyte rgba[4];
 	GLfloat rot[3];
 	GLfloat scale[3];
 
@@ -38,7 +38,7 @@ struct EF_QUAD {
 
 struct EF_MESH {
 	GLfloat xyz[3];
-	GLfloat rgba[4];
+	GLubyte rgba[4];
 	GLfloat rot[4];
 	GLfloat pos[3];
 	GLfloat scale[3];
@@ -53,7 +53,6 @@ extern EF_TRIANGLE *triangle;
 extern EF_QUAD *quad;
 extern EF_MESH *mesh;
 extern int tris;
-extern int quads;
 extern int objects;
 
 class EFCreationSystem

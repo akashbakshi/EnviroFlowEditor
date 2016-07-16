@@ -6,10 +6,79 @@ EF_TRIANGLE *triangle;
 EF_QUAD *quad;
 EF_VERTEX *vertex;
 EF_MESH *mesh;
-int quads = 0;
 int objects = 0;
 int tris = 0;
 GLfloat tempx[4], tempy[4], tempz[4];
+
+
+bool ColorCheck(int obj, GLubyte r, GLubyte g, GLubyte b)
+{
+	if (objects > 0)
+	{
+		for (int i = 0; i < objects; i++)
+		{
+			if (mesh[obj].rgba[0] == r && mesh[obj].rgba[1] == g && mesh[obj].rgba[2] == b)return (true);
+		}
+	}
+
+	return (false);
+}
+
+void GenerateColors(int obj, GLubyte &r, GLubyte &g, GLubyte &b)
+{
+	unsigned int one, two, three;
+
+	r = rand() * 256 / RAND_MAX;
+	g = rand() * 256 / RAND_MAX;
+	b = rand() * 256 / RAND_MAX;
+	while (ColorCheck(obj,r, g, b))
+	{
+		r = rand() * 256 / RAND_MAX;
+		g = rand() * 256 / RAND_MAX;
+		b = rand() * 256 / RAND_MAX;
+	}
+	one = r;
+	two = g;
+	three = b;
+	cout << "R:" << one << endl;
+	cout << "G:" << two << endl;
+	cout << "B:" << three << endl;
+}
+
+
+bool QuadColorCheck(int obj,int n_quad,GLubyte r, GLubyte g, GLubyte b)
+{
+	if (objects > 0)
+	{
+		for (int i = 0; i < objects; i++)
+		{
+			if (mesh[obj].m_quad[n_quad].rgba[0] == r && mesh[obj].m_quad[n_quad].rgba[1] == g && mesh[obj].m_quad[n_quad].rgba[2] == b)return (true);
+		}
+	}
+
+	return (false);
+}
+
+void GenerateQuadColors(int obj,int n_quad,GLubyte &r, GLubyte &g, GLubyte &b)
+{
+	unsigned int one, two, three;
+
+	r = rand() * 256 / RAND_MAX;
+	g = rand() * 256 / RAND_MAX;
+	b = rand() * 256 / RAND_MAX;
+	while (QuadColorCheck(obj,n_quad,r, g, b))
+	{
+		r = rand() * 256 / RAND_MAX;
+		g = rand() * 256 / RAND_MAX;
+		b = rand() * 256 / RAND_MAX;
+	}
+	one = r;
+	two = g;
+	three = b;
+	cout << "R:" << one << endl;
+	cout << "G:" << two << endl;
+	cout << "B:" << three << endl;
+}
 
 EFCreationSystem::EFCreationSystem()
 {
@@ -40,17 +109,18 @@ void EFCreationSystem::CreateVertex(int obj, GLfloat x, GLfloat y, GLfloat z)
 	vertex[obj].xyz[0] = x;
 	vertex[obj].xyz[1] = y;
 	vertex[obj].xyz[2] = z;
+
+	delete[]vertex;
 }
 
 void EFCreationSystem::CreateTri(int obj,int tri, GLfloat x, GLfloat y, GLfloat z)
 {
-	if (obj == 0) {
-
+	
 		triangle = new EF_TRIANGLE[1];
 
 		CreateVertex(obj, x, y, z);
 		
-	}
+		delete[]triangle;
 	
 }
 
@@ -83,10 +153,7 @@ void EFCreationSystem::CreateQuad(int obj, int quad_num, GLfloat x[4], GLfloat y
 		quad[obj].q_vertices.push_back(z[3]);
 
 		// Set color for quad
-		quad[obj].rgba[0] = 1.0f;
-		quad[obj].rgba[1] = 0.0f;
-		quad[obj].rgba[2] = 0.0f;
-		quad[obj].rgba[3] = 0.0f;
+		GenerateQuadColors(obj,quad_num,quad[obj].rgba[0], quad[obj].rgba[1], quad[obj].rgba[2]);
 
 		// add indices for quad to tell program which vertices to draw in what order
 		quad[obj].q_indices.push_back(0);
@@ -102,49 +169,55 @@ void EFCreationSystem::CreateCube(int obj) {
 	mesh = new EF_MESH[1];
 
 	mesh[obj].m_quad = new EF_QUAD[6];
-
+	mesh[obj].quad_count = 0;
 	//Making Front Face
 	
 	//Set The XYZ Coordinates For the face
 	SetQuadCoordinates(-1.0f, -1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f, 1.0f, 0.0f, -1.0f, 1.0f, 0.0f);
 
 	// Take those coordinates and put them in the structure to be drawn
-	CreateQuad(obj, quads, tempx, tempy, tempz);
-	mesh[obj].m_quad[quads] = quad[0];
-	CreateBuffers(obj, quads);
-	quads += 1;
-
+	CreateQuad(obj, mesh[obj].quad_count, tempx, tempy, tempz);
+	mesh[obj].m_quad[mesh[obj].quad_count] = quad[0];
+	delete[]quad;
+	CreateBuffers(obj, mesh[obj].quad_count);
+	mesh[obj].quad_count += 1;
 	
 	SetQuadCoordinates(-1.0f, 1.0f, 0.0f, -1.0f, 1.0f, 2.0f, 1.0f, 1.0f, 2.0f, 1.0f, 1.0f, 0.0f);
-	CreateQuad(obj, quads, tempx, tempy, tempz);
-	mesh[obj].m_quad[quads] = quad[0];
-	CreateBuffers(obj, quads);
-	quads += 1;
+	CreateQuad(obj, mesh[obj].quad_count, tempx, tempy, tempz);
+	mesh[obj].m_quad[mesh[obj].quad_count] = quad[0];
+	delete[]quad;
+	CreateBuffers(obj, mesh[obj].quad_count);
+	mesh[obj].quad_count += 1;
 	
 	SetQuadCoordinates(-1.0f, -1.0f, 2.0f, 1.0f, -1.0f, 2.0f, 1.0f, 1.0f, 2.0f, -1.0f, 1.0f, 2.0f);
-	CreateQuad(obj, quads, tempx, tempy, tempz);
-	mesh[obj].m_quad[quads] = quad[0];
-	CreateBuffers(obj, quads);
-	quads += 1;
+	CreateQuad(obj, mesh[obj].quad_count, tempx, tempy, tempz);
+	mesh[obj].m_quad[mesh[obj].quad_count] = quad[0];
+	delete[]quad;
+	CreateBuffers(obj, mesh[obj].quad_count);
+	mesh[obj].quad_count += 1;
 
 	SetQuadCoordinates(-1.0f, -1.0f, 0.0f, -1.0f, -1.0f, 2.0f, 1.0f, -1.0f, 2.0f, 1.0f, -1.0f, 0.0f);
-	CreateQuad(obj, quads, tempx, tempy, tempz);
-	mesh[obj].m_quad[quads] = quad[0];
-	CreateBuffers(obj, quads);
-	quads += 1;
+	CreateQuad(obj, mesh[obj].quad_count, tempx, tempy, tempz);
+	mesh[obj].m_quad[mesh[obj].quad_count] = quad[0];
+	delete[]quad;
+	CreateBuffers(obj, mesh[obj].quad_count);
+	mesh[obj].quad_count += 1;
 
 	SetQuadCoordinates(-1.0f, -1.0f, 0.0f, -1.0f, -1.0f, 2.0f, -1.0f, 1.0f, 2.0f, -1.0f, 1.0f, 0.0f);
-	CreateQuad(obj, quads, tempx, tempy, tempz);
-	mesh[obj].m_quad[quads] = quad[0];
-	CreateBuffers(obj, quads);
-	quads += 1;
+	CreateQuad(obj, mesh[obj].quad_count, tempx, tempy, tempz);
+	mesh[obj].m_quad[mesh[obj].quad_count] = quad[0];
+	delete[]quad;
+	CreateBuffers(obj, mesh[obj].quad_count);
+	mesh[obj].quad_count += 1;
 
 	SetQuadCoordinates(1.0f, -1.0f, 0.0f, 1.0f, -1.0f, 2.0f, 1.0f, 1.0f, 2.0f, 1.0f, 1.0f, 0.0f);
-	CreateQuad(obj, quads, tempx, tempy, tempz);
-	mesh[obj].m_quad[quads] = quad[0];
-	CreateBuffers(obj, quads);
-	quads += 1;
+	CreateQuad(obj, mesh[obj].quad_count, tempx, tempy, tempz);
+	mesh[obj].m_quad[mesh[obj].quad_count] = quad[0];
+	delete[]quad;
+	CreateBuffers(obj, mesh[obj].quad_count);
+	mesh[obj].quad_count += 1;
 
+	GenerateColors(obj, mesh[obj].rgba[0], mesh[obj].rgba[1], mesh[obj].rgba[2]);
 	objects += 1;
 }
 

@@ -6,7 +6,7 @@
 Cam Camera;
 bool GetKey[256];
 EFCreationSystem *Create = NULL;
-
+bool init_quad = false;
 EFRender::EFRender()
 {
 }
@@ -115,8 +115,13 @@ void EFRender::Render() {
 		Camera.StrafeRight(0.2f);
 		//Display();
 	}
-
 	
+	if (GetKey[P]) {
+		init_quad = true;
+	}
+	if (GetKey[L]) {
+		init_quad = false;
+	}
 	//Basic OpenGL Viewport stuff
 
 	glViewport(0, 0, (GLsizei)1440, (GLsizei)900);
@@ -142,19 +147,22 @@ void EFRender::Render() {
 	DisplayGrid();
 	DrawXYZ();
 	for (int i =0; i < objects; i++)
-		RenderMesh(0);
+		RenderMesh(i);
 }
 
 void EFRender::RenderMesh(int obj)
 {
-	for(int i =0;i<quads;i++){
+	for(int i =0;i<mesh[obj].quad_count;i++){
 		glPushMatrix();
 		glBindBuffer(GL_ARRAY_BUFFER, mesh[obj].m_quad[i].vbo);
 		glVertexPointer(3, GL_FLOAT, 0, 0);
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh[obj].m_quad[i].vio);
 
-		glColor3f(mesh[obj].m_quad[i].rgba[0], mesh[obj].m_quad[i].rgba[1], mesh[obj].m_quad[i].rgba[2]);
+		if(init_quad == true)
+			glColor3ub(mesh[obj].m_quad[i].rgba[0], mesh[obj].m_quad[i].rgba[1], mesh[obj].m_quad[i].rgba[2]);
+		if(init_quad == false)
+			glColor3ub(mesh[obj].rgba[0], mesh[obj].rgba[1], mesh[obj].rgba[2]);
 
 		glDrawElements(GL_QUADS, mesh[obj].m_quad[i].q_indices.size(), GL_UNSIGNED_INT, 0);
 
