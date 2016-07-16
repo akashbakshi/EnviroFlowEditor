@@ -69,13 +69,13 @@ void EFRender::Render() {
 	if (GetKey[LEFT_ARROW])
 	{
 
-		Camera.RAngleY(0.4f);
+		Camera.RAngleY(0.2f);
 		//Display();
 	}
 
 	if (GetKey[VK_RIGHT])
 	{
-		Camera.RAngleY(-0.4f);
+		Camera.RAngleY(-0.2f);
 		//Display();
 
 	}
@@ -85,34 +85,34 @@ void EFRender::Render() {
 	}
 	if (GetKey[W])
 	{
-		Camera.MoveForwards(-0.4f);
+		Camera.MoveForwards(-0.2f);
 		//Display();
 	}
 	if (GetKey[S])
 	{
-		Camera.MoveForwards(0.4f);
+		Camera.MoveForwards(0.2f);
 		//Display();	
 	}
 	if (GetKey[UP_ARROW])
 	{
-		Camera.RAngleX(0.4f);
+		Camera.RAngleX(0.2f);
 		//Display();
 	}
 	if (GetKey[DOWN_ARROW])
 	{
-		Camera.RAngleX(-0.4f);
+		Camera.RAngleX(-0.2f);
 		//Display();
 	}
 
 	if (GetKey[A])
 	{
-		Camera.StrafeRight(-0.4f);
+		Camera.StrafeRight(-0.2f);
 		//Display();
 	}
 
 	if (GetKey[D])
 	{
-		Camera.StrafeRight(0.4f);
+		Camera.StrafeRight(0.2f);
 		//Display();
 	}
 
@@ -142,21 +142,21 @@ void EFRender::Render() {
 	DisplayGrid();
 	DrawXYZ();
 	for (int i =0; i < objects; i++)
-		RenderMesh(i);
+		RenderMesh(0);
 }
 
 void EFRender::RenderMesh(int obj)
 {
-		for(int i=0;i<tris;i++){
+	for(int i =0;i<quads;i++){
 		glPushMatrix();
-		glBindBuffer(GL_ARRAY_BUFFER, quad[obj].tri[i].vbo);
+		glBindBuffer(GL_ARRAY_BUFFER, mesh[obj].m_quad[i].vbo);
 		glVertexPointer(3, GL_FLOAT, 0, 0);
 		glEnableClientState(GL_VERTEX_ARRAY);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, quad[obj].tri[i].vio);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh[obj].m_quad[i].vio);
 
-		glColor3f(quad[obj].tri[i].rgba[0], quad[obj].tri[i].rgba[1], quad[obj].tri[i].rgba[2]);
+		glColor3f(mesh[obj].m_quad[i].rgba[0], mesh[obj].m_quad[i].rgba[1], mesh[obj].m_quad[i].rgba[2]);
 
-		glDrawElements(GL_QUADS, quad[obj].tri[i].indices.size(), GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_QUADS, mesh[obj].m_quad[i].q_indices.size(), GL_UNSIGNED_INT, 0);
 
 		glDisableClientState(GL_VERTEX_ARRAY);
 		glPopMatrix();
