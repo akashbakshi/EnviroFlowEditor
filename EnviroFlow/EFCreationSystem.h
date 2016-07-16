@@ -26,6 +26,8 @@ struct EF_QUAD {
 	GLfloat rot[3];
 	GLfloat scale[3];
 
+	int tri_count;
+
 	EF_TRIANGLE tri[2];
 
 };
@@ -38,7 +40,7 @@ struct EF_MESH {
 	GLfloat scale[3];
 
 	EF_QUAD quad[2];
-
+	int quad_count;
 	vector<GLfloat>m_vert;
 	vector<GLfloat>m_ind;
 };

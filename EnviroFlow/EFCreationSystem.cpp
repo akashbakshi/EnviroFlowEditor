@@ -6,7 +6,6 @@ EF_TRIANGLE *triangle;
 EF_QUAD *quad;
 EF_VERTEX *vertex;
 
-
 int quads = 0;
 int objects = 0;
 int tris = 0;
@@ -41,7 +40,6 @@ void EFCreationSystem::CreateVertex(int obj, GLfloat x, GLfloat y, GLfloat z)
 	vertex[obj].xyz[0] = x;
 	vertex[obj].xyz[1] = y;
 	vertex[obj].xyz[2] = z;
-	
 }
 
 void EFCreationSystem::CreateTri(int obj,int tri, GLfloat x, GLfloat y, GLfloat z)
@@ -51,13 +49,7 @@ void EFCreationSystem::CreateTri(int obj,int tri, GLfloat x, GLfloat y, GLfloat 
 		triangle = new EF_TRIANGLE[1];
 
 		CreateVertex(obj, x, y, z);
-		triangle[obj].vertices.push_back(triangle[obj].vert[obj].xyz[0]);
-		triangle[obj].vertices.push_back(triangle[obj].vert[obj].xyz[1]);
-		triangle[obj].vertices.push_back(triangle[obj].vert[obj].xyz[2]);
-
-		triangle[obj].indices.push_back(0);
-		triangle[obj].indices.push_back(1);
-		triangle[obj].indices.push_back(2);
+		
 	}
 	
 }
@@ -67,9 +59,10 @@ void EFCreationSystem::CreateQuad(int obj, int tri, GLfloat x[3], GLfloat y[3], 
 	//First half of triangle
 	if(quads == 0){
 		quad = new EF_QUAD[1];
-		CreateTri(obj,tri, x[0], y[0], z[0]);
-		CreateTri(obj,tri, x[1], y[1], z[1]);
-		CreateTri(obj,tri, x[2], y[2], z[2]);
+		CreateVertex(obj, x[0], y[0], z[0]);
+		CreateVertex(obj, x[1], y[1], z[1]);
+		CreateVertex(obj, x[2], y[2], z[2]);
+		CreateVertex(obj, x2[0], y2[0], z2[0]);
 
 		quad[obj].tri[tri].vertices.push_back(x[0]);
 		quad[obj].tri[tri].vertices.push_back(y[0]);
@@ -83,6 +76,10 @@ void EFCreationSystem::CreateQuad(int obj, int tri, GLfloat x[3], GLfloat y[3], 
 		quad[obj].tri[tri].vertices.push_back(y[2]);
 		quad[obj].tri[tri].vertices.push_back(z[2]);
 
+		quad[obj].tri[tri ].vertices.push_back(x2[0]);
+		quad[obj].tri[tri ].vertices.push_back(y2[0]);
+		quad[obj].tri[tri ].vertices.push_back(z2[0]);
+
 		quad[obj].tri[tri].rgba[0] = 1.0f;
 		quad[obj].tri[tri].rgba[1] = 0.0f;
 		quad[obj].tri[tri].rgba[2] = 0.0f;
@@ -91,37 +88,10 @@ void EFCreationSystem::CreateQuad(int obj, int tri, GLfloat x[3], GLfloat y[3], 
 		quad[obj].tri[tri].indices.push_back(0);
 		quad[obj].tri[tri].indices.push_back(1);
 		quad[obj].tri[tri].indices.push_back(2);
+		quad[obj].tri[tri].indices.push_back(3);
 
 		CreateBuffers(obj, tri);
-		//Second half of triangle
-		CreateTri(obj, tri, x[0], y[0], z[0]);
-		CreateTri(obj, tri, x[1], y[1], z[1]);
-		CreateTri(obj, tri, x[2], y[2], z[2]);
-
-
-		quad[obj].tri[tri+1].vertices.push_back(x2[0]);
-		quad[obj].tri[tri+1].vertices.push_back(y2[0]);
-		quad[obj].tri[tri+1].vertices.push_back(z2[0]);
-
-		quad[obj].tri[tri+1].vertices.push_back(x2[1]);
-		quad[obj].tri[tri+1].vertices.push_back(y2[1]);
-		quad[obj].tri[tri+1].vertices.push_back(z2[1]);
-
-		quad[obj].tri[tri+1].vertices.push_back(x2[2]);
-		quad[obj].tri[tri+1].vertices.push_back(y2[2]);
-		quad[obj].tri[tri+1].vertices.push_back(z2[2]);
-
-
-		quad[obj].tri[tri + 1].rgba[0] = 0.0f;
-		quad[obj].tri[tri + 1].rgba[1] = 0.0f;
-		quad[obj].tri[tri + 1].rgba[2] = 1.0f;
-		quad[obj].tri[tri + 1].rgba[3] = 0.0f;
-
-		quad[obj].tri[tri+1].indices.push_back(0);
-		quad[obj].tri[tri+1].indices.push_back(1);
-		quad[obj].tri[tri+1].indices.push_back(2);
-
-		CreateBuffers(obj, tri+1);
+		//Second half of triangle;
 	}
 	if (quads > 0) {
 
@@ -211,7 +181,7 @@ void EFCreationSystem::CreateCube(int obj) {
 	z[1] = 0.0f;
 
 	x[2] = 1.0f;
-	y[2] = -1.0f;
+	y[2] = 1.0f;
 	z[2] = 0.0f;
 
 
@@ -231,7 +201,7 @@ void EFCreationSystem::CreateCube(int obj) {
 	tris += 2;
 	objects += 1;
 	quads += 1;
-
+	/*
 	//top face
 	x[0] = -1.0f;
 	y[0] = 1.0f;
@@ -382,6 +352,5 @@ void EFCreationSystem::CreateCube(int obj) {
 	CreateQuad(objects, 0, x, y, z, x2, y2, z2);
 	objects += 1;
 	quads += 1;
+	*/
 }
-
-

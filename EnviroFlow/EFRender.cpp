@@ -156,7 +156,7 @@ void EFRender::RenderMesh(int obj)
 
 		glColor3f(quad[obj].tri[i].rgba[0], quad[obj].tri[i].rgba[1], quad[obj].tri[i].rgba[2]);
 
-		glDrawElements(GL_TRIANGLES, quad[obj].tri[i].indices.size(), GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_QUADS, quad[obj].tri[i].indices.size(), GL_UNSIGNED_INT, 0);
 
 		glDisableClientState(GL_VERTEX_ARRAY);
 		glPopMatrix();
