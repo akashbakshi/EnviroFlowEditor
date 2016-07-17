@@ -12,6 +12,9 @@ bool v_wireframe = false;
 bool v_solid = true;
 bool v_textured = false;
 
+int arr = 0;
+
+
 EFRender::EFRender()
 {
 }
@@ -21,11 +24,218 @@ EFRender::~EFRender()
 {
 }
 
+struct Arrow
+{
+	vector<GLfloat>vertices;
+	vector<GLuint>faces;
+	GLubyte rgb[3];
+	GLfloat pos[3];
+	GLuint vbo, vio;
+};
+
+
+Arrow arrow[3];
+
+
+void ArrowXYZ(int arr_obj)
+{
+	arrow[arr_obj].vertices.push_back(2.1034f);
+	arrow[arr_obj].vertices.push_back(-0.0050f);
+	arrow[arr_obj].vertices.push_back(1.7474f);
+
+	arrow[arr_obj].vertices.push_back(1.8686f);
+	arrow[arr_obj].vertices.push_back(-0.0050f);
+	arrow[arr_obj].vertices.push_back(1.7474f);
+
+	arrow[arr_obj].vertices.push_back(1.9855f);
+	arrow[arr_obj].vertices.push_back(0.6709f);
+	arrow[arr_obj].vertices.push_back(1.8656f);
+
+
+	arrow[arr_obj].vertices.push_back(2.1034f);
+	arrow[arr_obj].vertices.push_back(-0.0050f);
+	arrow[arr_obj].vertices.push_back(1.9837f);
+
+
+	arrow[arr_obj].vertices.push_back(1.8636f);
+	arrow[arr_obj].vertices.push_back(-0.0050f);
+	arrow[arr_obj].vertices.push_back(1.9837f);
+
+	arrow[arr_obj].vertices.push_back(1.9855f);
+	arrow[arr_obj].vertices.push_back(-0.0050f);
+	arrow[arr_obj].vertices.push_back(1.8656f);
+
+	arrow[arr_obj].vertices.push_back(1.9692f);
+	arrow[arr_obj].vertices.push_back(0.0000f);
+	arrow[arr_obj].vertices.push_back(1.8531f);
+
+	arrow[arr_obj].vertices.push_back(1.9692f);
+	arrow[arr_obj].vertices.push_back(0.0000f);
+	arrow[arr_obj].vertices.push_back(1.8781f);
+
+	arrow[arr_obj].vertices.push_back(1.9942f);
+	arrow[arr_obj].vertices.push_back(0.0000f);
+	arrow[arr_obj].vertices.push_back(1.8781f);
+
+	arrow[arr_obj].vertices.push_back(1.9942f);
+	arrow[arr_obj].vertices.push_back(0.0000f);
+	arrow[arr_obj].vertices.push_back(1.8531f);
+
+	arrow[arr_obj].vertices.push_back(1.9692f);
+	arrow[arr_obj].vertices.push_back(-1.1703f);
+	arrow[arr_obj].vertices.push_back(1.8531f);
+
+	arrow[arr_obj].vertices.push_back(1.9942f);
+	arrow[arr_obj].vertices.push_back(-1.1703f);
+	arrow[arr_obj].vertices.push_back(1.8531f);
+
+	arrow[arr_obj].vertices.push_back(1.9942f);
+	arrow[arr_obj].vertices.push_back(-1.1703f);
+	arrow[arr_obj].vertices.push_back(1.8781f);
+
+	arrow[arr_obj].vertices.push_back(1.9962f);
+	arrow[arr_obj].vertices.push_back(-1.1703f);
+	arrow[arr_obj].vertices.push_back(1.8781f);
+
+	//faces
+	arrow[arr_obj].faces.push_back(0);
+	arrow[arr_obj].faces.push_back(1);
+	arrow[arr_obj].faces.push_back(2);
+
+	arrow[arr_obj].faces.push_back(3);
+	arrow[arr_obj].faces.push_back(0);
+	arrow[arr_obj].faces.push_back(2);
+
+	arrow[arr_obj].faces.push_back(4);
+	arrow[arr_obj].faces.push_back(3);
+	arrow[arr_obj].faces.push_back(2);
+
+	arrow[arr_obj].faces.push_back(1);
+	arrow[arr_obj].faces.push_back(4);
+	arrow[arr_obj].faces.push_back(2);
+
+	arrow[arr_obj].faces.push_back(3);
+	arrow[arr_obj].faces.push_back(5);
+	arrow[arr_obj].faces.push_back(0);
+
+	arrow[arr_obj].faces.push_back(4);
+	arrow[arr_obj].faces.push_back(5);
+	arrow[arr_obj].faces.push_back(3);
+
+	arrow[arr_obj].faces.push_back(1);
+	arrow[arr_obj].faces.push_back(5);
+	arrow[arr_obj].faces.push_back(4);
+
+	arrow[arr_obj].faces.push_back(6);
+	arrow[arr_obj].faces.push_back(7);
+	arrow[arr_obj].faces.push_back(8);
+
+	arrow[arr_obj].faces.push_back(8);
+	arrow[arr_obj].faces.push_back(9);
+	arrow[arr_obj].faces.push_back(6);
+
+	arrow[arr_obj].faces.push_back(10);
+	arrow[arr_obj].faces.push_back(11);
+	arrow[arr_obj].faces.push_back(12);
+
+	arrow[arr_obj].faces.push_back(12);
+	arrow[arr_obj].faces.push_back(13);
+	arrow[arr_obj].faces.push_back(10);
+
+	arrow[arr_obj].faces.push_back(6);
+	arrow[arr_obj].faces.push_back(9);
+	arrow[arr_obj].faces.push_back(11);
+
+	arrow[arr_obj].faces.push_back(11);
+	arrow[arr_obj].faces.push_back(10);
+	arrow[arr_obj].faces.push_back(6);
+
+	arrow[arr_obj].faces.push_back(9);
+	arrow[arr_obj].faces.push_back(8);
+	arrow[arr_obj].faces.push_back(12);
+
+	arrow[arr_obj].faces.push_back(12);
+	arrow[arr_obj].faces.push_back(11);
+	arrow[arr_obj].faces.push_back(9);
+
+	arrow[arr_obj].faces.push_back(8);
+	arrow[arr_obj].faces.push_back(7);
+	arrow[arr_obj].faces.push_back(13);
+
+	arrow[arr_obj].faces.push_back(13);
+	arrow[arr_obj].faces.push_back(12);
+	arrow[arr_obj].faces.push_back(8);
+
+	arrow[arr_obj].faces.push_back(7);
+	arrow[arr_obj].faces.push_back(6);
+	arrow[arr_obj].faces.push_back(10);
+
+	arrow[arr_obj].faces.push_back(10);
+	arrow[arr_obj].faces.push_back(13);
+	arrow[arr_obj].faces.push_back(7);
+
+	
+
+	glGenBuffers(1, &arrow[arr_obj].vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, arrow[arr_obj].vbo);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*arrow[arr_obj].vertices.size(), &arrow[arr_obj].vertices[0], GL_STATIC_DRAW);
+
+
+
+	glGenBuffers(1, &arrow[arr_obj].vio);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, arrow[arr_obj].vio);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint)*arrow[arr_obj].faces.size(), &arrow[arr_obj].faces[0], GL_STATIC_DRAW);
+	arr += 1;
+
+}
+
+
+void RenderArrows(int obj)
+{
+	glPushMatrix();
+
+	glBindBuffer(GL_ARRAY_BUFFER, arrow[obj].vbo);
+
+	glVertexPointer(3, GL_FLOAT, 0, 0);
+	glEnableClientState(GL_VERTEX_ARRAY);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, arrow[obj].vio);
+
+	glColor3ub(arrow[obj].rgb[0], arrow[obj].rgb[1], arrow[obj].rgb[2]);
+	glTranslatef(arrow[obj].pos[0], arrow[obj].pos[1], arrow[obj].pos[2]);
+	glDrawElements(GL_TRIANGLES, arrow[obj].faces.size(), GL_UNSIGNED_INT, 0);
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glPopMatrix();
+}
+
 void EFRender::Init() {
 
 	glEnable(GL_DEPTH_TEST);
 	//Create Cube
-	Create->CreateCube(0);
+	//Create->CreateCube(0);
+	//Create->CreateCube(1);
+
+
+	ArrowXYZ(0);
+	arrow[0].rgb[0] = 0.0;
+	arrow[0].rgb[1] = 255.0;
+	arrow[0].rgb[2] = 0.0;
+
+	arrow[0].pos[0] = -2.05f;
+	arrow[0].pos[1] = 1.0f;
+	arrow[0].pos[2] = -1.85f;
+
+
+
+	ArrowXYZ(1);
+	arrow[1].rgb[0] = 255.0;
+	arrow[1].rgb[1] = 0.0;
+	arrow[1].rgb[2] = 0.0;
+
+	arrow[1].pos[0] = -5.0f;
+	arrow[1].pos[1] = 0.0f;
+	arrow[1].pos[2] = 0.0f;
 }
 
 // Draw the XYZ lines in scene
@@ -129,7 +339,7 @@ void EFRender::Render() {
 	//Basic OpenGL Viewport stuff
 
 	glViewport(0, 0, (GLsizei)1440, (GLsizei)900);
-
+	
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
@@ -140,7 +350,7 @@ void EFRender::Render() {
 	glLoadIdentity();
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClearColor(0.2f, 0.2f, 0.2f, 0.0f);
 	glLoadIdentity();
 
 	gluLookAt(-0.5, 1.0, 7.0, 0.0, 0.0, -10.0, 0.0, 1.0, 0.0);
@@ -150,8 +360,16 @@ void EFRender::Render() {
 
 	DisplayGrid();
 	DrawXYZ();
-	for (int i =0; i < objects; i++)
+
+
+	for (int a=0;a<arr;a++)
+		RenderArrows(a);
+/*
+	for (int i = 0; i < objects; i++)
 		RenderMesh(i);
+		*/
+
+
 }
 
 void EFRender::RenderMesh(int obj){
@@ -169,13 +387,14 @@ void EFRender::RenderMesh(int obj){
 			glColor3ub(mesh[obj].rgba[0], mesh[obj].rgba[1], mesh[obj].rgba[2]);
 		if (v_textured == true)
 			glColor3ub(255, 255, 255);
-
+		glTranslated(3.0, 0.0, 0.0);
 		glBindBuffer(GL_ARRAY_BUFFER,mesh[obj].m_quad[i].tex[0].vto);
 		glTexCoordPointer(2, GL_FLOAT, 0, 0);
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glBindTexture(GL_TEXTURE_2D, mesh[obj].m_quad[i].tex[0].TexID);
 		glDrawElements(GL_QUADS, mesh[obj].m_quad[i].q_indices.size(), GL_UNSIGNED_INT, 0);
 		glDisableClientState(GL_VERTEX_ARRAY);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glPopMatrix();
 	}
 }
