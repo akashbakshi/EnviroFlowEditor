@@ -30,3 +30,6 @@ extern GLuint LoadTGATexture(char *TexName);
 extern bool v_textured;
 extern bool v_solid;
 extern bool v_wireframe;
+
+//Universal selection variable to keep track of selected meshes index.
+extern int uni_sel;

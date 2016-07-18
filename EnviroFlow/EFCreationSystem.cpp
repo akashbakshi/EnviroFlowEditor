@@ -260,6 +260,10 @@ void EFCreationSystem::CreateCube(int obj) {
 	mesh[obj].quad_count += 1;
 
 	GenerateColors(obj, mesh[obj].rgba[0], mesh[obj].rgba[1], mesh[obj].rgba[2]);
+
+	mesh[obj].pos[0] = 0.0;
+	mesh[obj].pos[1] = 0.0;
+	mesh[obj].pos[2] = 0.0;
 	objects += 1;
 }
 

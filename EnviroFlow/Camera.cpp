@@ -1,5 +1,7 @@
 #include "Camera.h"
+#include <iostream>
 
+using namespace std;
 SF3dVector F3dVector(GLdouble x, GLdouble y, GLdouble z)
 {
 	SF3dVector tmp;
@@ -79,6 +81,7 @@ void Cam::Render( void )
 	glRotatef(-RotatedY, 0.0, 1.0, 0.0);
 	glRotatef(-RotatedZ, 0.0, 0.0, 1.0);
 
+	//cout << -RotatedX << " " << -RotatedY << " " << -RotatedZ << endl;
 	glTranslated(-Position.x, -Position.y, -Position.z);
 
 

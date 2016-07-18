@@ -52,7 +52,7 @@ struct EF_MESH {
 	GLfloat xyz[3];
 	GLubyte rgba[4];
 	GLfloat rot[4];
-	GLfloat pos[3];
+	GLdouble pos[3];
 	GLfloat scale[3];
 
 	EF_QUAD *m_quad;
