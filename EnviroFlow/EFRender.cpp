@@ -30,6 +30,7 @@ struct Arrow
 	vector<GLuint>faces;
 	GLubyte rgb[3];
 	GLfloat pos[3];
+	GLfloat rot[4];
 	GLuint vbo, vio;
 };
 
@@ -39,142 +40,187 @@ Arrow arrow[3];
 
 void ArrowXYZ(int arr_obj)
 {
-	arrow[arr_obj].vertices.push_back(2.1034f);
-	arrow[arr_obj].vertices.push_back(-0.0050f);
-	arrow[arr_obj].vertices.push_back(1.7474f);
+	arrow[arr_obj].vertices.push_back(0.022402f);
+	arrow[arr_obj].vertices.push_back(-0.000660f);
+	arrow[arr_obj].vertices.push_back(-0.023251f);
 
-	arrow[arr_obj].vertices.push_back(1.8686f);
-	arrow[arr_obj].vertices.push_back(-0.0050f);
-	arrow[arr_obj].vertices.push_back(1.7474f);
+	arrow[arr_obj].vertices.push_back(0.022402f);
+	arrow[arr_obj].vertices.push_back(-0.000660f);
+	arrow[arr_obj].vertices.push_back(0.023251f);
 
-	arrow[arr_obj].vertices.push_back(1.9855f);
-	arrow[arr_obj].vertices.push_back(0.6709f);
-	arrow[arr_obj].vertices.push_back(1.8656f);
+	arrow[arr_obj].vertices.push_back(-0.022402f);
+	arrow[arr_obj].vertices.push_back(-0.000660f);
+	arrow[arr_obj].vertices.push_back(0.023251f);
 
+	arrow[arr_obj].vertices.push_back(-0.022402f);
+	arrow[arr_obj].vertices.push_back(-0.000660f);
+	arrow[arr_obj].vertices.push_back(-0.023251f);
 
-	arrow[arr_obj].vertices.push_back(2.1034f);
-	arrow[arr_obj].vertices.push_back(-0.0050f);
-	arrow[arr_obj].vertices.push_back(1.9837f);
+	//
+	arrow[arr_obj].vertices.push_back(0.022402f);
+	arrow[arr_obj].vertices.push_back(0.999497f);
+	arrow[arr_obj].vertices.push_back(-0.023251f);
 
+	arrow[arr_obj].vertices.push_back(0.022402f);
+	arrow[arr_obj].vertices.push_back(0.999497f);
+	arrow[arr_obj].vertices.push_back(0.023251f);
 
-	arrow[arr_obj].vertices.push_back(1.8636f);
-	arrow[arr_obj].vertices.push_back(-0.0050f);
-	arrow[arr_obj].vertices.push_back(1.9837f);
+	arrow[arr_obj].vertices.push_back(-0.022402f);
+	arrow[arr_obj].vertices.push_back(0.999497f);
+	arrow[arr_obj].vertices.push_back(0.023251f);
 
-	arrow[arr_obj].vertices.push_back(1.9855f);
-	arrow[arr_obj].vertices.push_back(-0.0050f);
-	arrow[arr_obj].vertices.push_back(1.8656f);
+	arrow[arr_obj].vertices.push_back(-0.022402f);
+	arrow[arr_obj].vertices.push_back(0.999497f);
+	arrow[arr_obj].vertices.push_back(-0.023251f);
 
-	arrow[arr_obj].vertices.push_back(1.9692f);
-	arrow[arr_obj].vertices.push_back(0.0000f);
-	arrow[arr_obj].vertices.push_back(1.8531f);
+	//
+	arrow[arr_obj].vertices.push_back(0.095719f);
+	arrow[arr_obj].vertices.push_back(1.000003f);
+	arrow[arr_obj].vertices.push_back(-0.095718f);
 
-	arrow[arr_obj].vertices.push_back(1.9692f);
-	arrow[arr_obj].vertices.push_back(0.0000f);
-	arrow[arr_obj].vertices.push_back(1.8781f);
+	arrow[arr_obj].vertices.push_back(0.095718f);
+	arrow[arr_obj].vertices.push_back(1.000003f);
+	arrow[arr_obj].vertices.push_back(0.095719f);
 
-	arrow[arr_obj].vertices.push_back(1.9942f);
-	arrow[arr_obj].vertices.push_back(0.0000f);
-	arrow[arr_obj].vertices.push_back(1.8781f);
+	arrow[arr_obj].vertices.push_back(-0.095719f);
+	arrow[arr_obj].vertices.push_back(1.000003f);
+	arrow[arr_obj].vertices.push_back(0.095719f);
 
-	arrow[arr_obj].vertices.push_back(1.9942f);
-	arrow[arr_obj].vertices.push_back(0.0000f);
-	arrow[arr_obj].vertices.push_back(1.8531f);
+	arrow[arr_obj].vertices.push_back(-0.095719f);
+	arrow[arr_obj].vertices.push_back(1.000003f);
+	arrow[arr_obj].vertices.push_back(-0.095718f);
 
-	arrow[arr_obj].vertices.push_back(1.9692f);
-	arrow[arr_obj].vertices.push_back(-1.1703f);
-	arrow[arr_obj].vertices.push_back(1.8531f);
+	//
+	arrow[arr_obj].vertices.push_back(0.001761f);
+	arrow[arr_obj].vertices.push_back(1.268505f);
+	arrow[arr_obj].vertices.push_back(-0.001761f);
 
-	arrow[arr_obj].vertices.push_back(1.9942f);
-	arrow[arr_obj].vertices.push_back(-1.1703f);
-	arrow[arr_obj].vertices.push_back(1.8531f);
+	arrow[arr_obj].vertices.push_back(0.001761f);
+	arrow[arr_obj].vertices.push_back(1.268505f);
+	arrow[arr_obj].vertices.push_back(0.001761f);
 
-	arrow[arr_obj].vertices.push_back(1.9942f);
-	arrow[arr_obj].vertices.push_back(-1.1703f);
-	arrow[arr_obj].vertices.push_back(1.8781f);
+	arrow[arr_obj].vertices.push_back(-0.001761f);
+	arrow[arr_obj].vertices.push_back(1.268505f);
+	arrow[arr_obj].vertices.push_back(0.001761f);
 
-	arrow[arr_obj].vertices.push_back(1.9962f);
-	arrow[arr_obj].vertices.push_back(-1.1703f);
-	arrow[arr_obj].vertices.push_back(1.8781f);
+	arrow[arr_obj].vertices.push_back(-0.001761f);
+	arrow[arr_obj].vertices.push_back(1.268505f);
+	arrow[arr_obj].vertices.push_back(-0.001761f);
 
 	//faces
 	arrow[arr_obj].faces.push_back(0);
 	arrow[arr_obj].faces.push_back(1);
 	arrow[arr_obj].faces.push_back(2);
 
-	arrow[arr_obj].faces.push_back(3);
-	arrow[arr_obj].faces.push_back(0);
-	arrow[arr_obj].faces.push_back(2);
+
+	arrow[arr_obj].faces.push_back(6);
+	arrow[arr_obj].faces.push_back(9);
+	arrow[arr_obj].faces.push_back(10);
 
 	arrow[arr_obj].faces.push_back(4);
-	arrow[arr_obj].faces.push_back(3);
-	arrow[arr_obj].faces.push_back(2);
-
 	arrow[arr_obj].faces.push_back(1);
-	arrow[arr_obj].faces.push_back(4);
-	arrow[arr_obj].faces.push_back(2);
-
-	arrow[arr_obj].faces.push_back(3);
-	arrow[arr_obj].faces.push_back(5);
 	arrow[arr_obj].faces.push_back(0);
 
+	arrow[arr_obj].faces.push_back(5);
+	arrow[arr_obj].faces.push_back(2);
+	arrow[arr_obj].faces.push_back(1);
+
+	arrow[arr_obj].faces.push_back(6);
+	arrow[arr_obj].faces.push_back(3);
+	arrow[arr_obj].faces.push_back(2);
+
+	arrow[arr_obj].faces.push_back(0);
+	arrow[arr_obj].faces.push_back(7);
+	arrow[arr_obj].faces.push_back(4);
+
+	arrow[arr_obj].faces.push_back(9);
+	arrow[arr_obj].faces.push_back(14);
+	arrow[arr_obj].faces.push_back(10);
+
+	arrow[arr_obj].faces.push_back(4);
+	arrow[arr_obj].faces.push_back(9);
+	arrow[arr_obj].faces.push_back(5);
+
+	arrow[arr_obj].faces.push_back(6);
+	arrow[arr_obj].faces.push_back(11);
+	arrow[arr_obj].faces.push_back(7);
+
+	arrow[arr_obj].faces.push_back(4);
+	arrow[arr_obj].faces.push_back(11);
+	arrow[arr_obj].faces.push_back(8);
+
+	arrow[arr_obj].faces.push_back(15);
+	arrow[arr_obj].faces.push_back(13);
+	arrow[arr_obj].faces.push_back(12);
+
+	arrow[arr_obj].faces.push_back(9);
+	arrow[arr_obj].faces.push_back(12);
+	arrow[arr_obj].faces.push_back(13);
+
+	arrow[arr_obj].faces.push_back(10);
+	arrow[arr_obj].faces.push_back(15);
+	arrow[arr_obj].faces.push_back(11);
+
+	arrow[arr_obj].faces.push_back(11);
+	arrow[arr_obj].faces.push_back(12);
+	arrow[arr_obj].faces.push_back(8);
+
+	arrow[arr_obj].faces.push_back(0);
+	arrow[arr_obj].faces.push_back(1);
+	arrow[arr_obj].faces.push_back(2);
+
+	arrow[arr_obj].faces.push_back(6);
+	arrow[arr_obj].faces.push_back(5);
+	arrow[arr_obj].faces.push_back(9);
+
 	arrow[arr_obj].faces.push_back(4);
 	arrow[arr_obj].faces.push_back(5);
+	arrow[arr_obj].faces.push_back(1);
+
+	arrow[arr_obj].faces.push_back(5);
+	arrow[arr_obj].faces.push_back(6);
+	arrow[arr_obj].faces.push_back(2);
+
+	arrow[arr_obj].faces.push_back(6);
+	arrow[arr_obj].faces.push_back(7);
 	arrow[arr_obj].faces.push_back(3);
 
-	arrow[arr_obj].faces.push_back(1);
-	arrow[arr_obj].faces.push_back(5);
+	arrow[arr_obj].faces.push_back(0);
+	arrow[arr_obj].faces.push_back(3);
+	arrow[arr_obj].faces.push_back(7);
+
+	arrow[arr_obj].faces.push_back(9);
+	arrow[arr_obj].faces.push_back(13);
+	arrow[arr_obj].faces.push_back(14);
+
 	arrow[arr_obj].faces.push_back(4);
+	arrow[arr_obj].faces.push_back(8);
+	arrow[arr_obj].faces.push_back(9);
 
 	arrow[arr_obj].faces.push_back(6);
+	arrow[arr_obj].faces.push_back(10);
+	arrow[arr_obj].faces.push_back(11);
+
+	arrow[arr_obj].faces.push_back(4);
 	arrow[arr_obj].faces.push_back(7);
-	arrow[arr_obj].faces.push_back(8);
-
-	arrow[arr_obj].faces.push_back(8);
-	arrow[arr_obj].faces.push_back(9);
-	arrow[arr_obj].faces.push_back(6);
-
-	arrow[arr_obj].faces.push_back(10);
 	arrow[arr_obj].faces.push_back(11);
-	arrow[arr_obj].faces.push_back(12);
 
-	arrow[arr_obj].faces.push_back(12);
+	arrow[arr_obj].faces.push_back(15);
+	arrow[arr_obj].faces.push_back(14);
 	arrow[arr_obj].faces.push_back(13);
-	arrow[arr_obj].faces.push_back(10);
-
-	arrow[arr_obj].faces.push_back(6);
-	arrow[arr_obj].faces.push_back(9);
-	arrow[arr_obj].faces.push_back(11);
-
-	arrow[arr_obj].faces.push_back(11);
-	arrow[arr_obj].faces.push_back(10);
-	arrow[arr_obj].faces.push_back(6);
 
 	arrow[arr_obj].faces.push_back(9);
 	arrow[arr_obj].faces.push_back(8);
 	arrow[arr_obj].faces.push_back(12);
 
-	arrow[arr_obj].faces.push_back(12);
+	arrow[arr_obj].faces.push_back(10);
+	arrow[arr_obj].faces.push_back(14);
+	arrow[arr_obj].faces.push_back(15);
+
 	arrow[arr_obj].faces.push_back(11);
-	arrow[arr_obj].faces.push_back(9);
-
-	arrow[arr_obj].faces.push_back(8);
-	arrow[arr_obj].faces.push_back(7);
-	arrow[arr_obj].faces.push_back(13);
-
-	arrow[arr_obj].faces.push_back(13);
+	arrow[arr_obj].faces.push_back(15);
 	arrow[arr_obj].faces.push_back(12);
-	arrow[arr_obj].faces.push_back(8);
 
-	arrow[arr_obj].faces.push_back(7);
-	arrow[arr_obj].faces.push_back(6);
-	arrow[arr_obj].faces.push_back(10);
-
-	arrow[arr_obj].faces.push_back(10);
-	arrow[arr_obj].faces.push_back(13);
-	arrow[arr_obj].faces.push_back(7);
-
-	
 
 	glGenBuffers(1, &arrow[arr_obj].vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, arrow[arr_obj].vbo);
@@ -202,8 +248,9 @@ void RenderArrows(int obj)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, arrow[obj].vio);
 
 	glColor3ub(arrow[obj].rgb[0], arrow[obj].rgb[1], arrow[obj].rgb[2]);
-	glTranslatef(arrow[obj].pos[0], arrow[obj].pos[1], arrow[obj].pos[2]);
-	glDrawElements(GL_TRIANGLES, arrow[obj].faces.size(), GL_UNSIGNED_INT, 0);
+	glRotatef(arrow[obj].rot[0], arrow[obj].rot[1], arrow[obj].rot[2], arrow[obj].rot[3]);
+	//glTranslatef(arrow[obj].pos[0], arrow[obj].pos[1], arrow[obj].pos[2]);
+	glDrawElements(GL_TRIANGLES , arrow[obj].faces.size(), GL_UNSIGNED_INT, 0);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glPopMatrix();
@@ -213,7 +260,7 @@ void EFRender::Init() {
 
 	glEnable(GL_DEPTH_TEST);
 	//Create Cube
-	//Create->CreateCube(0);
+	Create->CreateCube(0);
 	//Create->CreateCube(1);
 
 
@@ -222,10 +269,11 @@ void EFRender::Init() {
 	arrow[0].rgb[1] = 255.0;
 	arrow[0].rgb[2] = 0.0;
 
-	arrow[0].pos[0] = -2.05f;
-	arrow[0].pos[1] = 1.0f;
-	arrow[0].pos[2] = -1.85f;
 
+	arrow[0].pos[0] = -2.05f;
+	/*arrow[0].pos[1] = 1.0f;
+	arrow[0].pos[2] = -1.85f;
+	*/
 
 
 	ArrowXYZ(1);
@@ -233,9 +281,25 @@ void EFRender::Init() {
 	arrow[1].rgb[1] = 0.0;
 	arrow[1].rgb[2] = 0.0;
 
+	arrow[1].rot[0] = 90.0f;
+	arrow[1].rot[1] = 0.0f;
+	arrow[1].rot[2] = 0.0f;
+	arrow[1].rot[3] = -90.0f;
+	/*
 	arrow[1].pos[0] = -5.0f;
 	arrow[1].pos[1] = 0.0f;
 	arrow[1].pos[2] = 0.0f;
+	*/
+
+	ArrowXYZ(2);
+	arrow[2].rgb[0] = 0.0;
+	arrow[2].rgb[1] = 0.0;
+	arrow[2].rgb[2] = 255.0;
+
+	arrow[2].rot[0] = 90.0f;
+	arrow[2].rot[1] = 90.0f;
+	arrow[2].rot[2] = 0.0f;
+	arrow[2].rot[3] = 0.0f;
 }
 
 // Draw the XYZ lines in scene
@@ -364,10 +428,10 @@ void EFRender::Render() {
 
 	for (int a=0;a<arr;a++)
 		RenderArrows(a);
-/*
+
 	for (int i = 0; i < objects; i++)
 		RenderMesh(i);
-		*/
+		
 
 
 }
