@@ -247,9 +247,10 @@ void RenderArrows(int obj)
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, arrow[obj].vio);
 
-	glColor3ub(arrow[obj].rgb[0], arrow[obj].rgb[1], arrow[obj].rgb[2]);
+	glTranslated(3, 1, 1);
 	glRotatef(arrow[obj].rot[0], arrow[obj].rot[1], arrow[obj].rot[2], arrow[obj].rot[3]);
-	//glTranslatef(arrow[obj].pos[0], arrow[obj].pos[1], arrow[obj].pos[2]);
+
+	glColor3ub(arrow[obj].rgb[0], arrow[obj].rgb[1], arrow[obj].rgb[2]);
 	glDrawElements(GL_TRIANGLES , arrow[obj].faces.size(), GL_UNSIGNED_INT, 0);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
@@ -447,7 +448,7 @@ void EFRender::RenderMesh(int obj){
 
 		if(init_quad == true)
 			glColor3ub(mesh[obj].m_quad[i].rgba[0], mesh[obj].m_quad[i].rgba[1], mesh[obj].m_quad[i].rgba[2]);
-		if (v_solid == true || v_wireframe == true)
+		if (v_solid == true || v_wireframe == true && v_textured == false)
 			glColor3ub(mesh[obj].rgba[0], mesh[obj].rgba[1], mesh[obj].rgba[2]);
 		if (v_textured == true)
 			glColor3ub(255, 255, 255);
