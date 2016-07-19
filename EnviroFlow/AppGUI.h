@@ -10,3 +10,4 @@ public:
 	void CreateToolbars();
 };
 
+extern HWND Toolbar[2];

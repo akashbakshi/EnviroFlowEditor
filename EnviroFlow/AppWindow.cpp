@@ -35,6 +35,8 @@ int init_mouse_y = 0;
 
 int current_mouse_x = 0;
 int current_mouse_y = 0;
+
+bool sel_trans = true, sel_scale = false, sel_rot = false;
 AppWindow::AppWindow()
 {
 }
@@ -44,7 +46,7 @@ AppWindow::~AppWindow()
 {
 }
 
-void CalcArrowsMouse(bool x, bool y, bool z, int mouse_x, int mouse_y) {
+void CalcMouseTrans(bool x, bool y, bool z, int mouse_x, int mouse_y) {
 
 	if (xaxis == true) {
 		if (get_coord == true) {
@@ -60,17 +62,17 @@ void CalcArrowsMouse(bool x, bool y, bool z, int mouse_x, int mouse_y) {
 
 		if (tempx > 0) {
 
-			mesh[uni_sel].pos[0] += 0.06;
-			arrow[0].pos[0] += 0.06;
-			arrow[1].pos[0] += 0.06;
-			arrow[2].pos[0] += 0.06;
+			mesh[uni_sel].pos[0] += 0.06f;
+			arrow[0].pos[0] += 0.06f;
+			arrow[1].pos[0] += 0.06f;
+			arrow[2].pos[0] += 0.06f;
 
 		}
 		if (tempx < 0) {
-			mesh[uni_sel].pos[0] -= 0.06;
-			arrow[0].pos[0] -= 0.06;
-			arrow[1].pos[0] -= 0.06;
-			arrow[2].pos[0] -= 0.06;
+			mesh[uni_sel].pos[0] -= 0.06f;
+			arrow[0].pos[0] -= 0.06f;
+			arrow[1].pos[0] -= 0.06f;
+			arrow[2].pos[0] -= 0.06f;
 		}
 	}
 	if (yaxis == true) {
@@ -91,17 +93,17 @@ void CalcArrowsMouse(bool x, bool y, bool z, int mouse_x, int mouse_y) {
 
 		if (tempy < 0 ) {
 
-			mesh[uni_sel].pos[1] += 0.045;
-			arrow[0].pos[1] += 0.045;
-			arrow[1].pos[1] += 0.045;
-			arrow[2].pos[1] += 0.045;
+			mesh[uni_sel].pos[1] += 0.045f;
+			arrow[0].pos[1] += 0.045f;
+			arrow[1].pos[1] += 0.045f;
+			arrow[2].pos[1] += 0.045f;
 		}
 		if (tempy > 0 ) {
 
-			mesh[uni_sel].pos[1] -= 0.045;
-			arrow[0].pos[1] -= 0.045;
-			arrow[1].pos[1] -= 0.045;
-			arrow[2].pos[1] -= 0.045;
+			mesh[uni_sel].pos[1] -= 0.045f;
+			arrow[0].pos[1] -= 0.045f;
+			arrow[1].pos[1] -= 0.045f;
+			arrow[2].pos[1] -= 0.045f;
 		}
 	}
 
@@ -123,17 +125,94 @@ void CalcArrowsMouse(bool x, bool y, bool z, int mouse_x, int mouse_y) {
 
 		if (tempy > 0) {
 
-			mesh[uni_sel].pos[2] += 0.045;
-			arrow[0].pos[2] += 0.045;
-			arrow[1].pos[2] += 0.045;
-			arrow[2].pos[2] += 0.045;
+			mesh[uni_sel].pos[2] += 0.045f;
+			arrow[0].pos[2] += 0.045f;
+			arrow[1].pos[2] += 0.045f;
+			arrow[2].pos[2] += 0.045f;
 		}
 		if (tempy < 0) {
 
-			mesh[uni_sel].pos[2] -= 0.045;
-			arrow[0].pos[2] -= 0.045;
-			arrow[1].pos[2] -= 0.045;
-			arrow[2].pos[2] -= 0.045;
+			mesh[uni_sel].pos[2] -= 0.045f;
+			arrow[0].pos[2] -= 0.045f;
+			arrow[1].pos[2] -= 0.045f;
+			arrow[2].pos[2] -= 0.045f;
+		}
+	}
+}
+
+void CalcMouseScale(bool x, bool y, bool z, int mouse_x, int mouse_y) {
+
+	if (xaxis == true) {
+		if (get_coord == true) {
+			init_mouse_x = mouse_x;
+			get_coord = false;
+			cout << "init";
+		}
+		current_mouse_x = mouse_x;
+		int tempx = current_mouse_x - init_mouse_x;
+		cout << "initx:" << init_mouse_x << endl;
+		cout << "currentx" << current_mouse_x << endl;
+		cout << "x: " << tempx << endl;
+
+		if (tempx > 0) {
+
+			mesh[uni_sel].scale[0] += 0.06f;
+
+		}
+		if (tempx < 0) {
+			mesh[uni_sel].scale[0] -= 0.06f;
+		}
+	}
+	if (yaxis == true) {
+		if (get_coord == true) {
+			init_mouse_x = mouse_x;
+			init_mouse_y = mouse_y;
+			get_coord = false;
+			cout << "init";
+		}
+		current_mouse_x = mouse_x;
+		current_mouse_y = mouse_y;
+		int tempx = current_mouse_x - init_mouse_x;
+		int tempy = current_mouse_y - init_mouse_y;
+		cout << "initx:" << init_mouse_x << endl;
+		cout << "currentx" << current_mouse_x << endl;
+		cout << "x: " << tempx << endl;
+		cout << "y: " << tempy << endl;
+
+		if (tempy < 0) {
+
+			mesh[uni_sel].scale[1] += 0.045f;
+		}
+		if (tempy > 0) {
+
+			mesh[uni_sel].scale[1] -= 0.045f;
+		}
+	}
+
+	if (zaxis == true) {
+		if (get_coord == true) {
+			init_mouse_x = mouse_x;
+			init_mouse_y = mouse_y;
+			get_coord = false;
+			cout << "init";
+		}
+
+		current_mouse_x = mouse_x;
+		current_mouse_y = mouse_y;
+		int tempx = current_mouse_x - init_mouse_x;
+		int tempy = current_mouse_y - init_mouse_y;
+		cout << "initx:" << init_mouse_x << endl;
+		cout << "currentx" << current_mouse_x << endl;
+		cout << "x: " << tempx << endl;
+		cout << "y: " << tempy << endl;
+
+		if (tempy > 0) {
+
+			mesh[uni_sel].scale[2] += 0.045f;
+		}
+		if (tempy < 0) {
+
+			mesh[uni_sel].scale[2] -= 0.045f;
 		}
 	}
 }
@@ -245,7 +324,97 @@ void WMCommand(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		//put in Line mode since we're in wireframe mode.
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	}
-	
+
+
+	//Buttons
+	if (lParam == (LPARAM)Toolbar[0]) {
+
+		sel_scale = false;
+		sel_trans = true;
+			//Draw Green Y-axis Arrow
+
+			arrow[0].faces.clear();
+			arrow[0].vertices.clear();
+			TranslateArrowsXYZ(0);
+			arrow[0].rgb[0] = 0;
+			arrow[0].rgb[1] = 255;
+			arrow[0].rgb[2] = 0;
+
+			arrow[0].pos[1] = 1.1f;
+			//Draw Red X-axis Arrow
+			arrow[1].faces.clear();
+			arrow[1].vertices.clear();
+			TranslateArrowsXYZ(1);
+			arrow[1].rgb[0] = 255;
+			arrow[1].rgb[1] = 0;
+			arrow[1].rgb[2] = 0;
+			arrow[1].pos[1] = 1.1f;
+			//Rotating it so it faces the X-axis.
+			arrow[1].rot[0] = 90.0f;
+			arrow[1].rot[1] = 0.0f;
+			arrow[1].rot[2] = 0.0f;
+			arrow[1].rot[3] = -90.0f;
+
+			//Drawing Blue Z-Axis Arrow.
+			arrow[2].faces.clear();
+			arrow[2].vertices.clear();
+			TranslateArrowsXYZ(2);
+			arrow[2].rgb[0] = 0;
+			arrow[2].rgb[1] = 0;
+			arrow[2].rgb[2] = 255;
+			arrow[2].pos[1] = 1.1f;
+			//Rotating it so it faces the z-axis.
+			arrow[2].rot[0] = 90.0f;
+			arrow[2].rot[1] = 90.0f;
+			arrow[2].rot[2] = 0.0f;
+			arrow[2].rot[3] = 0.0f;
+
+			SetFocus(MainWindow);
+	}
+	if (lParam == (LPARAM)Toolbar[1]) {
+
+		sel_scale = true;
+		sel_trans = false;
+		
+		//Draw Green Y-axis Arrow
+		arrow[0].faces.clear();
+		arrow[0].vertices.clear();
+		ScaleArrowsXYZ(0);
+		arrow[0].rgb[0] = 0;
+		arrow[0].rgb[1] = 255;
+		arrow[0].rgb[2] = 0;
+
+		arrow[0].pos[1] = 1.1f;
+		//Draw Red X-axis Arrow
+		arrow[1].faces.clear();
+		arrow[1].vertices.clear();
+		ScaleArrowsXYZ(1);
+		arrow[1].rgb[0] = 255;
+		arrow[1].rgb[1] = 0;
+		arrow[1].rgb[2] = 0;
+		arrow[1].pos[1] = 1.1f;
+		//Rotating it so it faces the X-axis.
+		arrow[1].rot[0] = 90.0f;
+		arrow[1].rot[1] = 0.0f;
+		arrow[1].rot[2] = 0.0f;
+		arrow[1].rot[3] = -90.0f;
+
+		//Drawing Blue Z-Axis Arrow.
+		arrow[2].faces.clear();
+		arrow[2].vertices.clear();
+		ScaleArrowsXYZ(2);
+		arrow[2].rgb[0] = 0;
+		arrow[2].rgb[1] = 0;
+		arrow[2].rgb[2] = 255;
+		arrow[2].pos[1] = 1.1f;
+		//Rotating it so it faces the z-axis.
+		arrow[2].rot[0] = 90.0f;
+		arrow[2].rot[1] = 90.0f;
+		arrow[2].rot[2] = 0.0f;
+		arrow[2].rot[3] = 0.0f;
+
+		SetFocus(MainWindow);
+	}
 }
 int get_x = 0;
 int get_y = 0;
@@ -284,7 +453,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 
 				get_x = GET_X_LPARAM(lParam);
 				get_y = GET_Y_LPARAM(lParam);
-				CalcArrowsMouse(xaxis, yaxis, zaxis, get_x, get_y);
+				if(sel_trans == true)
+					CalcMouseTrans(xaxis, yaxis, zaxis, get_x, get_y);
+				if (sel_scale == true)
+					CalcMouseScale(xaxis, yaxis, zaxis, get_x, get_y);
 			}
 			break;
 	}

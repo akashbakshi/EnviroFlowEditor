@@ -51,11 +51,11 @@ void ScaleArrowsXYZ(int arr_obj)
 	//
 	arrow[arr_obj].vertices.push_back(0.095718f);
 	arrow[arr_obj].vertices.push_back(1.000003f);
-	arrow[arr_obj].vertices.push_back(0.095719);
+	arrow[arr_obj].vertices.push_back(0.095719f);
 
 	arrow[arr_obj].vertices.push_back(-0.095719f);
 	arrow[arr_obj].vertices.push_back(1.000003f);
-	arrow[arr_obj].vertices.push_back(0.095719);
+	arrow[arr_obj].vertices.push_back(0.095719f);
 
 	arrow[arr_obj].vertices.push_back(0.022402f);
 	arrow[arr_obj].vertices.push_back(0.999497f);
@@ -464,37 +464,37 @@ void EFRender::Init() {
 	Create->CreateCube(0);
 	//Create->CreateCube(1);
 
+		//Draw Green Y-axis Arrow
+		TranslateArrowsXYZ(0);
+		arrow[0].rgb[0] = 0;
+		arrow[0].rgb[1] = 255;
+		arrow[0].rgb[2] = 0;
 
-	//Draw Green Y-axis Arrow
-	TranslateArrowsXYZ(0);
-	arrow[0].rgb[0] = 0.0;
-	arrow[0].rgb[1] = 255.0;
-	arrow[0].rgb[2] = 0.0;
+		arrow[0].pos[1] = 1.1f;
+		//Draw Red X-axis Arrow
+		TranslateArrowsXYZ(1);
+		arrow[1].rgb[0] = 255;
+		arrow[1].rgb[1] = 0;
+		arrow[1].rgb[2] = 0;
+		arrow[1].pos[1] = 1.1f;
+		//Rotating it so it faces the X-axis.
+		arrow[1].rot[0] = 90.0f;
+		arrow[1].rot[1] = 0.0f;
+		arrow[1].rot[2] = 0.0f;
+		arrow[1].rot[3] = -90.0f;
 
-	arrow[0].pos[1] = 1.1;
-	//Draw Red X-axis Arrow
-	TranslateArrowsXYZ(1);
-	arrow[1].rgb[0] = 255.0;
-	arrow[1].rgb[1] = 0.0;
-	arrow[1].rgb[2] = 0.0;
-	arrow[1].pos[1] = 1.1;
-	//Rotating it so it faces the X-axis.
-	arrow[1].rot[0] = 90.0f;
-	arrow[1].rot[1] = 0.0f;
-	arrow[1].rot[2] = 0.0f;
-	arrow[1].rot[3] = -90.0f;
-
-	//Drawing Blue Z-Axis Arrow.
-	TranslateArrowsXYZ(2);
-	arrow[2].rgb[0] = 0.0;
-	arrow[2].rgb[1] = 0.0;
-	arrow[2].rgb[2] = 255.0;
-	arrow[2].pos[1] = 1.1;
-	//Rotating it so it faces the z-axis.
-	arrow[2].rot[0] = 90.0f;
-	arrow[2].rot[1] = 90.0f;
-	arrow[2].rot[2] = 0.0f;
-	arrow[2].rot[3] = 0.0f;
+		//Drawing Blue Z-Axis Arrow.
+		TranslateArrowsXYZ(2);
+		arrow[2].rgb[0] = 0;
+		arrow[2].rgb[1] = 0;
+		arrow[2].rgb[2] = 255;
+		arrow[2].pos[1] = 1.1f;
+		//Rotating it so it faces the z-axis.
+		arrow[2].rot[0] = 90.0f;
+		arrow[2].rot[1] = 90.0f;
+		arrow[2].rot[2] = 0.0f;
+		arrow[2].rot[3] = 0.0f;
+	
 }
 
 // Draw the XYZ lines in scene
@@ -652,6 +652,8 @@ void EFRender::RenderMesh(int obj){
 		if (v_textured == true)
 			glColor3ub(255, 255, 255);
 
+		//Scale mesh
+		glScalef(mesh[obj].scale[0], mesh[obj].scale[1], mesh[obj].scale[2]);
 		//Translate mesh
 		glTranslated(mesh[obj].pos[0], mesh[obj].pos[1], mesh[obj].pos[2]);
 		//Bind Texture object.
