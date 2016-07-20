@@ -625,9 +625,9 @@ void EFRender::RenderMesh(int obj){
 				glColor3ub(255, 255, 255);
 		}
 	
-
-		if(mesh[obj].selected == true)
-			glColor3ub(220, 20, 60);
+		if(selection == true)
+			if(i == uni_sel)
+				glColor3ub(220, 20, 60);
 		//Scale mesh
 		glScalef(mesh[obj].scale[0], mesh[obj].scale[1], mesh[obj].scale[2]);
 		//Translate mesh
