@@ -16,7 +16,7 @@ bool v_textured = false;
 // arrow index
 int arr = 0;
 
-
+bool selection = false;
 EFRender::EFRender()
 {
 }
@@ -462,38 +462,8 @@ void EFRender::Init() {
 	glEnable(GL_DEPTH_TEST);
 	//Create Cube
 	Create->CreateCube(0);
-	//Create->CreateCube(1);
+	Create->CreateCube(1);
 
-		//Draw Green Y-axis Arrow
-		TranslateArrowsXYZ(0);
-		arrow[0].rgb[0] = 0;
-		arrow[0].rgb[1] = 255;
-		arrow[0].rgb[2] = 0;
-
-		arrow[0].pos[1] = 1.1f;
-		//Draw Red X-axis Arrow
-		TranslateArrowsXYZ(1);
-		arrow[1].rgb[0] = 255;
-		arrow[1].rgb[1] = 0;
-		arrow[1].rgb[2] = 0;
-		arrow[1].pos[1] = 1.1f;
-		//Rotating it so it faces the X-axis.
-		arrow[1].rot[0] = 90.0f;
-		arrow[1].rot[1] = 0.0f;
-		arrow[1].rot[2] = 0.0f;
-		arrow[1].rot[3] = -90.0f;
-
-		//Drawing Blue Z-Axis Arrow.
-		TranslateArrowsXYZ(2);
-		arrow[2].rgb[0] = 0;
-		arrow[2].rgb[1] = 0;
-		arrow[2].rgb[2] = 255;
-		arrow[2].pos[1] = 1.1f;
-		//Rotating it so it faces the z-axis.
-		arrow[2].rot[0] = 90.0f;
-		arrow[2].rot[1] = 90.0f;
-		arrow[2].rot[2] = 0.0f;
-		arrow[2].rot[3] = 0.0f;
 	
 }
 
@@ -619,10 +589,11 @@ void EFRender::Render() {
 
 	DisplayGrid();
 	DrawXYZ();
-
-	//Render The XYZ Arrows 
-	for (int a=0;a<arr;a++)
-		RenderArrows(a);
+	if(selection == true){
+		//Render The XYZ Arrows 
+		for (int a=0;a<arr;a++)
+			RenderArrows(a);
+	}
 
 	//Render Every other mesh
 	for (int i = 0; i < objects; i++)
@@ -642,16 +613,21 @@ void EFRender::RenderMesh(int obj){
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh[obj].m_quad[i].vio);
 
 		//If statement for making face only color.
-		if(init_quad == true)
+		if(init_quad == true )
 			glColor3ub(mesh[obj].m_quad[i].rgba[0], mesh[obj].m_quad[i].rgba[1], mesh[obj].m_quad[i].rgba[2]);
 		//If statement for mesh only color.
-		if (v_solid == true || v_wireframe == true && v_textured == false && init_quad == false)
-			glColor3ub(mesh[obj].rgba[0], mesh[obj].rgba[1], mesh[obj].rgba[2]);
+		if (init_quad == false) {
+			if (v_solid == true || v_wireframe == true || v_textured == false)
+				glColor3ub(mesh[obj].rgba[0], mesh[obj].rgba[1], mesh[obj].rgba[2]);
 
-		//set color to white if textures enabled so they look right.
-		if (v_textured == true)
-			glColor3ub(255, 255, 255);
+			//set color to white if textures enabled so they look right.
+			if (v_textured == true)
+				glColor3ub(255, 255, 255);
+		}
+	
 
+		if(mesh[obj].selected == true)
+			glColor3ub(220, 20, 60);
 		//Scale mesh
 		glScalef(mesh[obj].scale[0], mesh[obj].scale[1], mesh[obj].scale[2]);
 		//Translate mesh

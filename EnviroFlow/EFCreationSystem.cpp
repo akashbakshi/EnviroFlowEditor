@@ -17,11 +17,11 @@ bool ColorCheck(int obj, GLubyte r, GLubyte g, GLubyte b)
 	{
 		for (int i = 0; i < objects; i++)
 		{
-			if (mesh[obj].rgba[0] == r && mesh[obj].rgba[1] == g && mesh[obj].rgba[2] == b)return (true);
+			if (mesh[i].rgba[0] == r && mesh[i].rgba[1] == g && mesh[i].rgba[2] == b)return (false);
 		}
 	}
 
-	return (false);
+	return (true);
 }
 
 void GenerateColors(int obj, GLubyte &r, GLubyte &g, GLubyte &b)
@@ -31,7 +31,7 @@ void GenerateColors(int obj, GLubyte &r, GLubyte &g, GLubyte &b)
 	r = rand() * 256 / RAND_MAX;
 	g = rand() * 256 / RAND_MAX;
 	b = rand() * 256 / RAND_MAX;
-	while (ColorCheck(obj,r, g, b))
+	while (!ColorCheck(obj,r, g, b))
 	{
 		r = rand() * 256 / RAND_MAX;
 		g = rand() * 256 / RAND_MAX;
@@ -50,34 +50,26 @@ bool QuadColorCheck(int obj,int n_quad,GLubyte r, GLubyte g, GLubyte b)
 {
 	if (objects > 0)
 	{
-		for (int i = 0; i < objects; i++)
+		for (int i = 0; i < mesh[obj].quad_count; i++)
 		{
-			if (mesh[obj].m_quad[n_quad].rgba[0] == r && mesh[obj].m_quad[n_quad].rgba[1] == g && mesh[obj].m_quad[n_quad].rgba[2] == b)return (true);
+			if (mesh[obj].m_quad[i].rgba[0] == r && mesh[obj].m_quad[i].rgba[1] == g && mesh[obj].m_quad[i].rgba[2] == b)return (false);
 		}
 	}
 
-	return (false);
+	return (true);
 }
 
 void GenerateQuadColors(int obj,int n_quad,GLubyte &r, GLubyte &g, GLubyte &b)
 {
-	unsigned int one, two, three;
-
 	r = rand() * 256 / RAND_MAX;
 	g = rand() * 256 / RAND_MAX;
 	b = rand() * 256 / RAND_MAX;
-	while (QuadColorCheck(obj,n_quad,r, g, b))
+	while (!QuadColorCheck(obj,n_quad,r, g, b))
 	{
 		r = rand() * 256 / RAND_MAX;
 		g = rand() * 256 / RAND_MAX;
 		b = rand() * 256 / RAND_MAX;
 	}
-	one = r;
-	two = g;
-	three = b;
-	cout << "R:" << one << endl;
-	cout << "G:" << two << endl;
-	cout << "B:" << three << endl;
 }
 
 EFCreationSystem::EFCreationSystem()
@@ -103,13 +95,25 @@ void EFCreationSystem::CreateBuffers(int obj, int tri)
 
 void EFCreationSystem::CreateVertex(int obj, GLfloat x, GLfloat y, GLfloat z)
 {
-	vertex = new EF_VERTEX[1]; 
-	
-	//set xyz of vertex based on x,y,z parameter
-	vertex[0].xyz[0] = x;
-	vertex[0].xyz[1] = y;
-	vertex[0].xyz[2] = z;
+	if(quad[0].vert_count == 0)
+		quad[0].vert = new EF_VERTEX[1]; 
 
+	if (quad[0].vert_count > 0) {
+		EF_VERTEX *temp = new EF_VERTEX[quad[0].vert_count];
+		for (int i = 0; i < quad[0].vert_count; i++)
+			temp[i] = quad[0].vert[i];
+
+		quad[0].vert = new EF_VERTEX[quad[0].vert_count + 1];
+
+		for (int i = 0; i < quad[0].vert_count; i++)
+			quad[0].vert[i] = temp[i];
+
+	}
+	//set xyz of vertex based on x,y,z parameter
+	quad[0].vert[quad[0].vert_count].xyz[0] = x;
+	quad[0].vert[quad[0].vert_count].xyz[1] = y;
+	quad[0].vert[quad[0].vert_count].xyz[2] = z;
+	quad[0].vert_count += 1;
 }
 
 void EFCreationSystem::CreateTri(int obj,int tri, GLfloat x, GLfloat y, GLfloat z)
@@ -126,13 +130,29 @@ void EFCreationSystem::CreateQuad(int obj, int quad_num, GLfloat x[4], GLfloat y
 {
 		// Initialize quad
 		quad = new EF_QUAD[1];
-
+		quad[0].vert_count = 0;
 		// Create 4 vertices for the plane
 		CreateVertex(obj, x[0], y[0], z[0]);
 		CreateVertex(obj, x[1], y[1], z[1]);
 		CreateVertex(obj, x[2], y[2], z[2]);
 		CreateVertex(obj, x[3], y[3], z[3]);
+		//PUSH BACK X,,Y,Z, VECTORS
 
+		quad[0].x.push_back(x[0]);
+		quad[0].x.push_back(x[1]);
+		quad[0].x.push_back(x[2]);
+		quad[0].x.push_back(x[3]);
+
+
+		quad[0].y.push_back(y[0]);
+		quad[0].y.push_back(y[1]);
+		quad[0].y.push_back(y[2]);
+		quad[0].y.push_back(y[3]);
+
+		quad[0].z.push_back(z[0]);
+		quad[0].z.push_back(z[1]);
+		quad[0].z.push_back(z[2]);
+		quad[0].z.push_back(z[3]);
 		// Take  coordinates for vertices and add it to the vertices list
 		quad[0].q_vertices.push_back(x[0]);
 		quad[0].q_vertices.push_back(y[0]);
@@ -206,7 +226,12 @@ void EFCreationSystem::CreateCube(int obj) {
 	// Take those coordinates and put them in the structure to be drawn
 	CreateQuad(obj, mesh[obj].quad_count, tempx, tempy, tempz);
 	mesh[obj].m_quad[mesh[obj].quad_count] = quad[0];
-	
+	for(int i = 0;i<quad[0].vert_count;i++)
+		mesh[obj].x.push_back(quad[0].x[i]);
+	for (int i = 0; i<quad[0].vert_count; i++)
+		mesh[obj].y.push_back(quad[0].y[i]);
+	for (int i = 0; i<quad[0].vert_count; i++)
+		mesh[obj].z.push_back(quad[0].z[i]);
 	CreateBuffers(obj, mesh[obj].quad_count);
 	mesh[obj].m_quad[mesh[obj].quad_count].tex[0].TexID = LoadTGATexture("front.tga");
 	SetTexCoord(obj, mesh[obj].quad_count, 0.0001f, 0.9999f);
@@ -215,9 +240,13 @@ void EFCreationSystem::CreateCube(int obj) {
 	SetQuadCoordinates(-1.0f, 1.0f, 0.0f, -1.0f, 1.0f, 2.0f, 1.0f, 1.0f, 2.0f, 1.0f, 1.0f, 0.0f);
 	CreateQuad(obj, mesh[obj].quad_count, tempx, tempy, tempz);
 	mesh[obj].m_quad[mesh[obj].quad_count] = quad[0];
-	delete[]quad;
+	for (int i = 0; i<quad[0].vert_count; i++)
+		mesh[obj].x.push_back(quad[0].x[i]);
+	for (int i = 0; i<quad[0].vert_count; i++)
+		mesh[obj].y.push_back(quad[0].y[i]);
+	for (int i = 0; i<quad[0].vert_count; i++)
+		mesh[obj].z.push_back(quad[0].z[i]);
 	CreateBuffers(obj, mesh[obj].quad_count);
-
 	mesh[obj].m_quad[mesh[obj].quad_count].tex[0].TexID = LoadTGATexture("top.tga");
 	SetTexCoord(obj, mesh[obj].quad_count, 0.0001f, 0.9999f);
 	mesh[obj].quad_count += 1;
@@ -225,9 +254,13 @@ void EFCreationSystem::CreateCube(int obj) {
 	SetQuadCoordinates(-1.0f, -1.0f, 2.0f, 1.0f, -1.0f, 2.0f, 1.0f, 1.0f, 2.0f, -1.0f, 1.0f, 2.0f);
 	CreateQuad(obj, mesh[obj].quad_count, tempx, tempy, tempz);
 	mesh[obj].m_quad[mesh[obj].quad_count] = quad[0];
-	delete[]quad;
+	for (int i = 0; i<quad[0].vert_count; i++)
+		mesh[obj].x.push_back(quad[0].x[i]);
+	for (int i = 0; i<quad[0].vert_count; i++)
+		mesh[obj].y.push_back(quad[0].y[i]);
+	for (int i = 0; i<quad[0].vert_count; i++)
+		mesh[obj].z.push_back(quad[0].z[i]);
 	CreateBuffers(obj, mesh[obj].quad_count);
-
 	mesh[obj].m_quad[mesh[obj].quad_count].tex[0].TexID = LoadTGATexture("back.tga");
 	SetTexCoord(obj, mesh[obj].quad_count, 0.0001f, 0.9999f);
 	mesh[obj].quad_count += 1;
@@ -235,7 +268,12 @@ void EFCreationSystem::CreateCube(int obj) {
 	SetQuadCoordinates(-1.0f, -1.0f, 0.0f, -1.0f, -1.0f, 2.0f, 1.0f, -1.0f, 2.0f, 1.0f, -1.0f, 0.0f);
 	CreateQuad(obj, mesh[obj].quad_count, tempx, tempy, tempz);
 	mesh[obj].m_quad[mesh[obj].quad_count] = quad[0];
-	delete[]quad;
+	for (int i = 0; i<quad[0].vert_count; i++)
+		mesh[obj].x.push_back(quad[0].x[i]);
+	for (int i = 0; i<quad[0].vert_count; i++)
+		mesh[obj].y.push_back(quad[0].y[i]);
+	for (int i = 0; i<quad[0].vert_count; i++)
+		mesh[obj].z.push_back(quad[0].z[i]);
 	CreateBuffers(obj, mesh[obj].quad_count);
 	mesh[obj].m_quad[mesh[obj].quad_count].tex[0].TexID = LoadTGATexture("bottom.tga");
 	SetTexCoord(obj, mesh[obj].quad_count, 0.0001f, 0.9999f);
@@ -244,16 +282,26 @@ void EFCreationSystem::CreateCube(int obj) {
 	SetQuadCoordinates(-1.0f, -1.0f, 0.0f, -1.0f, -1.0f, 2.0f, -1.0f, 1.0f, 2.0f, -1.0f, 1.0f, 0.0f);
 	CreateQuad(obj, mesh[obj].quad_count, tempx, tempy, tempz);
 	mesh[obj].m_quad[mesh[obj].quad_count] = quad[0];
-	delete[]quad;
+	for (int i = 0; i<quad[0].vert_count; i++)
+		mesh[obj].x.push_back(quad[0].x[i]);
+	for (int i = 0; i<quad[0].vert_count; i++)
+		mesh[obj].y.push_back(quad[0].y[i]);
+	for (int i = 0; i<quad[0].vert_count; i++)
+		mesh[obj].z.push_back(quad[0].z[i]);
 	CreateBuffers(obj, mesh[obj].quad_count);
 	mesh[obj].m_quad[mesh[obj].quad_count].tex[0].TexID = LoadTGATexture("left.tga");
 	SetTexCoord(obj, mesh[obj].quad_count, 0.0001f, 0.9999f);
 	mesh[obj].quad_count += 1;
 
 	SetQuadCoordinates(1.0f, -1.0f, 0.0f, 1.0f, -1.0f, 2.0f, 1.0f, 1.0f, 2.0f, 1.0f, 1.0f, 0.0f);
-	CreateQuad(obj, mesh[obj].quad_count, tempx, tempy, tempz);
+	CreateQuad(obj, mesh[obj].quad_count, tempx, tempy, tempz); 
 	mesh[obj].m_quad[mesh[obj].quad_count] = quad[0];
-	delete[]quad;
+	for (int i = 0; i<quad[0].vert_count; i++)
+		mesh[obj].x.push_back(quad[0].x[i]);
+	for (int i = 0; i<quad[0].vert_count; i++)
+		mesh[obj].y.push_back(quad[0].y[i]);
+	for (int i = 0; i<quad[0].vert_count; i++)
+		mesh[obj].z.push_back(quad[0].z[i]);
 	CreateBuffers(obj, mesh[obj].quad_count);
 	mesh[obj].m_quad[mesh[obj].quad_count].tex[0].TexID = LoadTGATexture("Right.tga");
 	SetTexCoord(obj, mesh[obj].quad_count, 0.0001f, 0.9999f);

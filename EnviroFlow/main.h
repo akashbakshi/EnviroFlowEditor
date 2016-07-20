@@ -33,3 +33,4 @@ extern bool v_wireframe;
 
 //Universal selection variable to keep track of selected meshes index.
 extern int uni_sel;
+extern bool selection;

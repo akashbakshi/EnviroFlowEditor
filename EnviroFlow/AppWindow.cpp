@@ -6,7 +6,7 @@
 #include <CommCtrl.h>
 #include <shlobj.h>   
 #include <windowsx.h>
-
+#include <algorithm>
 using namespace std;
 
 PFNWGLCREATECONTEXTATTRIBSARBPROC wglCreateContextAttribsARB = NULL;
@@ -46,19 +46,31 @@ AppWindow::~AppWindow()
 {
 }
 
+void CalcXYZPos() {
+	double max_x = *max_element(mesh[uni_sel].x.begin(), mesh[uni_sel].x.end());
+	double max_y = *max_element(mesh[uni_sel].y.begin(), mesh[uni_sel].y.end());
+	double max_z = *max_element(mesh[uni_sel].z.begin(), mesh[uni_sel].z.end());
+	arrow[0].pos[0] = max_x/2 ;
+	arrow[0].pos[1] = max_y;
+	arrow[0].pos[2] = max_z /2;
+
+	arrow[1].pos[0] = max_x /2;
+	arrow[1].pos[1] = max_y;
+	arrow[1].pos[2] = max_z / 2;
+
+	arrow[2].pos[0] = max_x /2;
+	arrow[2].pos[1] = max_y;
+	arrow[2].pos[2] = max_z / 2;
+}
 void CalcMouseTrans(bool x, bool y, bool z, int mouse_x, int mouse_y) {
 
 	if (xaxis == true) {
 		if (get_coord == true) {
 			init_mouse_x = mouse_x;
 			get_coord = false;
-			cout << "init";
 		}
 		current_mouse_x = mouse_x;
 		int tempx = current_mouse_x - init_mouse_x;
-		cout << "initx:" << init_mouse_x << endl;
-		cout << "currentx" << current_mouse_x << endl;
-		cout << "x: " << tempx << endl;
 
 		if (tempx > 0) {
 
@@ -80,16 +92,11 @@ void CalcMouseTrans(bool x, bool y, bool z, int mouse_x, int mouse_y) {
 			init_mouse_x = mouse_x;
 			init_mouse_y = mouse_y;
 			get_coord = false;
-			cout << "init";
 		}
 		current_mouse_x = mouse_x;
 		current_mouse_y = mouse_y;
 		int tempx = current_mouse_x - init_mouse_x;
 		int tempy = current_mouse_y - init_mouse_y;
-		cout << "initx:" << init_mouse_x << endl;
-		cout << "currentx" << current_mouse_x << endl;
-		cout << "x: " << tempx << endl;
-		cout << "y: " << tempy << endl;
 
 		if (tempy < 0 ) {
 
@@ -112,16 +119,11 @@ void CalcMouseTrans(bool x, bool y, bool z, int mouse_x, int mouse_y) {
 			init_mouse_x = mouse_x;
 			init_mouse_y = mouse_y;
 			get_coord = false;
-			cout << "init";
 		}
 		current_mouse_x = mouse_x;
 		current_mouse_y = mouse_y;
 		int tempx = current_mouse_x - init_mouse_x;
 		int tempy = current_mouse_y - init_mouse_y;
-		cout << "initx:" << init_mouse_x << endl;
-		cout << "currentx" << current_mouse_x << endl;
-		cout << "x: " << tempx << endl;
-		cout << "y: " << tempy << endl;
 
 		if (tempy > 0) {
 
@@ -247,10 +249,30 @@ void Selection(HWND hWnd)
 	for (int i = 0; i < objects; i++)
 	{
 		//ResetInfo();
-		if (mesh[i].rgba[0] == pixel[0] && mesh[i].rgba[1] == pixel[1] && mesh[i].rgba[2] == pixel[2])
-		{
+		if (mesh[i].rgba[0] == pixel[0] && mesh[i].rgba[1] == pixel[1] && mesh[i].rgba[2] == pixel[2]){
 			uni_sel = i;
 			cout << "sel "<<uni_sel;
+			for (int c = 0; c < objects; c++)
+				mesh[c].selected = false;
+			selection = true;
+			mesh[i].selected = true;
+
+			CalcXYZPos();
+		}
+		
+		if (init_quad == true) {
+			for (int c = 0; c < mesh[i].quad_count; c++) {
+				if (mesh[i].m_quad[c].rgba[0] == pixel[0] && mesh[i].m_quad[c].rgba[1] == pixel[1] && mesh[i].m_quad[c].rgba[2] == pixel[2]) {
+					uni_sel = c;
+					selection = true;
+				}
+			}
+			
+		}
+		if (pixel[0] == bg[0] && pixel[1] == bg[1] && pixel[2] == bg[2]) {
+			for (int c = 0; c < objects; c++)
+				mesh[c].selected = false;
+			selection = false;
 		}
 		if (pixel[0] == 255 && pixel[1] == 0 && pixel[2] == 0) {
 			xaxis = true;
@@ -258,7 +280,6 @@ void Selection(HWND hWnd)
 			zaxis = false;
 			init_click = true;
 			get_coord = true;
-			uni_sel = 0;
 		}
 		if (pixel[0] == 0 && pixel[1] == 255 && pixel[2] == 0) {
 			xaxis = false;
@@ -266,7 +287,6 @@ void Selection(HWND hWnd)
 			zaxis = false;
 			init_click = true;
 			get_coord = true;
-			uni_sel = 0;
 		}
 		if (pixel[0] == 0 && pixel[1] == 0 && pixel[2] == 255) {
 			xaxis = false;
@@ -274,7 +294,6 @@ void Selection(HWND hWnd)
 			zaxis = true;
 			init_click = true;
 			get_coord = true;
-			uni_sel = 0;
 		}
 	}
 }
@@ -285,9 +304,16 @@ void WMCommand(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	}
 	else if (wParam == (WPARAM)ID_TWEAKMODE_FACETWEAK) {
 		init_quad = true;
+		v_solid = false;
+		v_wireframe = false;
+		v_textured = false;
 	}
 	else if (wParam == (WPARAM)ID_TWEAKMODE_MESHTWEAK) {
 		init_quad = false;
+
+		v_solid = true;
+		v_wireframe = false;
+		v_textured = false;
 	}
 	else if (wParam == (WPARAM)ID_VIEW_TEXTURED) {
 		// Enable Texture if selected.
@@ -369,6 +395,7 @@ void WMCommand(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 			arrow[2].rot[2] = 0.0f;
 			arrow[2].rot[3] = 0.0f;
 
+			CalcXYZPos();
 			SetFocus(MainWindow);
 	}
 	if (lParam == (LPARAM)Toolbar[1]) {
@@ -413,6 +440,7 @@ void WMCommand(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		arrow[2].rot[2] = 0.0f;
 		arrow[2].rot[3] = 0.0f;
 
+		CalcXYZPos();
 		SetFocus(MainWindow);
 	}
 }
@@ -449,14 +477,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 			current_mouse_x = 0;
 			break;
 		case WM_MOUSEMOVE:
-			if(init_click == true){
+			if(mesh[uni_sel].selected == true){
+				if(init_click == true){
 
-				get_x = GET_X_LPARAM(lParam);
-				get_y = GET_Y_LPARAM(lParam);
-				if(sel_trans == true)
-					CalcMouseTrans(xaxis, yaxis, zaxis, get_x, get_y);
-				if (sel_scale == true)
-					CalcMouseScale(xaxis, yaxis, zaxis, get_x, get_y);
+					get_x = GET_X_LPARAM(lParam);
+					get_y = GET_Y_LPARAM(lParam);
+					if(sel_trans == true){
+						CalcMouseTrans(xaxis, yaxis, zaxis, get_x, get_y);
+					}
+					if (sel_scale == true) {
+						CalcMouseScale(xaxis, yaxis, zaxis, get_x, get_y);
+					}
+				}
 			}
 			break;
 	}

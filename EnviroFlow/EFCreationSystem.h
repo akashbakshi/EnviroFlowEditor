@@ -18,6 +18,7 @@ struct EF_TEXTURE {
 struct EF_VERTEX {
 	GLfloat xyz[3];
 	GLfloat rgba[4];
+
 };
 
 struct EF_TRIANGLE {
@@ -38,12 +39,13 @@ struct EF_QUAD {
 	GLfloat scale[3];
 
 	int tri_count;
-
-	EF_TRIANGLE tri[2];
+	int vert_count;
+	EF_VERTEX *vert;
 	EF_TEXTURE tex[1];
 
 	vector<GLfloat> q_vertices;
 	vector<GLuint> q_indices;
+	vector<GLfloat>x, y, z;
 
 	GLuint vbo, vio;
 };
@@ -57,8 +59,10 @@ struct EF_MESH {
 
 	EF_QUAD *m_quad;
 	int quad_count;
+	bool selected;
 	vector<GLfloat>m_vert;
 	vector<GLfloat>m_ind;
+	vector<GLfloat>x, y, z;
 };
 
 extern EF_TRIANGLE *triangle;
