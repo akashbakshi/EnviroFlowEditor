@@ -491,6 +491,40 @@ void DrawXYZ()
 	glEnd();
 }
 
+void viewportDirChange() {
+	if (GetKey[T]) {
+		Camera.RotatedX = -90.0f;
+		Camera.RotatedY = 0.0f;
+		Camera.RotatedZ = 0.0f;
+		Camera.SetPos(0.0f, 5.0f, 0.0f);
+	}
+	if (GetKey[L]) {
+
+		Camera.RotatedX = 0.0f;
+		Camera.RotatedY = -90.0f;
+		Camera.RotatedZ = 0.0f;
+		Camera.SetPos(-5.0f, 0.0f, 0.0f);
+	}
+	if (GetKey[R]) {
+		Camera.RotatedX = 0.0f;
+		Camera.RotatedY = 90.0f;
+		Camera.RotatedZ = 0.0f;
+		Camera.SetPos(5.0f, 0.0f, 0.0f);
+	}
+	if (GetKey[B]) {
+		Camera.RotatedX = 90.0f;
+		Camera.RotatedY = 0.0f;
+		Camera.RotatedZ = 0.0f;
+		Camera.SetPos(0.0f, -5.0f, 0.0f);
+	}
+	if (GetKey[F]) {
+		Camera.RotatedX = 0.0f;
+		Camera.RotatedY = 0.0f;
+		Camera.RotatedZ = 0.0f;
+		Camera.SetPos(0.0f, 0.0f, 5.0f);
+	}
+}
+
 // Draw the grid
 void DisplayGrid()
 {
@@ -559,7 +593,7 @@ void EFRender::Render() {
 		Camera.StrafeRight(0.2f);
 		//Display();
 	}
-	
+	viewportDirChange();
 	if (GetKey[P]) {
 		init_quad = true;
 	}

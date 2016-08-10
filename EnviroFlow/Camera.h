@@ -39,7 +39,7 @@ public:
 	void RAngleXYZ ( SF3dVector Angles );
 	void MoveForwards ( GLfloat Distance );
 	void StrafeRight ( GLfloat Distance );
-	GLfloat getCamValue();
+	void SetPos(GLfloat x, GLfloat y, GLfloat z);
 
 	GLfloat RotatedX, RotatedY, RotatedZ;
 };
