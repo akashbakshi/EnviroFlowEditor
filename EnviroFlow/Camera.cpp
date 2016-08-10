@@ -81,7 +81,7 @@ void Cam::Render( void )
 	glRotatef(-RotatedY, 0.0, 1.0, 0.0);
 	glRotatef(-RotatedZ, 0.0, 0.0, 1.0);
 
-	//cout << -RotatedX << " " << -RotatedY << " " << -RotatedZ << endl;
+	//cout << -RotatedY  << endl;
 	glTranslated(-Position.x, -Position.y, -Position.z);
 
 
@@ -108,4 +108,9 @@ void Cam::StrafeRight ( GLfloat Distance )
 	MoveVector.y = 0.0;
 	MoveVector.x = ViewDir.z * -Distance;
 	AddF3dVectorToVector(&Position, &MoveVector );
+}
+
+GLfloat Cam::getCamValue()
+{
+	return RotatedY;
 }

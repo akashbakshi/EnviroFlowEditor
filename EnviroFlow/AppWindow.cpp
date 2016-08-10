@@ -2,6 +2,7 @@
 #include "EFRender.h"
 #include "AppGUI.h"
 #include "EFCreationSystem.h"
+#include "Camera.h"
 
 #include <CommCtrl.h>
 #include <shlobj.h>   
@@ -26,6 +27,7 @@ AppGUI *GUI = NULL;
 HMENU Menu;
 
 int uni_sel = 0;
+bool quad_uni_sel = false;
 unsigned char pixel[4];
 bool xaxis = false, yaxis = false, zaxis = false;
 bool init_click = false;
@@ -64,6 +66,7 @@ void CalcXYZPos() {
 }
 void CalcMouseTrans(bool x, bool y, bool z, int mouse_x, int mouse_y) {
 
+	// X Axis Calculations
 	if (xaxis == true) {
 		if (get_coord == true) {
 			init_mouse_x = mouse_x;
@@ -71,22 +74,40 @@ void CalcMouseTrans(bool x, bool y, bool z, int mouse_x, int mouse_y) {
 		}
 		current_mouse_x = mouse_x;
 		int tempx = current_mouse_x - init_mouse_x;
-
+		
 		if (tempx > 0) {
+			if (camY < 90.0f && camY > -90.0f) {
 
-			mesh[uni_sel].pos[0] += 0.06f;
-			arrow[0].pos[0] += 0.06f;
-			arrow[1].pos[0] += 0.06f;
-			arrow[2].pos[0] += 0.06f;
+				cout << "reg" << endl;
+				cout << camY << endl;
+				mesh[uni_sel].pos[0] += 0.06f;
+				arrow[0].pos[0] += 0.06f;
+				arrow[1].pos[0] += 0.06f;
+				arrow[2].pos[0] += 0.06f;
+			}else{
+				cout << "init";
+				mesh[uni_sel].pos[0] -= 0.06f;
+				arrow[0].pos[0] -= 0.06f;
+				arrow[1].pos[0] -= 0.06f;
+				arrow[2].pos[0] -= 0.06f;
+			}
 
 		}
 		if (tempx < 0) {
-			mesh[uni_sel].pos[0] -= 0.06f;
-			arrow[0].pos[0] -= 0.06f;
-			arrow[1].pos[0] -= 0.06f;
-			arrow[2].pos[0] -= 0.06f;
+			if (camY < 90.0f && camY > -90.0f) {
+				mesh[uni_sel].pos[0] -= 0.06f;
+				arrow[0].pos[0] -= 0.06f;
+				arrow[1].pos[0] -= 0.06f;
+				arrow[2].pos[0] -= 0.06f;
+			}else{
+				mesh[uni_sel].pos[0] += 0.06f;
+				arrow[0].pos[0] += 0.06f;
+				arrow[1].pos[0] += 0.06f;
+				arrow[2].pos[0] += 0.06f;
+			}
 		}
 	}
+
 	if (yaxis == true) {
 		if (get_coord == true) {
 			init_mouse_x = mouse_x;
@@ -98,21 +119,21 @@ void CalcMouseTrans(bool x, bool y, bool z, int mouse_x, int mouse_y) {
 		int tempx = current_mouse_x - init_mouse_x;
 		int tempy = current_mouse_y - init_mouse_y;
 
-		if (tempy < 0 ) {
-
+		if (tempy < 0) {
 			mesh[uni_sel].pos[1] += 0.045f;
 			arrow[0].pos[1] += 0.045f;
 			arrow[1].pos[1] += 0.045f;
 			arrow[2].pos[1] += 0.045f;
 		}
-		if (tempy > 0 ) {
+
+		if (tempy > 0) {
 
 			mesh[uni_sel].pos[1] -= 0.045f;
 			arrow[0].pos[1] -= 0.045f;
 			arrow[1].pos[1] -= 0.045f;
 			arrow[2].pos[1] -= 0.045f;
+			}
 		}
-	}
 
 	if (zaxis == true) {
 		if (get_coord == true) {
@@ -127,17 +148,35 @@ void CalcMouseTrans(bool x, bool y, bool z, int mouse_x, int mouse_y) {
 
 		if (tempy > 0) {
 
-			mesh[uni_sel].pos[2] += 0.045f;
-			arrow[0].pos[2] += 0.045f;
-			arrow[1].pos[2] += 0.045f;
-			arrow[2].pos[2] += 0.045f;
+			if (camY < 90.0f && camY > -90.0f) {
+				mesh[uni_sel].pos[2] += 0.045f;
+				arrow[0].pos[2] += 0.045f;
+				arrow[1].pos[2] += 0.045f;
+				arrow[2].pos[2] += 0.045f;
+			}
+			else {
+
+				mesh[uni_sel].pos[2] -= 0.045f;
+				arrow[0].pos[2] -= 0.045f;
+				arrow[1].pos[2] -= 0.045f;
+				arrow[2].pos[2] -= 0.045f;
+			}
 		}
 		if (tempy < 0) {
 
-			mesh[uni_sel].pos[2] -= 0.045f;
-			arrow[0].pos[2] -= 0.045f;
-			arrow[1].pos[2] -= 0.045f;
-			arrow[2].pos[2] -= 0.045f;
+			if (camY < 90.0f && camY > -90.0f) {
+				mesh[uni_sel].pos[2] -= 0.045f;
+				arrow[0].pos[2] -= 0.045f;
+				arrow[1].pos[2] -= 0.045f;
+				arrow[2].pos[2] -= 0.045f;
+			}
+			else {
+
+				mesh[uni_sel].pos[2] += 0.045f;
+				arrow[0].pos[2] += 0.045f;
+				arrow[1].pos[2] += 0.045f;
+				arrow[2].pos[2] += 0.045f;
+			}
 		}
 	}
 }
@@ -255,7 +294,7 @@ void Selection(HWND hWnd)
 			for (int c = 0; c < objects; c++)
 				mesh[c].selected = false;
 			selection = true;
-			mesh[i].selected = true;
+			mesh[uni_sel].selected = true;
 
 			CalcXYZPos();
 		}
@@ -263,8 +302,7 @@ void Selection(HWND hWnd)
 		if (init_quad == true) {
 			for (int c = 0; c < mesh[i].quad_count; c++) {
 				if (mesh[i].m_quad[c].rgba[0] == pixel[0] && mesh[i].m_quad[c].rgba[1] == pixel[1] && mesh[i].m_quad[c].rgba[2] == pixel[2]) {
-					uni_sel = c;
-					selection = true;
+					quad_uni_sel = true;
 				}
 			}
 			
@@ -273,6 +311,7 @@ void Selection(HWND hWnd)
 			for (int c = 0; c < objects; c++)
 				mesh[c].selected = false;
 			selection = false;
+			quad_uni_sel = false;
 		}
 		if (pixel[0] == 255 && pixel[1] == 0 && pixel[2] == 0) {
 			xaxis = true;

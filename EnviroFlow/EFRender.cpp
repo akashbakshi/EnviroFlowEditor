@@ -13,6 +13,7 @@ bool v_wireframe = false;
 bool v_solid = true;
 bool v_textured = false;
 
+GLfloat camY = 0.0f;
 // arrow index
 int arr = 0;
 
@@ -585,6 +586,8 @@ void EFRender::Render() {
 	gluLookAt(-0.5, 1.0, 7.0, 0.0, 0.0, -10.0, 0.0, 1.0, 0.0);
 	//Initialize Camera Render
 	Camera.Render();
+	camY = Camera.RotatedY;
+
 	//Draw XYZ and Grid to the scene
 
 	DisplayGrid();
@@ -598,6 +601,7 @@ void EFRender::Render() {
 	//Render Every other mesh
 	for (int i = 0; i < objects; i++)
 		RenderMesh(i);
+
 }
 
 void EFRender::RenderMesh(int obj){
@@ -625,9 +629,13 @@ void EFRender::RenderMesh(int obj){
 				glColor3ub(255, 255, 255);
 		}
 	
-		if(selection == true)
-			if(i == uni_sel)
+		if(mesh[uni_sel].selected == true)
 				glColor3ub(220, 20, 60);
+		if (quad_uni_sel == true)
+		{
+			if (uni_sel == i)					
+				glColor3ub(220, 20, 60);
+		}
 		//Scale mesh
 		glScalef(mesh[obj].scale[0], mesh[obj].scale[1], mesh[obj].scale[2]);
 		//Translate mesh

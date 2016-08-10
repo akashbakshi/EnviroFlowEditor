@@ -27,7 +27,6 @@ private:
 							So it is not necessary to "actualize" it always. It is only
 							actualized when ViewDirChanged is true and moveforwards is called*/
 	bool ViewDirChanged;
-	GLfloat RotatedX, RotatedY, RotatedZ;	
 	void GetViewDir ( void );
 public:
 	Cam();				//inits the values (Position: (0|0|0) Target: (0|0|-1) )
@@ -40,6 +39,9 @@ public:
 	void RAngleXYZ ( SF3dVector Angles );
 	void MoveForwards ( GLfloat Distance );
 	void StrafeRight ( GLfloat Distance );
+	GLfloat getCamValue();
+
+	GLfloat RotatedX, RotatedY, RotatedZ;
 };
 
 
