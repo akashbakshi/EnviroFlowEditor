@@ -541,6 +541,12 @@ void DisplayGrid()
 	glEnd();
 
 }
+bool keydown(int key)
+{
+	return (GetAsyncKeyState(key) & 0x8000) != 0;
+}
+
+
 
 void EFRender::Render() {
 	//Camera Key Binding
@@ -600,6 +606,11 @@ void EFRender::Render() {
 	if (GetKey[L]) {
 		init_quad = false;
 	}
+
+	if (keydown(VK_SPACE) && keydown(VK_LEFT) && keydown(VK_UP))
+	{
+		cout << "combo pressed!" << endl;
+	}
 	//Basic OpenGL Viewport stuff
 
 	glViewport(0, 0, (GLsizei)1440, (GLsizei)900);
@@ -655,16 +666,18 @@ void EFRender::RenderMesh(int obj){
 			glColor3ub(mesh[obj].m_quad[i].rgba[0], mesh[obj].m_quad[i].rgba[1], mesh[obj].m_quad[i].rgba[2]);
 		//If statement for mesh only color.
 		if (init_quad == false) {
-			if (v_solid == true || v_wireframe == true || v_textured == false)
-				glColor3ub(mesh[obj].rgba[0], mesh[obj].rgba[1], mesh[obj].rgba[2]);
-
+			if (v_solid == true || v_wireframe == true || v_textured == false) {
+					glColor3ub(mesh[obj].rgba[0], mesh[obj].rgba[1], mesh[obj].rgba[2]);
+			
+			}
 			//set color to white if textures enabled so they look right.
 			if (v_textured == true)
 				glColor3ub(255, 255, 255);
 		}
 	
-		if(mesh[uni_sel].selected == true)
+		if(mesh[obj].selected == true)
 				glColor3ub(220, 20, 60);
+
 		if (quad_uni_sel == true)
 		{
 			if (uni_sel == i)					
