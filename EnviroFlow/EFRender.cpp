@@ -461,10 +461,6 @@ void RenderArrows(int obj)
 void EFRender::Init() {
 
 	glEnable(GL_DEPTH_TEST);
-	//Create Cube
-	Create->CreateCube(0);
-	Create->CreateCube(1);
-
 	
 }
 

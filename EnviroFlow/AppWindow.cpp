@@ -24,7 +24,9 @@ HGLRC hRC;
 // pointers for classes
 EFRender *Draw = NULL;
 AppGUI *GUI = NULL;
+EFCreationSystem *Gen = NULL;
 HMENU Menu;
+HMENU Popup;
 
 int uni_sel = 0;
 bool quad_uni_sel = false;
@@ -49,23 +51,23 @@ AppWindow::~AppWindow()
 }
 
 void CalcXYZPos() {
-	double max_x = *max_element(mesh[uni_sel].x.begin(), mesh[uni_sel].x.end());
-	double max_y = *max_element(mesh[uni_sel].y.begin(), mesh[uni_sel].y.end());
-	double max_z = *max_element(mesh[uni_sel].z.begin(), mesh[uni_sel].z.end());
-	arrow[0].pos[0] = max_x/2 ;
-	arrow[0].pos[1] = max_y;
-	arrow[0].pos[2] = max_z /2;
+	GLfloat max_x = *max_element(mesh[uni_sel].x.begin(), mesh[uni_sel].x.end());
+	GLfloat max_y = *max_element(mesh[uni_sel].y.begin(), mesh[uni_sel].y.end());
+	GLfloat max_z = *max_element(mesh[uni_sel].z.begin(), mesh[uni_sel].z.end());
+	arrow[0].pos[0] = (max_x + mesh[uni_sel].pos[0])/2;
+	arrow[0].pos[1] = max_y + mesh[uni_sel].pos[1];
+	arrow[0].pos[2] = (max_z + mesh[uni_sel].pos[2])/2;
 
-	arrow[1].pos[0] = max_x /2;
-	arrow[1].pos[1] = max_y;
-	arrow[1].pos[2] = max_z / 2;
+	arrow[1].pos[0] = (max_x + mesh[uni_sel].pos[0]) / 2;
+	arrow[1].pos[1] = max_y + mesh[uni_sel].pos[1];
+	arrow[1].pos[2] = (max_z + mesh[uni_sel].pos[2]) / 2;
 
-	arrow[2].pos[0] = max_x /2;
-	arrow[2].pos[1] = max_y;
-	arrow[2].pos[2] = max_z / 2;
+	arrow[2].pos[0] = (max_x + mesh[uni_sel].pos[0]) / 2;
+	arrow[2].pos[1] = max_y + mesh[uni_sel].pos[1];
+	arrow[2].pos[2] = (max_z + mesh[uni_sel].pos[2]) / 2;
 }
 void CalcMouseTrans(bool x, bool y, bool z, int mouse_x, int mouse_y) {
-
+	// huh??
 	// X Axis Calculations
 	if (xaxis == true) {
 		if (get_coord == true) {
@@ -77,15 +79,11 @@ void CalcMouseTrans(bool x, bool y, bool z, int mouse_x, int mouse_y) {
 		
 		if (tempx > 0) {
 			if (camY < 90.0f && camY > -90.0f) {
-
-				cout << "reg" << endl;
-				cout << camY << endl;
 				mesh[uni_sel].pos[0] += 0.06f;
 				arrow[0].pos[0] += 0.06f;
 				arrow[1].pos[0] += 0.06f;
 				arrow[2].pos[0] += 0.06f;
 			}else{
-				cout << "init";
 				mesh[uni_sel].pos[0] -= 0.06f;
 				arrow[0].pos[0] -= 0.06f;
 				arrow[1].pos[0] -= 0.06f;
@@ -187,18 +185,11 @@ void CalcMouseScale(bool x, bool y, bool z, int mouse_x, int mouse_y) {
 		if (get_coord == true) {
 			init_mouse_x = mouse_x;
 			get_coord = false;
-			cout << "init";
 		}
 		current_mouse_x = mouse_x;
 		int tempx = current_mouse_x - init_mouse_x;
-		cout << "initx:" << init_mouse_x << endl;
-		cout << "currentx" << current_mouse_x << endl;
-		cout << "x: " << tempx << endl;
-
 		if (tempx > 0) {
-
 			mesh[uni_sel].scale[0] += 0.06f;
-
 		}
 		if (tempx < 0) {
 			mesh[uni_sel].scale[0] -= 0.06f;
@@ -209,16 +200,11 @@ void CalcMouseScale(bool x, bool y, bool z, int mouse_x, int mouse_y) {
 			init_mouse_x = mouse_x;
 			init_mouse_y = mouse_y;
 			get_coord = false;
-			cout << "init";
 		}
 		current_mouse_x = mouse_x;
 		current_mouse_y = mouse_y;
 		int tempx = current_mouse_x - init_mouse_x;
 		int tempy = current_mouse_y - init_mouse_y;
-		cout << "initx:" << init_mouse_x << endl;
-		cout << "currentx" << current_mouse_x << endl;
-		cout << "x: " << tempx << endl;
-		cout << "y: " << tempy << endl;
 
 		if (tempy < 0) {
 
@@ -235,17 +221,12 @@ void CalcMouseScale(bool x, bool y, bool z, int mouse_x, int mouse_y) {
 			init_mouse_x = mouse_x;
 			init_mouse_y = mouse_y;
 			get_coord = false;
-			cout << "init";
 		}
 
 		current_mouse_x = mouse_x;
 		current_mouse_y = mouse_y;
 		int tempx = current_mouse_x - init_mouse_x;
 		int tempy = current_mouse_y - init_mouse_y;
-		cout << "initx:" << init_mouse_x << endl;
-		cout << "currentx" << current_mouse_x << endl;
-		cout << "x: " << tempx << endl;
-		cout << "y: " << tempy << endl;
 
 		if (tempy > 0) {
 
@@ -290,13 +271,14 @@ void Selection(HWND hWnd)
 		//ResetInfo();
 		if (mesh[i].rgba[0] == pixel[0] && mesh[i].rgba[1] == pixel[1] && mesh[i].rgba[2] == pixel[2]){
 			uni_sel = i;
+
+			CalcXYZPos();
 			cout << "sel "<<uni_sel;
 			for (int c = 0; c < objects; c++)
 				mesh[c].selected = false;
 			selection = true;
 			mesh[uni_sel].selected = true;
 
-			CalcXYZPos();
 		}
 		
 		if (init_quad == true) {
@@ -341,6 +323,10 @@ void WMCommand(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	if (wParam == (WPARAM)ID_FILE_QUIT) {
 		PostQuitMessage(0);
 	}
+	if (wParam == (WPARAM)ID_CREATE_CUBE) {
+		Gen->CreateCube(objects);
+	}
+
 	else if (wParam == (WPARAM)ID_TWEAKMODE_FACETWEAK) {
 		init_quad = true;
 		v_solid = false;
@@ -486,7 +472,8 @@ void WMCommand(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 int get_x = 0;
 int get_y = 0;
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	
+	POINT pt;
+
 	switch (msg) {
 		case WM_CREATE:
 			break;
@@ -503,6 +490,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		case WM_KEYUP:
 			GetKey[wParam] = false;
 			break;
+		case WM_RBUTTONDOWN: {
+			pt.x = LOWORD(lParam);
+			pt.y = HIWORD(lParam);
+			ClientToScreen(MainWindow, &pt);
+			Popup = LoadMenu(hInst, MAKEINTRESOURCE(IDR_POPUP));
+			Popup = GetSubMenu(Popup, 0);
+			TrackPopupMenu(Popup, TPM_RIGHTBUTTON, pt.x, pt.y, 0, MainWindow, NULL);
+
+
+		}break;
 		case WM_LBUTTONDOWN:
 		
 			Selection(RenderWindow);
@@ -516,16 +513,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 			current_mouse_x = 0;
 			break;
 		case WM_MOUSEMOVE:
-			if(mesh[uni_sel].selected == true){
-				if(init_click == true){
+			if (selection == true) {
+				if (mesh[uni_sel].selected == true) {
+					if (init_click == true) {
 
-					get_x = GET_X_LPARAM(lParam);
-					get_y = GET_Y_LPARAM(lParam);
-					if(sel_trans == true){
-						CalcMouseTrans(xaxis, yaxis, zaxis, get_x, get_y);
-					}
-					if (sel_scale == true) {
-						CalcMouseScale(xaxis, yaxis, zaxis, get_x, get_y);
+						get_x = GET_X_LPARAM(lParam);
+						get_y = GET_Y_LPARAM(lParam);
+						if (sel_trans == true) {
+							CalcMouseTrans(xaxis, yaxis, zaxis, get_x, get_y);
+						}
+						if (sel_scale == true) {
+							CalcMouseScale(xaxis, yaxis, zaxis, get_x, get_y);
+						}
 					}
 				}
 			}
@@ -655,6 +654,7 @@ int AppWindow::CreateWindows(string name, int width, int height)
 	
 	Menu = LoadMenu(hInst, MAKEINTRESOURCE(IDR_MENU1));
 	SetMenu(MainWindow, Menu);
+
 	return 0;
 }
 
