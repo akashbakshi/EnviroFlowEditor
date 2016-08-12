@@ -41,6 +41,8 @@ int current_mouse_y = 0;
 
 bool sel_trans = true, sel_scale = false, sel_rot = false;
 
+int get_x = 0;
+int get_y = 0;
 AppWindow::AppWindow()
 {
 }
@@ -151,8 +153,6 @@ void Selection(HWND hWnd)
 	}
 }
 
-int get_x = 0;
-int get_y = 0;
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	POINT pt;
 

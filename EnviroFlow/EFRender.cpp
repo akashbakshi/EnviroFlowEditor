@@ -18,6 +18,8 @@ GLfloat camY = 0.0f;
 int arr = 0;
 
 bool selection = false;
+
+Arrow arrow[3];
 EFRender::EFRender()
 {
 }
@@ -26,9 +28,6 @@ EFRender::EFRender()
 EFRender::~EFRender()
 {
 }
-
-
-Arrow arrow[3];
 
 void ScaleArrowsXYZ(int arr_obj)
 {
@@ -234,8 +233,6 @@ void ScaleArrowsXYZ(int arr_obj)
 
 }
 
-
-
 void TranslateArrowsXYZ(int arr_obj)
 {
 	arrow[arr_obj].vertices.push_back(0.022402f);
@@ -433,7 +430,6 @@ void TranslateArrowsXYZ(int arr_obj)
 
 }
 
-
 void RenderArrows(int obj)
 {
 	glPushMatrix();
@@ -537,12 +533,6 @@ void DisplayGrid()
 	glEnd();
 
 }
-bool keydown(int key)
-{
-	return (GetAsyncKeyState(key) & 0x8000) != 0;
-}
-
-
 
 void EFRender::Render() {
 	//Camera Key Binding
@@ -603,10 +593,7 @@ void EFRender::Render() {
 		init_quad = false;
 	}
 
-	if (keydown(VK_SPACE) && keydown(VK_LEFT) && keydown(VK_UP))
-	{
-		cout << "combo pressed!" << endl;
-	}
+	
 	//Basic OpenGL Viewport stuff
 
 	glViewport(0, 0, (GLsizei)1440, (GLsizei)900);
