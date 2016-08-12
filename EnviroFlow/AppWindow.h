@@ -15,4 +15,3 @@ public:
 	int CreateWindows(std::string name, int width, int height);
 	int WinLoop(MSG msg);
 };
-

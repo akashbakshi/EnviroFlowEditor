@@ -6,7 +6,7 @@
 #include <vector>
 #include <fstream>
 #include <glew.h>
-
+#include <sstream>
 #include "wglext.h"
 #include "resource.h"
 
@@ -36,3 +36,6 @@ extern int uni_sel;
 extern bool quad_uni_sel;
 extern bool selection;
 extern GLfloat camY;
+
+//
+extern void CalcXYZPos();

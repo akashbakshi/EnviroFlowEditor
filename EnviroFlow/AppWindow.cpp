@@ -54,17 +54,17 @@ void CalcXYZPos() {
 	GLfloat max_x = *max_element(mesh[uni_sel].x.begin(), mesh[uni_sel].x.end());
 	GLfloat max_y = *max_element(mesh[uni_sel].y.begin(), mesh[uni_sel].y.end());
 	GLfloat max_z = *max_element(mesh[uni_sel].z.begin(), mesh[uni_sel].z.end());
-	arrow[0].pos[0] = (max_x + mesh[uni_sel].pos[0])/2;
-	arrow[0].pos[1] = max_y + mesh[uni_sel].pos[1];
-	arrow[0].pos[2] = (max_z + mesh[uni_sel].pos[2])/2;
+	arrow[0].pos[0] = (max_x + mesh[uni_sel].pos[0]) * mesh[uni_sel].scale[0];
+	arrow[0].pos[1] = (max_y + mesh[uni_sel].pos[1]) * mesh[uni_sel].scale[1];
+	arrow[0].pos[2] = ((max_z + mesh[uni_sel].pos[2])* mesh[uni_sel].scale[2]);
 
-	arrow[1].pos[0] = (max_x + mesh[uni_sel].pos[0]) / 2;
-	arrow[1].pos[1] = max_y + mesh[uni_sel].pos[1];
-	arrow[1].pos[2] = (max_z + mesh[uni_sel].pos[2]) / 2;
+	arrow[1].pos[0] = (max_x + mesh[uni_sel].pos[0]) * mesh[uni_sel].scale[0];
+	arrow[1].pos[1] = (max_y + mesh[uni_sel].pos[1]) * mesh[uni_sel].scale[1];
+	arrow[1].pos[2] = ((max_z + mesh[uni_sel].pos[2])* mesh[uni_sel].scale[2]);
 
-	arrow[2].pos[0] = (max_x + mesh[uni_sel].pos[0]) / 2;
-	arrow[2].pos[1] = max_y + mesh[uni_sel].pos[1];
-	arrow[2].pos[2] = (max_z + mesh[uni_sel].pos[2]) / 2;
+	arrow[2].pos[0] = (max_x + mesh[uni_sel].pos[0]) * mesh[uni_sel].scale[0];
+	arrow[2].pos[1] = (max_y + mesh[uni_sel].pos[1]) * mesh[uni_sel].scale[1];
+	arrow[2].pos[2] = ((max_z + mesh[uni_sel].pos[2])* mesh[uni_sel].scale[2]);
 }
 void CalcMouseTrans(bool x, bool y, bool z, int mouse_x, int mouse_y) {
 	// huh??
@@ -279,6 +279,7 @@ void Selection(HWND hWnd)
 			selection = true;
 			mesh[uni_sel].selected = true;
 
+			GUI->UpdateMeshProperties();
 		}
 		
 		if (init_quad == true) {
@@ -294,6 +295,8 @@ void Selection(HWND hWnd)
 				mesh[c].selected = false;
 			selection = false;
 			quad_uni_sel = false;
+
+			GUI->ClearMeshProperties();
 		}
 		if (pixel[0] == 255 && pixel[1] == 0 && pixel[2] == 0) {
 			xaxis = true;
@@ -515,6 +518,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		case WM_MOUSEMOVE:
 			if (selection == true) {
 				if (mesh[uni_sel].selected == true) {
+					GUI->UpdateMeshProperties();
 					if (init_click == true) {
 
 						get_x = GET_X_LPARAM(lParam);
