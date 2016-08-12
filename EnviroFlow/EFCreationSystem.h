@@ -81,7 +81,7 @@ public:
 	void CreateVertex(int obj,GLfloat x,GLfloat y, GLfloat z);
 	void CreateQuad(int obj, int tri, GLfloat x[4], GLfloat y[4], GLfloat z[4]);
 	void CreateTri(int obj,int tri, GLfloat x, GLfloat y, GLfloat z);
-	void CreateCube(int obj);
+	void CreateCube(int obj, GLfloat size_x, GLfloat size_y, GLfloat size_z);
 	void SetQuadCoordinates(GLfloat x1, GLfloat y1, GLfloat z1, GLfloat x2, GLfloat y2, GLfloat z2, GLfloat x3, GLfloat y3, GLfloat z3, GLfloat x4, GLfloat y4, GLfloat z4);
 
 };

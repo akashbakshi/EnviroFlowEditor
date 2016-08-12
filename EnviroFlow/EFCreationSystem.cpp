@@ -200,7 +200,7 @@ void SetTexCoord(int obj,int nq,GLfloat s, GLfloat t) {
 	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*mesh[obj].m_quad[nq].tex[0].uv.size(), &mesh[obj].m_quad[nq].tex[0].uv[0], GL_STATIC_DRAW);
 
 }
-void EFCreationSystem::CreateCube(int obj) {
+void EFCreationSystem::CreateCube(int obj,GLfloat size_x,GLfloat size_y, GLfloat size_z) {
 
 	if(obj  == 0)
 		mesh = new EF_MESH[1];
@@ -221,7 +221,7 @@ void EFCreationSystem::CreateCube(int obj) {
 	//Making Front Face
 	
 	//Set The XYZ Coordinates For the face
-	SetQuadCoordinates(-1.0f, -1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f, 1.0f, 0.0f, -1.0f, 1.0f, 0.0f);
+	SetQuadCoordinates(-size_x/2, -size_y/2, -size_z / 2, size_x/2, -size_y/2, -size_z / 2, size_x/2, size_y/2, -size_z / 2, -size_x/2, size_y/2, -size_z / 2);
 
 	// Take those coordinates and put them in the structure to be drawn
 	CreateQuad(obj, mesh[obj].quad_count, tempx, tempy, tempz);
@@ -237,7 +237,7 @@ void EFCreationSystem::CreateCube(int obj) {
 	SetTexCoord(obj, mesh[obj].quad_count, 0.0001f, 0.9999f);
 	mesh[obj].quad_count += 1;
 	
-	SetQuadCoordinates(-1.0f, 1.0f, 0.0f, -1.0f, 1.0f, 2.0f, 1.0f, 1.0f, 2.0f, 1.0f, 1.0f, 0.0f);
+	SetQuadCoordinates(-size_x/2, size_y/2, -size_z / 2, -size_x/2, size_y/2, size_z/2,size_x/2, size_y/2, size_z/2, size_x/2, size_y/2, -size_z / 2);
 	CreateQuad(obj, mesh[obj].quad_count, tempx, tempy, tempz);
 	mesh[obj].m_quad[mesh[obj].quad_count] = quad[0];
 	for (int i = 0; i<quad[0].vert_count; i++)
@@ -251,7 +251,7 @@ void EFCreationSystem::CreateCube(int obj) {
 	SetTexCoord(obj, mesh[obj].quad_count, 0.0001f, 0.9999f);
 	mesh[obj].quad_count += 1;
 	
-	SetQuadCoordinates(-1.0f, -1.0f, 2.0f, 1.0f, -1.0f, 2.0f, 1.0f, 1.0f, 2.0f, -1.0f, 1.0f, 2.0f);
+	SetQuadCoordinates(-size_x/2, -size_y/2, size_z/2, size_x/2, -size_y/2, size_z/2, size_x/2, size_y/2, size_z/2, -size_x/2, size_y/2, size_z/2);
 	CreateQuad(obj, mesh[obj].quad_count, tempx, tempy, tempz);
 	mesh[obj].m_quad[mesh[obj].quad_count] = quad[0];
 	for (int i = 0; i<quad[0].vert_count; i++)
@@ -265,7 +265,7 @@ void EFCreationSystem::CreateCube(int obj) {
 	SetTexCoord(obj, mesh[obj].quad_count, 0.0001f, 0.9999f);
 	mesh[obj].quad_count += 1;
 
-	SetQuadCoordinates(-1.0f, -1.0f, 0.0f, -1.0f, -1.0f, 2.0f, 1.0f, -1.0f, 2.0f, 1.0f, -1.0f, 0.0f);
+	SetQuadCoordinates(-size_x/2, -size_y / 2, -size_z / 2, -size_x / 2, -size_y / 2, size_z / 2, size_x / 2, -size_y / 2, size_z / 2, size_x / 2, -size_y / 2, -size_z / 2);
 	CreateQuad(obj, mesh[obj].quad_count, tempx, tempy, tempz);
 	mesh[obj].m_quad[mesh[obj].quad_count] = quad[0];
 	for (int i = 0; i<quad[0].vert_count; i++)
@@ -279,7 +279,7 @@ void EFCreationSystem::CreateCube(int obj) {
 	SetTexCoord(obj, mesh[obj].quad_count, 0.0001f, 0.9999f);
 	mesh[obj].quad_count += 1;
 
-	SetQuadCoordinates(-1.0f, -1.0f, 0.0f, -1.0f, -1.0f, 2.0f, -1.0f, 1.0f, 2.0f, -1.0f, 1.0f, 0.0f);
+	SetQuadCoordinates(-size_x / 2, -size_y / 2,-size_z / 2, -size_x / 2, -size_y / 2, size_z / 2, -size_x / 2, size_y / 2, size_z / 2, -size_x / 2, size_y / 2, -size_z / 2);
 	CreateQuad(obj, mesh[obj].quad_count, tempx, tempy, tempz);
 	mesh[obj].m_quad[mesh[obj].quad_count] = quad[0];
 	for (int i = 0; i<quad[0].vert_count; i++)
@@ -293,7 +293,7 @@ void EFCreationSystem::CreateCube(int obj) {
 	SetTexCoord(obj, mesh[obj].quad_count, 0.0001f, 0.9999f);
 	mesh[obj].quad_count += 1;
 
-	SetQuadCoordinates(1.0f, -1.0f, 0.0f, 1.0f, -1.0f, 2.0f, 1.0f, 1.0f, 2.0f, 1.0f, 1.0f, 0.0f);
+	SetQuadCoordinates(size_x / 2, -size_y / 2, 0.0f, size_x / 2, -size_y / 2, size_z / 2, size_x / 2, size_y / 2, size_z / 2, size_x / 2, size_y / 2, 0.0f);
 	CreateQuad(obj, mesh[obj].quad_count, tempx, tempy, tempz); 
 	mesh[obj].m_quad[mesh[obj].quad_count] = quad[0];
 	for (int i = 0; i<quad[0].vert_count; i++)

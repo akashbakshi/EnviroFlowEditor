@@ -227,7 +227,7 @@ void WMCommand(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	}
 	if (wParam == (WPARAM)ID_CREATE_CUBE) {
 		DialogBox(hInst, MAKEINTRESOURCE(IDD_CREATE), MainWindow, (DLGPROC)CreateCubeDialog);
-		Gen->CreateCube(objects);
+		
 	}
 
 	else if (wParam == (WPARAM)ID_TWEAKMODE_FACETWEAK) {
@@ -382,6 +382,10 @@ LRESULT CALLBACK CreateCubeDialog(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPa
 		}break;
 		case WM_COMMAND: {
 			if (wParam == IDOK) {
+				GLfloat x = GetDlgItemFloat(hWnd, IDC_SIZEX);
+				GLfloat y = GetDlgItemFloat(hWnd, IDC_SIZEY);
+				GLfloat z = GetDlgItemFloat(hWnd, IDC_SIZEZ);
+				Gen->CreateCube(objects,x,y,z);
 				EndDialog(hWnd, 0);
 			}
 		}break;
