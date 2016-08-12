@@ -24,7 +24,6 @@ HGLRC hRC;
 // pointers for classes
 EFRender *Draw = NULL;
 AppGUI *GUI = NULL;
-EFCreationSystem *Gen = NULL;
 HMENU Menu;
 HMENU Popup;
 
@@ -41,6 +40,7 @@ int current_mouse_x = 0;
 int current_mouse_y = 0;
 
 bool sel_trans = true, sel_scale = false, sel_rot = false;
+
 AppWindow::AppWindow()
 {
 }
@@ -66,178 +66,7 @@ void CalcXYZPos() {
 	arrow[2].pos[1] = (max_y + mesh[uni_sel].pos[1]) * mesh[uni_sel].scale[1];
 	arrow[2].pos[2] = ((max_z + mesh[uni_sel].pos[2])* mesh[uni_sel].scale[2]);
 }
-void CalcMouseTrans(bool x, bool y, bool z, int mouse_x, int mouse_y) {
-	// huh??
-	// X Axis Calculations
-	if (xaxis == true) {
-		if (get_coord == true) {
-			init_mouse_x = mouse_x;
-			get_coord = false;
-		}
-		current_mouse_x = mouse_x;
-		int tempx = current_mouse_x - init_mouse_x;
-		
-		if (tempx > 0) {
-			if (camY < 90.0f && camY > -90.0f) {
-				mesh[uni_sel].pos[0] += 0.06f;
-				arrow[0].pos[0] += 0.06f;
-				arrow[1].pos[0] += 0.06f;
-				arrow[2].pos[0] += 0.06f;
-			}else{
-				mesh[uni_sel].pos[0] -= 0.06f;
-				arrow[0].pos[0] -= 0.06f;
-				arrow[1].pos[0] -= 0.06f;
-				arrow[2].pos[0] -= 0.06f;
-			}
 
-		}
-		if (tempx < 0) {
-			if (camY < 90.0f && camY > -90.0f) {
-				mesh[uni_sel].pos[0] -= 0.06f;
-				arrow[0].pos[0] -= 0.06f;
-				arrow[1].pos[0] -= 0.06f;
-				arrow[2].pos[0] -= 0.06f;
-			}else{
-				mesh[uni_sel].pos[0] += 0.06f;
-				arrow[0].pos[0] += 0.06f;
-				arrow[1].pos[0] += 0.06f;
-				arrow[2].pos[0] += 0.06f;
-			}
-		}
-	}
-
-	if (yaxis == true) {
-		if (get_coord == true) {
-			init_mouse_x = mouse_x;
-			init_mouse_y = mouse_y;
-			get_coord = false;
-		}
-		current_mouse_x = mouse_x;
-		current_mouse_y = mouse_y;
-		int tempx = current_mouse_x - init_mouse_x;
-		int tempy = current_mouse_y - init_mouse_y;
-
-		if (tempy < 0) {
-			mesh[uni_sel].pos[1] += 0.045f;
-			arrow[0].pos[1] += 0.045f;
-			arrow[1].pos[1] += 0.045f;
-			arrow[2].pos[1] += 0.045f;
-		}
-
-		if (tempy > 0) {
-
-			mesh[uni_sel].pos[1] -= 0.045f;
-			arrow[0].pos[1] -= 0.045f;
-			arrow[1].pos[1] -= 0.045f;
-			arrow[2].pos[1] -= 0.045f;
-			}
-		}
-
-	if (zaxis == true) {
-		if (get_coord == true) {
-			init_mouse_x = mouse_x;
-			init_mouse_y = mouse_y;
-			get_coord = false;
-		}
-		current_mouse_x = mouse_x;
-		current_mouse_y = mouse_y;
-		int tempx = current_mouse_x - init_mouse_x;
-		int tempy = current_mouse_y - init_mouse_y;
-
-		if (tempy > 0) {
-
-			if (camY < 90.0f && camY > -90.0f) {
-				mesh[uni_sel].pos[2] += 0.045f;
-				arrow[0].pos[2] += 0.045f;
-				arrow[1].pos[2] += 0.045f;
-				arrow[2].pos[2] += 0.045f;
-			}
-			else {
-
-				mesh[uni_sel].pos[2] -= 0.045f;
-				arrow[0].pos[2] -= 0.045f;
-				arrow[1].pos[2] -= 0.045f;
-				arrow[2].pos[2] -= 0.045f;
-			}
-		}
-		if (tempy < 0) {
-
-			if (camY < 90.0f && camY > -90.0f) {
-				mesh[uni_sel].pos[2] -= 0.045f;
-				arrow[0].pos[2] -= 0.045f;
-				arrow[1].pos[2] -= 0.045f;
-				arrow[2].pos[2] -= 0.045f;
-			}
-			else {
-
-				mesh[uni_sel].pos[2] += 0.045f;
-				arrow[0].pos[2] += 0.045f;
-				arrow[1].pos[2] += 0.045f;
-				arrow[2].pos[2] += 0.045f;
-			}
-		}
-	}
-}
-
-void CalcMouseScale(bool x, bool y, bool z, int mouse_x, int mouse_y) {
-
-	if (xaxis == true) {
-		if (get_coord == true) {
-			init_mouse_x = mouse_x;
-			get_coord = false;
-		}
-		current_mouse_x = mouse_x;
-		int tempx = current_mouse_x - init_mouse_x;
-		if (tempx > 0) {
-			mesh[uni_sel].scale[0] += 0.06f;
-		}
-		if (tempx < 0) {
-			mesh[uni_sel].scale[0] -= 0.06f;
-		}
-	}
-	if (yaxis == true) {
-		if (get_coord == true) {
-			init_mouse_x = mouse_x;
-			init_mouse_y = mouse_y;
-			get_coord = false;
-		}
-		current_mouse_x = mouse_x;
-		current_mouse_y = mouse_y;
-		int tempx = current_mouse_x - init_mouse_x;
-		int tempy = current_mouse_y - init_mouse_y;
-
-		if (tempy < 0) {
-
-			mesh[uni_sel].scale[1] += 0.045f;
-		}
-		if (tempy > 0) {
-
-			mesh[uni_sel].scale[1] -= 0.045f;
-		}
-	}
-
-	if (zaxis == true) {
-		if (get_coord == true) {
-			init_mouse_x = mouse_x;
-			init_mouse_y = mouse_y;
-			get_coord = false;
-		}
-
-		current_mouse_x = mouse_x;
-		current_mouse_y = mouse_y;
-		int tempx = current_mouse_x - init_mouse_x;
-		int tempy = current_mouse_y - init_mouse_y;
-
-		if (tempy > 0) {
-
-			mesh[uni_sel].scale[2] += 0.045f;
-		}
-		if (tempy < 0) {
-
-			mesh[uni_sel].scale[2] -= 0.045f;
-		}
-	}
-}
 void Selection(HWND hWnd)
 {
 	GLubyte bg[3];
@@ -322,156 +151,6 @@ void Selection(HWND hWnd)
 	}
 }
 
-void WMCommand(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	if (wParam == (WPARAM)ID_FILE_QUIT) {
-		PostQuitMessage(0);
-	}
-	if (wParam == (WPARAM)ID_CREATE_CUBE) {
-		Gen->CreateCube(objects);
-	}
-
-	else if (wParam == (WPARAM)ID_TWEAKMODE_FACETWEAK) {
-		init_quad = true;
-		v_solid = false;
-		v_wireframe = false;
-		v_textured = false;
-	}
-	else if (wParam == (WPARAM)ID_TWEAKMODE_MESHTWEAK) {
-		init_quad = false;
-
-		v_solid = true;
-		v_wireframe = false;
-		v_textured = false;
-	}
-	else if (wParam == (WPARAM)ID_VIEW_TEXTURED) {
-		// Enable Texture if selected.
-		glEnable(GL_TEXTURE_2D);
-
-		//Disable  other two view modes and enable texturing.
-		v_wireframe = false;
-		v_solid = false;
-		v_textured = true;
-
-		//put in Fill mode since we're not in wireframe
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	}
-	else if (wParam == (WPARAM)ID_VIEW_SOLID) {
-		//Disable texture mode
-		glDisable(GL_TEXTURE_2D);
-
-		//Enabled solid mode and disable other modes.
-		v_wireframe = false;
-		v_solid = true;
-		v_textured = false;
-
-		//put in Fill mode since we're not in wireframe
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	}
-	else if (wParam == (WPARAM)ID_VIEW_WIREFRAME) {
-		glDisable(GL_TEXTURE_2D);
-
-		//Enabled wireframe mode and disable other modes.
-		v_wireframe = true;
-		v_solid = false;
-		v_textured = false;
-
-		//put in Line mode since we're in wireframe mode.
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	}
-
-
-	//Buttons
-	if (lParam == (LPARAM)Toolbar[0]) {
-
-		sel_scale = false;
-		sel_trans = true;
-			//Draw Green Y-axis Arrow
-
-			arrow[0].faces.clear();
-			arrow[0].vertices.clear();
-			TranslateArrowsXYZ(0);
-			arrow[0].rgb[0] = 0;
-			arrow[0].rgb[1] = 255;
-			arrow[0].rgb[2] = 0;
-
-			arrow[0].pos[1] = 1.1f;
-			//Draw Red X-axis Arrow
-			arrow[1].faces.clear();
-			arrow[1].vertices.clear();
-			TranslateArrowsXYZ(1);
-			arrow[1].rgb[0] = 255;
-			arrow[1].rgb[1] = 0;
-			arrow[1].rgb[2] = 0;
-			arrow[1].pos[1] = 1.1f;
-			//Rotating it so it faces the X-axis.
-			arrow[1].rot[0] = 90.0f;
-			arrow[1].rot[1] = 0.0f;
-			arrow[1].rot[2] = 0.0f;
-			arrow[1].rot[3] = -90.0f;
-
-			//Drawing Blue Z-Axis Arrow.
-			arrow[2].faces.clear();
-			arrow[2].vertices.clear();
-			TranslateArrowsXYZ(2);
-			arrow[2].rgb[0] = 0;
-			arrow[2].rgb[1] = 0;
-			arrow[2].rgb[2] = 255;
-			arrow[2].pos[1] = 1.1f;
-			//Rotating it so it faces the z-axis.
-			arrow[2].rot[0] = 90.0f;
-			arrow[2].rot[1] = 90.0f;
-			arrow[2].rot[2] = 0.0f;
-			arrow[2].rot[3] = 0.0f;
-
-			CalcXYZPos();
-			SetFocus(MainWindow);
-	}
-	if (lParam == (LPARAM)Toolbar[1]) {
-
-		sel_scale = true;
-		sel_trans = false;
-		
-		//Draw Green Y-axis Arrow
-		arrow[0].faces.clear();
-		arrow[0].vertices.clear();
-		ScaleArrowsXYZ(0);
-		arrow[0].rgb[0] = 0;
-		arrow[0].rgb[1] = 255;
-		arrow[0].rgb[2] = 0;
-
-		arrow[0].pos[1] = 1.1f;
-		//Draw Red X-axis Arrow
-		arrow[1].faces.clear();
-		arrow[1].vertices.clear();
-		ScaleArrowsXYZ(1);
-		arrow[1].rgb[0] = 255;
-		arrow[1].rgb[1] = 0;
-		arrow[1].rgb[2] = 0;
-		arrow[1].pos[1] = 1.1f;
-		//Rotating it so it faces the X-axis.
-		arrow[1].rot[0] = 90.0f;
-		arrow[1].rot[1] = 0.0f;
-		arrow[1].rot[2] = 0.0f;
-		arrow[1].rot[3] = -90.0f;
-
-		//Drawing Blue Z-Axis Arrow.
-		arrow[2].faces.clear();
-		arrow[2].vertices.clear();
-		ScaleArrowsXYZ(2);
-		arrow[2].rgb[0] = 0;
-		arrow[2].rgb[1] = 0;
-		arrow[2].rgb[2] = 255;
-		arrow[2].pos[1] = 1.1f;
-		//Rotating it so it faces the z-axis.
-		arrow[2].rot[0] = 90.0f;
-		arrow[2].rot[1] = 90.0f;
-		arrow[2].rot[2] = 0.0f;
-		arrow[2].rot[3] = 0.0f;
-
-		CalcXYZPos();
-		SetFocus(MainWindow);
-	}
-}
 int get_x = 0;
 int get_y = 0;
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
@@ -518,16 +197,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		case WM_MOUSEMOVE:
 			if (selection == true) {
 				if (mesh[uni_sel].selected == true) {
-					GUI->UpdateMeshProperties();
 					if (init_click == true) {
 
 						get_x = GET_X_LPARAM(lParam);
 						get_y = GET_Y_LPARAM(lParam);
 						if (sel_trans == true) {
-							CalcMouseTrans(xaxis, yaxis, zaxis, get_x, get_y);
+							GUI->CalcMouseTrans(xaxis, yaxis, zaxis, get_x, get_y);
+							GUI->UpdateMeshProperties();
 						}
 						if (sel_scale == true) {
-							CalcMouseScale(xaxis, yaxis, zaxis, get_x, get_y);
+							GUI->CalcMouseScale(xaxis, yaxis, zaxis, get_x, get_y);
+							GUI->UpdateMeshProperties();
 						}
 					}
 				}

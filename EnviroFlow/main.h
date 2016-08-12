@@ -35,7 +35,14 @@ extern bool v_wireframe;
 extern int uni_sel;
 extern bool quad_uni_sel;
 extern bool selection;
+extern bool init_quad;
+extern bool sel_scale, sel_trans;
+extern bool get_coord;
+extern bool xaxis, yaxis, zaxis;
+extern int init_mouse_x,init_mouse_y,current_mouse_x,current_mouse_y;
 extern GLfloat camY;
 
 //
 extern void CalcXYZPos();
+extern void WMCommand(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+extern LRESULT CALLBACK CreateCubeDialog(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
