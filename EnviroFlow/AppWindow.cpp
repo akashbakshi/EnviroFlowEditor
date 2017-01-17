@@ -101,9 +101,10 @@ bool AppWindow::InitAPI(HWND hWnd, HDC &hDC, HGLRC &hRC)
 
 	}
 	wglMakeCurrent(hDC, hRC);
-	glewInit();
+	
 
 	glewExperimental = TRUE;
+
 	Draw->Init();
 
 
