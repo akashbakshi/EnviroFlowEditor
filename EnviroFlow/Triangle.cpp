@@ -10,6 +10,7 @@ Triangle::Triangle()
 
 	for (int i = 0; i < 3; i++) {
 		pos[i] = 0.0f;
+		scale[i] = 1.0f;
 		for(int c = 0;c<3;c++){
 			vertices.push_back(v[i].getCoordinates(c));
 			num_indices += 1;
@@ -29,8 +30,10 @@ Triangle::Triangle(GLfloat sx, GLfloat sy, GLfloat sz)
 	v[1] = Vertex(0.0f, sy, 0.0f);
 	v[2] = Vertex(sx, sy, 0.0f);
 	num_indices = 0;
+	
 	for (int i = 0; i < 3; i++) {
 		pos[i] = 0.0f;
+		scale[i] = 1.0f;
 		for (int c = 0; c<3; c++) {
 			vertices.push_back(v[i].getCoordinates(c));
 			num_indices += 1;
@@ -79,6 +82,17 @@ GLfloat Triangle::getPos(char axis)
 	return val;
 }
 
+GLfloat Triangle::getScale(char axis) {
+	GLfloat val = 0.0f;
+	if (axis == 'x' || axis == 'X')
+		val = scale[0];
+	else if (axis == 'y' || axis == 'Y')
+		val = scale[1];
+	else if (axis == 'z' || axis == 'Z')
+		val = scale[2];
+
+	return val;
+}
 void Triangle::setPos(GLfloat x, GLfloat y, GLfloat z) {
 	pos[0] = x;
 	pos[1] = y;

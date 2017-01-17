@@ -14,6 +14,7 @@ public:
 	GLuint getVBO();
 	GLuint getVIO();
 	GLfloat getPos(char axis);
+	GLfloat getScale(char axis);
 	void setPos(GLfloat x, GLfloat y, GLfloat z);
 	//vectors to hold data
 	std::vector<GLfloat> vertices;

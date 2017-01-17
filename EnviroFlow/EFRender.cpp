@@ -35,7 +35,7 @@ void RenderTri() {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tri[0].getVIO());
 	
 	glTranslatef(tri[0].getPos('x'), tri[0].getPos('y'), tri[0].getPos('z'));
-	glScalef(1.0f,1.0f,1.0f);
+	glScalef(tri[0].getScale('x'), tri[0].getScale('y'), tri[0].getScale('z'));
 	
 	glDrawElements(GL_TRIANGLES, tri[0].indices.size(), GL_UNSIGNED_INT, 0);
 
