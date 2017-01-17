@@ -71,13 +71,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\glew-1.13.0\include\GL;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\glew-1.13.0\lib\Release\Win32;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\glew-2.0.0\include\GL;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\glew-2.0.0\lib\Release\Win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\glew-1.13.0\include\GL;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\glew-1.13.0\lib\Release\Win32;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\glew-2.0.0\include\GL;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\glew-2.0.0\lib\Release\Win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
