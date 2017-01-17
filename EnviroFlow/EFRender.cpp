@@ -26,21 +26,18 @@ void EFRender::Init() {
 
 void RenderTri() {
 
-	glPushMatrix();
+	glPushMatrix(); 
+	
+	glBindBuffer(GL_ARRAY_BUFFER, tri[0].getVBO());
+	glVertexPointer(3, GL_FLOAT, 0, 0);
 	glEnableClientState(GL_VERTEX_ARRAY);
 
-	glBindBuffer(GL_ARRAY_BUFFER, tri[0].getVBO());
-
-	glVertexPointer(3, GL_FLOAT, 0, 0);
-
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tri[0].getVIO());
 	
-	glTranslatef(0.0f,0.0f,0.0f);
+	glTranslatef(tri[0].getPos('x'), tri[0].getPos('y'), tri[0].getPos('z'));
 	glScalef(1.0f,1.0f,1.0f);
 	
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tri[0].getVIO());
-
 	glDrawElements(GL_TRIANGLES, tri[0].indices.size(), GL_UNSIGNED_INT, 0);
-
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glPopMatrix();
@@ -163,6 +160,5 @@ void EFRender::Render() {
 	DisplayGrid();
 	DrawXYZ();
 
-	if(GetKey[SPACEBAR])
-		RenderTri();
+	RenderTri();
 }

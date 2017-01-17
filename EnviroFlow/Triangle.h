@@ -11,15 +11,18 @@ public:
 
 	void CreateBuffers();
 
+	GLuint getVBO();
+	GLuint getVIO();
+	GLfloat getPos(char axis);
+	void setPos(GLfloat x, GLfloat y, GLfloat z);
 	//vectors to hold data
 	std::vector<GLfloat> vertices;
 	std::vector<GLuint> indices;
 
-	GLuint getVBO();
-	GLuint getVIO();
 private:
 	Vertex v[3];
 	GLfloat pos[3];
+	GLfloat scale[3];
 	GLfloat rgba[4];
 	int num_indices;
 
