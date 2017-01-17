@@ -1,7 +1,9 @@
 #include "EFRender.h"
 #include "Camera.h"
 #include "Input.h"
+#include "Triangle.h"
 
+Triangle tri[1];
 Cam Camera;
 bool GetKey[256];
 
@@ -17,8 +19,31 @@ EFRender::~EFRender()
 void EFRender::Init() {
 
 	glEnable(GL_DEPTH_TEST);
+	tri[0] = Triangle(1.0f, 1.0f, 0.0f);
+
 }
 
+void RenderTri() {
+
+	glPushMatrix();
+	glEnableClientState(GL_VERTEX_ARRAY);
+
+	glBindBuffer(GL_ARRAY_BUFFER, tri[0].getVBO());
+
+	glVertexPointer(3, GL_FLOAT, 0, 0);
+
+	
+	glTranslatef(0.0f,0.0f,0.0f);
+	glScalef(1.0f,1.0f,1.0f);
+	
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tri[0].getVIO());
+
+	glDrawElements(GL_TRIANGLES, tri[0].vertices.size(), GL_UNSIGNED_INT, 0);
+
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glPopMatrix();
+}
 // Draw the XYZ lines in scene
 void DrawXYZ()
 {
@@ -136,4 +161,5 @@ void EFRender::Render() {
 	//Draw XYZ and Grid to the scene
 	DisplayGrid();
 	DrawXYZ();
+	RenderTri();
 }

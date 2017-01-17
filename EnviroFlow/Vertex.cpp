@@ -50,3 +50,8 @@ void Vertex::setColor(GLfloat r, GLfloat g, GLfloat b, GLfloat a)
 	rgba[2] = b;
 	rgba[3] = a;
 }
+
+GLfloat Vertex::getCoordinates(int num)
+{
+	return xyz[num];
+}

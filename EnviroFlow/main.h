@@ -5,7 +5,7 @@
 #include <string>
 #include <fstream>
 #include <glew.h>
-
+#include "glext.h"
 #include "wglext.h"
 #include "resource.h"
 

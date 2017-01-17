@@ -6,5 +6,6 @@ MSG msg;
 int main() {
 	Win->CreateClass();
 	Win->CreateWindows("EnviroFlow Build UNO", 1920, 1080);
+	glewInit();
 	Win->WinLoop(msg);
 }
