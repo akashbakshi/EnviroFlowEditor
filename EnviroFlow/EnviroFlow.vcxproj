@@ -71,8 +71,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\glew-1.13.0\include\GL;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\glew-1.13.0\lib\Release\Win32;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\glew-2.0.0\include\GL;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\glew-2.0.0\lib\Release\Win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -161,6 +161,8 @@
     <ClInclude Include="main.h" />
     <ClInclude Include="AppWindow.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Triangle.h" />
+    <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AppGUI.cpp" />
@@ -168,6 +170,8 @@
     <ClCompile Include="EFRender.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="AppWindow.cpp" />
+    <ClCompile Include="Triangle.cpp" />
+    <ClCompile Include="Vertex.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="EnviroFlow.rc" />
