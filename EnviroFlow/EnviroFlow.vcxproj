@@ -160,6 +160,8 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="AppWindow.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Quad.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="Vertex.h" />
@@ -170,6 +172,8 @@
     <ClCompile Include="EFRender.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="AppWindow.cpp" />
+    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="Quad.cpp" />
     <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="Vertex.cpp" />
   </ItemGroup>

@@ -1,9 +1,10 @@
 #include "EFRender.h"
 #include "Camera.h"
 #include "Input.h"
-#include "Triangle.h"
+#include "Quad.h"
 
 Triangle tri[1];
+Quad quad[2];
 Cam Camera;
 bool GetKey[256];
 
@@ -20,27 +21,37 @@ void EFRender::Init() {
 	glewInit();
 	glEnable(GL_DEPTH_TEST);
 
-	tri[0] = Triangle(1.0f, 1.0f, 0.0f);
-	tri[0].CreateBuffers();
+	quad[0] = Quad(1.0f, 1.0f,1.0f);
+	quad[0].CreateBuffers();
+
+	quad[1] = Quad(1.0f, 1.0f, 0.0f);
+	quad[1].CreateBuffers();
+	quad[1].setPos(0.0f, 0.0f, -1.0f);
+	quad[1].setColor((GLubyte)0, (GLubyte)155, (GLubyte)0, (GLubyte)0);
+
 }
 
-void RenderTri() {
+void RenderTri(int num) {
 
-	glPushMatrix(); 
+	for(int i =0;i<num;i++){
+		glPushMatrix(); 
 	
-	glBindBuffer(GL_ARRAY_BUFFER, tri[0].getVBO());
-	glVertexPointer(3, GL_FLOAT, 0, 0);
-	glEnableClientState(GL_VERTEX_ARRAY);
+		glBindBuffer(GL_ARRAY_BUFFER, quad[i].getVBO());
+		glVertexPointer(3, GL_FLOAT, 0, 0);
+		glEnableClientState(GL_VERTEX_ARRAY);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tri[0].getVIO());
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, quad[i].getVIO());
+		
+		
+		glColor3ub(quad[i].getColor('r'), quad[i].getColor('g'), quad[i].getColor('b'));
+		glTranslatef(quad[i].getPos('x'), quad[i].getPos('y'), quad[i].getPos('z'));
+		glScalef(quad[i].getScale('x'), quad[i].getScale('y'), quad[i].getScale('z'));
 	
-	glTranslatef(tri[0].getPos('x'), tri[0].getPos('y'), tri[0].getPos('z'));
-	glScalef(tri[0].getScale('x'), tri[0].getScale('y'), tri[0].getScale('z'));
-	
-	glDrawElements(GL_TRIANGLES, tri[0].indices.size(), GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_QUADS, quad[i].indices.size(), GL_UNSIGNED_INT, 0);
 
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glPopMatrix();
+		glDisableClientState(GL_VERTEX_ARRAY);
+		glPopMatrix();
+	}
 }
 // Draw the XYZ lines in scene
 void DrawXYZ()
@@ -160,5 +171,5 @@ void EFRender::Render() {
 	DisplayGrid();
 	DrawXYZ();
 
-	RenderTri();
+	RenderTri(2);
 }
