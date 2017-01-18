@@ -1,10 +1,9 @@
 #include "EFRender.h"
 #include "Camera.h"
 #include "Input.h"
-#include "Quad.h"
+#include "Mesh.h"
 
-Triangle tri[1];
-Quad quad[2];
+Mesh mesh[2];
 Cam Camera;
 bool GetKey[256];
 
@@ -21,39 +20,40 @@ void EFRender::Init() {
 	glewInit();
 	glEnable(GL_DEPTH_TEST);
 
-	quad[0] = Quad(1.0f, 1.0f,1.0f);
-	quad[0].CreateBuffers();
+	mesh[0] = Mesh(1.0f, 1.0f, 1.0f, 20);
+	mesh[0].q[0].setPos(0.0f, 0.0f, 0.0f);
 
-	quad[1] = Quad(1.0f, 1.0f, 0.0f);
-	quad[1].CreateBuffers();
-	quad[1].setPos(0.0f, 0.0f, -1.0f);
-	quad[1].setColor((GLubyte)0, (GLubyte)155, (GLubyte)0, (GLubyte)0);
+	mesh[1] = Mesh(2.0f, 2.0f, 1.0f, 20);
+	
+
 
 }
 
 void RenderTri(int num) {
+	for (int a = 0; a < num; a++) {
 
-	for(int i =0;i<num;i++){
-		glPushMatrix(); 
+		for(int i =0;i<mesh[a].num_quads;i++){
+			glPushMatrix(); 
 	
-		glBindBuffer(GL_ARRAY_BUFFER, quad[i].getVBO());
-		glVertexPointer(3, GL_FLOAT, 0, 0);
-		glEnableClientState(GL_VERTEX_ARRAY);
+			glBindBuffer(GL_ARRAY_BUFFER, mesh[a].q[i].getVBO());
+			glVertexPointer(3, GL_FLOAT, 0, 0);
+			glEnableClientState(GL_VERTEX_ARRAY);
 
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, quad[i].getVIO());
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh[a].q[i].getVIO());
 		
 		
-		glColor3ub(quad[i].getColor('r'), quad[i].getColor('g'), quad[i].getColor('b'));
-		glTranslatef(quad[i].getPos('x'), quad[i].getPos('y'), quad[i].getPos('z'));
-		glScalef(quad[i].getScale('x'), quad[i].getScale('y'), quad[i].getScale('z'));
+			glColor3ub(mesh[a].q[i].getColor('r'), mesh[a].q[i].getColor('g'), mesh[a].q[i].getColor('b'));
+			glTranslatef(mesh[a].q[i].getPos('x'), mesh[a].q[i].getPos('y'), mesh[a].q[i].getPos('z'));
+			glScalef(mesh[a].q[i].getScale('x'), mesh[a].q[i].getScale('y'), mesh[a].q[i].getScale('z'));
 	
-		glDrawElements(GL_QUADS, quad[i].indices.size(), GL_UNSIGNED_INT, 0);
+			glDrawElements(GL_QUADS, mesh[a].q[i].indices.size(), GL_UNSIGNED_INT, 0);
 
-		glDisableClientState(GL_VERTEX_ARRAY);
-		glPopMatrix();
+			glDisableClientState(GL_VERTEX_ARRAY);
+			glPopMatrix();
+		}
 	}
 }
-// Draw the XYZ lines in scene
+// D raw the XYZ lines in scene
 void DrawXYZ()
 {
 	glTranslatef(0.0f, 0.1f, 0.0f);
