@@ -16,7 +16,7 @@ HDC hDC;
 HGLRC hRC;
 
 // pointers for classes
-EFRender *Draw = NULL;
+EFRender Draw = EFRender();
 AppGUI *GUI = NULL;
 
 AppWindow::AppWindow()
@@ -105,7 +105,7 @@ bool AppWindow::InitAPI(HWND hWnd, HDC &hDC, HGLRC &hRC)
 
 	glewExperimental = TRUE;
 
-	Draw->Init();
+	Draw.Init();
 
 
 	return true;
@@ -184,7 +184,7 @@ int AppWindow::WinLoop(MSG msg)
 		else
 		{
 			//Render Loop plus swapping buffers
-			Draw->Render();
+			Draw.Render();
 			SwapBuffers(hDC);
 		}
 	}

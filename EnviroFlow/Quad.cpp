@@ -23,6 +23,8 @@ Quad::Quad()
 		pos[i] = 0.0f;
 		scale[i] = 1.0f;
 	}
+
+	header.numVertices += 4;
 }
 
 Quad::Quad(GLfloat sx, GLfloat sy,GLfloat sz) {
@@ -48,6 +50,7 @@ Quad::Quad(GLfloat sx, GLfloat sy,GLfloat sz) {
 		
 	}
 
+	header.numVertices += 4;
 }
 
 Quad::~Quad()
@@ -98,7 +101,20 @@ GLubyte Quad::getColor(char section)
 	else if (section == 'a' || section == 'A')
 		val = rgba[3];
 
-	std::cout << val << std::endl;
+	return val;
+}
+
+GLfloat Quad::getRot(char axis)
+{
+	GLfloat val = 0.0f;
+	if (axis == 'a' || axis == 'A')
+		val = rot[0];
+	else if (axis == 'x' || axis == 'X')
+		val = rot[1];
+	else if (axis == 'y' || axis == 'Y')
+		val = rot[2];
+	else if (axis == 'z' || axis == 'Z')
+		val = rot[3];
 	return val;
 }
 
@@ -108,6 +124,14 @@ void Quad::setPos(GLfloat x, GLfloat y, GLfloat z)
 	pos[1] = y;
 	pos[2] = z;
 
+}
+
+void Quad::setRotation(GLfloat angle, GLfloat x, GLfloat y, GLfloat z)
+{
+	rot[0] = angle;
+	rot[1] = x;
+	rot[2] = y;
+	rot[3] = z;
 }
 
 void Quad::setScale(GLfloat x, GLfloat y, GLfloat z)

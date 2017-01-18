@@ -7,13 +7,24 @@ public:
 	Mesh();
 	Mesh(GLfloat sx,GLfloat sy, GLfloat sz, int sides);
 	~Mesh();
+
+	int num_quads;
+	Quad *q;
 	
 	void CreateBuffers();
-	int num_quads;
-	GLuint vbo,vio;
+	GLubyte getColor(char section);
+
+	GLuint vbo, vio;
 	std::vector<GLfloat> vertices;
 	std::vector<GLuint>indices;
-	Quad *q;
+
+	bool quad_mode, mesh_mode;
 private:
+	int mesh_type;
+	bool QuadColorCheck(GLubyte r, GLubyte g, GLubyte b);
+	void GenerateQuadColors(int quad);
+
+	void GenerateMeshColors(int mesh);
+	GLubyte rgba[4];
 };
 

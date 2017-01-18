@@ -7,8 +7,23 @@ Mesh mesh[2];
 Cam Camera;
 bool GetKey[256];
 
+bool MeshColorCheck(GLubyte r, GLubyte g, GLubyte b)
+{
+	std::cout << "this one";
+	bool exists = false;
+	for (int i = 0; i <header.numMesh; i++)
+	{
+		if (mesh[i].getColor('r') == r && mesh[i].getColor('g') == g && mesh[i].getColor('b') == b)
+			exists = true;
+		else
+			exists = false;
+	}
+	return exists;
+}
+
 EFRender::EFRender()
 {
+	
 }
 
 
@@ -20,10 +35,7 @@ void EFRender::Init() {
 	glewInit();
 	glEnable(GL_DEPTH_TEST);
 
-	mesh[0] = Mesh(1.0f, 1.0f, 1.0f, 20);
-	mesh[0].q[0].setPos(0.0f, 0.0f, 0.0f);
-
-	mesh[1] = Mesh(2.0f, 2.0f, 1.0f, 20);
+	mesh[0] = Mesh(1.0f, 1.0f, 1.0f, CUBE);
 	
 
 
@@ -41,10 +53,14 @@ void RenderTri(int num) {
 
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh[a].q[i].getVIO());
 		
-		
-			glColor3ub(mesh[a].q[i].getColor('r'), mesh[a].q[i].getColor('g'), mesh[a].q[i].getColor('b'));
-			glTranslatef(mesh[a].q[i].getPos('x'), mesh[a].q[i].getPos('y'), mesh[a].q[i].getPos('z'));
+			if(mesh[a].quad_mode == true)
+				glColor3ub(mesh[a].q[i].getColor('r'), mesh[a].q[i].getColor('g'), mesh[a].q[i].getColor('b'));
+			else if(mesh[a].mesh_mode == true)
+				glColor3ub(mesh[a].getColor('r'), mesh[a].getColor('g'), mesh[a].getColor('b'));
+
 			glScalef(mesh[a].q[i].getScale('x'), mesh[a].q[i].getScale('y'), mesh[a].q[i].getScale('z'));
+			glTranslatef(mesh[a].q[i].getPos('x'), mesh[a].q[i].getPos('y'), mesh[a].q[i].getPos('z'));
+			glRotatef(mesh[a].q[i].getRot('a'), mesh[a].q[i].getRot('x'), mesh[a].q[i].getRot('y'), mesh[a].q[i].getRot('z'));
 	
 			glDrawElements(GL_QUADS, mesh[a].q[i].indices.size(), GL_UNSIGNED_INT, 0);
 
@@ -110,7 +126,10 @@ void EFRender::Render() {
 	}
 	if (GetKey[SPACEBAR])
 	{
-
+		for(int i =0;i<header.numMesh;i++){
+			mesh[i].mesh_mode = true;
+			mesh[i].quad_mode = false;
+		}
 	}
 	if (GetKey[W])
 	{

@@ -16,8 +16,10 @@ public:
 	GLfloat getPos(char axis);
 	GLfloat getScale(char axis);
 	GLubyte getColor(char section);
+	GLfloat getRot(char axis);
 	//
 	void setPos(GLfloat x, GLfloat y, GLfloat z);
+	void setRotation(GLfloat angle, GLfloat x, GLfloat y, GLfloat z);
 	void setScale(GLfloat x, GLfloat y, GLfloat z);
 	void setColor(GLubyte r, GLubyte g, GLubyte b, GLubyte a);
 

@@ -22,6 +22,7 @@ Triangle::Triangle()
 		rgba[i] = 0.0f;
 	
 
+	header.numVertices += 3;
 }
 
 Triangle::Triangle(GLfloat sx, GLfloat sy, GLfloat sz)
@@ -46,6 +47,7 @@ Triangle::Triangle(GLfloat sx, GLfloat sy, GLfloat sz)
 	for (int i = 0; i < 4; i++)
 		rgba[i] = 0.0f;
 
+	header.numVertices += 3;
 }
 
 void Triangle::CreateBuffers() {
