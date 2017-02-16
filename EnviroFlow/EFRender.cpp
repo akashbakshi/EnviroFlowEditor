@@ -35,9 +35,8 @@ void EFRender::Init() {
 	glewInit();
 	glEnable(GL_DEPTH_TEST);
 
-	mesh[0] = Mesh(1.0f, 1.0f, 1.0f, CUBE);
-	
-
+	mesh[0] = Mesh(2.0f, 3.0f, 2.0f, CUBE);
+	//mesh[1] = Mesh(2.0f, 2.0f, 3.0f, CUBE);
 
 }
 

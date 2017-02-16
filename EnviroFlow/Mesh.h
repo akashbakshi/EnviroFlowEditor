@@ -12,6 +12,7 @@ public:
 	Quad *q;
 	
 	void CreateBuffers();
+	void setScale(GLfloat x, GLfloat y, GLfloat z);
 	GLubyte getColor(char section);
 
 	GLuint vbo, vio;

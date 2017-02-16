@@ -1,6 +1,6 @@
 #include "Vertex.h"
 
-
+using namespace std;
 Vertex::Vertex()
 {
 	//Initialize values to a default values
@@ -11,9 +11,12 @@ Vertex::Vertex()
 	}
 	for (GLfloat i = 0; i < 4; i++)
 		rgba[4] = 0.0f;
+
+
 }
 
 Vertex::Vertex(GLfloat x, GLfloat y, GLfloat z) {
+	AppLog log;
 	xyz[0] = x;
 	xyz[1] = y;
 	xyz[2] = z;
@@ -22,6 +25,11 @@ Vertex::Vertex(GLfloat x, GLfloat y, GLfloat z) {
 		pos[i] = 0.0f;
 	for (int i = 0; i < 4; i++)
 		rgba[4] = 0.0f;
+
+
+
+	log = AppLog("log.txt",true);
+	log.writeLog("[" +to_string(x)+" , "+ to_string(y)+ ", "+to_string(z)+"]");
 }
 
 Vertex::~Vertex()

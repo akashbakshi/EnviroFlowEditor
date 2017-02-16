@@ -1,0 +1,65 @@
+Log Session Started 02/16/17 01:20:02
+Log Opened: 02/16/17 01:20:02
+
+Quad 1
+Log Opened: 02/16/17 01:20:02
+Vertex 1
+Log Opened: 02/16/17 01:20:02
+[0.000000 , 0.000000, 0.000000]
+Vertex 2
+Log Opened: 02/16/17 01:20:02
+[0.000000 , 1.000000, 0.000000]
+Vertex 3
+Log Opened: 02/16/17 01:20:02
+[1.000000 , 1.000000, 0.000000]
+Vertex 4
+Log Opened: 02/16/17 01:20:02
+[1.000000 , 0.000000, 0.000000]
+
+Quad 2
+Log Opened: 02/16/17 01:20:02
+Vertex 1
+Log Opened: 02/16/17 01:20:02
+[0.000000 , 0.000000, 0.000000]
+Vertex 2
+Log Opened: 02/16/17 01:20:02
+[0.000000 , 1.000000, 0.000000]
+Vertex 3
+Log Opened: 02/16/17 01:20:02
+[1.000000 , 1.000000, 0.000000]
+Vertex 4
+Log Opened: 02/16/17 01:20:02
+[1.000000 , 0.000000, 0.000000]
+
+Quad 3
+Log Opened: 02/16/17 01:20:02
+Vertex 1
+Log Opened: 02/16/17 01:20:02
+[0.000000 , 0.000000, 0.000000]
+Vertex 2
+Log Opened: 02/16/17 01:20:02
+[0.000000 , 1.000000, 0.000000]
+Vertex 3
+Log Opened: 02/16/17 01:20:02
+[1.000000 , 1.000000, 0.000000]
+Vertex 4
+Log Opened: 02/16/17 01:20:02
+[1.000000 , 0.000000, 0.000000]
+Generating Quad #1 Color
+[84, 131, 154]
+Creating Quad 1 Buffer
+ VBO Pass OK
+ VIO Pass OK
+Generating Quad #2 Color
+[37, 87, 250]
+Creating Quad 2 Buffer
+ VBO Pass OK
+ VIO Pass OK
+Generating Quad #3 Color
+[225, 205, 102]
+Creating Quad 3 Buffer
+ VBO Pass OK
+ VIO Pass OK
+Generating Mesh 1 Color
+[55, 88, 136]
+Mesh Type: CUBE

@@ -1,5 +1,6 @@
 #include "Mesh.h"
 
+AppLog mLog;
 MAP_HEADER header;
 
 
@@ -21,6 +22,7 @@ void Mesh::GenerateQuadColors(int quad)
 {
 	GLubyte r, g, b;
 
+	mLog.writeLog("Generating Quad #"+std::to_string(quad+1)+" Color");
 	r = rand() * 256 / RAND_MAX;
 	g = rand() * 256 / RAND_MAX;
 	b = rand() * 256 / RAND_MAX;
@@ -30,7 +32,7 @@ void Mesh::GenerateQuadColors(int quad)
 		g = rand() * 256 / RAND_MAX;
 		b = rand() * 256 / RAND_MAX;
 	}
-
+	mLog.writeLog("[" + std::to_string(r)+", "+std::to_string(g)+", "+std::to_string(b)+"]");
 	q[quad].setColor(r, g, b, 0);
 }
 
@@ -53,6 +55,9 @@ void Mesh::GenerateMeshColors(int mesh)
 	rgba[0] = r;
 	rgba[1] = g;
 	rgba[2] = b;
+
+	mLog.writeLog("Generating Mesh " + std::to_string(mesh) + " Color");
+	mLog.writeLog("[" + std::to_string(r) + ", " + std::to_string(g) + ", " + std::to_string(b) + "]");
 }
 
 
@@ -64,34 +69,33 @@ Mesh::Mesh(GLfloat sx, GLfloat sy, GLfloat sz,int type)
 {
 	switch (type) {
 	case CUBE: {
-		q = new Quad[6];
-		for (int i = 0; i < 6; i++) {
-			q[i] = Quad(sx, sy, 0.0f);
+		num_quads = 3;
+		q = new Quad[num_quads];
+
+		mLog = AppLog("log.txt", true);
+		mLog.writeLog("\nQuad 1");
+		q[0] = Quad(sx, sy, sz);
+		q[0].setPos(0.0f, 0.0f,-sz/2 );
+		mLog.writeLog("\nQuad 2");
+		q[1] = Quad(sx, sy, sz);
+		q[1].setPos(0.0f, 0.0f, sz / 2);
+		mLog.writeLog("\nQuad 3");
+		q[2] = Quad(sx, sy, sz);
+		q[2].setPos(0.0f, 0.0f, sz / 2);
+		q[2].setRotation(90.0f, -90.0f, 0.0f,0.0f);
+
+		for (int i = 0; i < num_quads; i++) {
 			GenerateQuadColors(i);
-		}
-		//0 back face
-		q[1].setPos(q[1].getPos('x'), q[1].getPos('y'), sz);//1 front face
-		q[2].setRotation(90.0f, 90.0f, 0.0f, 0.0f); // 2 bottom face
-
-		q[3].setPos(q[3].getPos('x'), sy, q[3].getPos('z')); // 3 top face
-		q[3].setRotation(90.0f, 90.0f, 0.0f, 0.0f);
-
-		q[4].setPos(sx, q[4].getPos('y'), sz); //4 right face
-		q[4].setRotation(90.0f, 0.0f, 90.0f, 0.0f);
-
-
-		q[5].setPos(q[1].getPos('x'), q[4].getPos('y'), sz); //4 left face
-		q[5].setRotation(90.0f, 0.0f, 90.0f, 0.0f);
-
-		num_quads = 6;
-		for (int i = 0; i < 6; i++)
+			mLog.writeLog("Creating Quad " + std::to_string(i + 1) + " Buffer");
 			q[i].CreateBuffers();
+		}
 
 		header.numMesh += 1;
-		header.numQuads += 6;
+		header.numQuads += num_quads;
 		quad_mode = true;
 		mesh_mode = false;
 		GenerateMeshColors(header.numMesh);
+		mLog.writeLog("Mesh Type: CUBE");
 	}break;
 
 	}
@@ -108,9 +112,16 @@ void Mesh::CreateBuffers() {
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*vertices.size(), &vertices[0], GL_STATIC_DRAW);
 
+
 	glGenBuffers(1, &vio);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vio);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint)*indices.size(), &indices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint)*indices.size(), &indices[0], GL_STATIC_DRAW); 
+
+}
+
+void Mesh::setScale(GLfloat x, GLfloat y, GLfloat z)
+{
+
 }
 
 GLubyte Mesh::getColor(char section)

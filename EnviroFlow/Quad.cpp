@@ -1,37 +1,24 @@
 #include "Quad.h"
-
+AppLog qLog;
 
 Quad::Quad()
 {
-	v[0] = Vertex(0.0f, 0.0f, 0.0f);
-	v[1] = Vertex(0.0f,1.0f, 0.0f);
-	v[2] = Vertex(1.0f, 1.0f, 0.0f);
-	v[3] = Vertex(1.0f, 0.0f, 0.0f);
-
-	for (int i = 0; i < 4; i++) {
-		for (int c = 0; c < 3; c++)
-			vertices.push_back(v[i].getCoordinates(c));
-		rgba[i] = 0;
-		rot[i] = 0.0f;
-		indices_num += 1;
-	}
-
-	for (int i = 0; i < indices_num; i++)
-		indices.push_back(i);
-
-	for (int i = 0; i < 3; i++) {
-		pos[i] = 0.0f;
-		scale[i] = 1.0f;
-	}
-
-	header.numVertices += 4;
+	
 }
 
 Quad::Quad(GLfloat sx, GLfloat sy,GLfloat sz) {
-	v[0] = Vertex(0.0f, 0.0f, sz);
-	v[1] = Vertex(sx, 0.0f, sz);
-	v[2] = Vertex(sx, sy, sz);
-	v[3] = Vertex(0.0f, sy, sz);
+
+
+	qLog = AppLog("log.txt", true);
+	qLog.writeLog("Vertex 1");
+	v[0] = Vertex(0.0f, 0.0f, 0.0f);
+	qLog.writeLog("Vertex 2");
+	v[1] = Vertex(0.0f, 1.0f, 0.0f);
+	qLog.writeLog("Vertex 3");
+	v[2] = Vertex(1.0f, 1.0f, 0.0f);
+	qLog.writeLog("Vertex 4");
+	v[3] = Vertex(1.0f, 0.0f, 0.0f);
+
 	indices_num = 0;
 	for (int i = 0; i < 4; i++) {
 		for (int c = 0; c < 3; c++)
@@ -153,12 +140,15 @@ void Quad::setColor(GLubyte r, GLubyte g, GLubyte b, GLubyte a)
 
 void Quad::CreateBuffers() {
 
+
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*vertices.size(), &vertices[0], GL_STATIC_DRAW);
 
+	qLog.writeLog(" VBO Pass OK");
 
 	glGenBuffers(1, &vio);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vio);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint)*indices.size(), &indices[0], GL_STATIC_DRAW);
+	qLog.writeLog(" VIO Pass OK");
 }
