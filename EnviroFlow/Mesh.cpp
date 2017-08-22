@@ -69,20 +69,28 @@ Mesh::Mesh(GLfloat sx, GLfloat sy, GLfloat sz,int type)
 {
 	switch (type) {
 	case CUBE: {
-		num_quads = 3;
+		num_quads = 6;
 		q = new Quad[num_quads];
 
 		mLog = AppLog("log.txt", true);
 		mLog.writeLog("\nQuad 1");
-		q[0] = Quad(sx, sy, sz);
-		q[0].setPos(0.0f, 0.0f,-sz/2 );
+		q[0] = Quad(Vertex(sx,-sy,sz),Vertex(sx, sy, sz),  Vertex(sx, sy, -sz),  Vertex(sx, -sy, -sz));
+		q[0].setPos(0.0f, 0.0f,0.0f );
 		mLog.writeLog("\nQuad 2");
-		q[1] = Quad(sx, sy, sz);
-		q[1].setPos(0.0f, 0.0f, sz / 2);
+		q[1] = Quad(Vertex(sx, -sy, -sz), Vertex(-sx,-sy, -sz), Vertex(-sx, -sy,sz), Vertex(sx, -sy, sz));
+		q[1].setPos(0.0f, 0.0f, 0.0f);
 		mLog.writeLog("\nQuad 3");
-		q[2] = Quad(sx, sy, sz);
-		q[2].setPos(0.0f, 0.0f, sz / 2);
-		q[2].setRotation(90.0f, -90.0f, 0.0f,0.0f);
+		q[2] = Quad(Vertex(sx, -sy, sz), Vertex(sx, sy, sz), Vertex(-sx, sy, sz), Vertex(-sx, -sy, sz));
+		q[2].setPos(0.0f, 0.0f, 0.0f);
+		mLog.writeLog("\nQuad 4");
+		q[3] = Quad(Vertex(-sx, -sy, sz), Vertex(-sx, -sy, -sz), Vertex(-sx, sy, -sz), Vertex(-sx, sy, sz));
+		q[3].setPos(0.0f, 0.0f, 0.0f);
+		mLog.writeLog("\nQuad 5");
+		q[4] = Quad(Vertex(-sx, sy, sz), Vertex(sx, sy, sz), Vertex(sx, sy, -sz), Vertex(-sx, sy, -sz));
+		q[4].setPos(0.0f, 0.0f, 0.0f);
+		mLog.writeLog("\nQuad 6");
+		q[5] = Quad(Vertex(-sx, sy, -sz), Vertex(-sx, -sy, -sz), Vertex(sx, -sy, -sz), Vertex(sx, sy, -sz));
+		q[5].setPos(0.0f, 0.0f, 0.0f);
 
 		for (int i = 0; i < num_quads; i++) {
 			GenerateQuadColors(i);

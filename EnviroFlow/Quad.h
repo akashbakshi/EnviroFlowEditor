@@ -5,6 +5,7 @@ class Quad
 {
 public:
 	Quad();
+	Quad(Vertex p1, Vertex p2, Vertex p3, Vertex p4);
 	Quad(GLfloat sx, GLfloat sy, GLfloat sz);
 	~Quad();
 

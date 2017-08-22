@@ -6,12 +6,39 @@ Quad::Quad()
 	
 }
 
+Quad::Quad(Vertex p1, Vertex p2,Vertex p3, Vertex p4) {
+	v[0] = p1;
+	v[1] = p2;
+	v[2] = p3;
+	v[3] = p4;
+
+	indices_num = 0;
+
+	for (int i = 0; i < 4; i++) {
+		for (int c = 0; c < 3; c++)
+			vertices.push_back(v[i].getCoordinates(c));
+		rgba[i] = 0;
+		rot[i] = 0.0f;
+		indices_num += 1;
+	}
+
+	for (int i = 0; i < indices_num; i++)
+		indices.push_back(i);
+
+	for (int i = 0; i < 3; i++) {
+		pos[i] = 0.0f;
+		scale[i] = 1.0f;
+
+	}
+
+	header.numVertices += 4;
+}
 Quad::Quad(GLfloat sx, GLfloat sy,GLfloat sz) {
 
 
 	qLog = AppLog("log.txt", true);
 	qLog.writeLog("Vertex 1");
-	v[0] = Vertex(0.0f, 0.0f, 0.0f);
+	v[0] = Vertex(1.0f, 0.0f, 0.0f);
 	qLog.writeLog("Vertex 2");
 	v[1] = Vertex(0.0f, 1.0f, 0.0f);
 	qLog.writeLog("Vertex 3");

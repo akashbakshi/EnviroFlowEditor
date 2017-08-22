@@ -35,8 +35,14 @@ void EFRender::Init() {
 	glewInit();
 	glEnable(GL_DEPTH_TEST);
 
-	mesh[0] = Mesh(2.0f, 3.0f, 2.0f, CUBE);
-	//mesh[1] = Mesh(2.0f, 2.0f, 3.0f, CUBE);
+	mesh[0] = Mesh(2.0f, 2.0f, 2.0f, CUBE);
+	mesh[0].q[0].setPos(-5.0f, 0.0f, 0.0f);
+	mesh[0].q[1].setPos(-5.0f, 0.0f, 0.0f);
+	mesh[0].q[2].setPos(-5.0f, 0.0f, 0.0f);
+	mesh[0].q[3].setPos(-5.0f, 0.0f, 0.0f);
+	mesh[0].q[4].setPos(-5.0f, 0.0f, 0.0f);
+	mesh[0].q[5].setPos(-5.0f, 0.0f, 0.0f);
+	mesh[1] = Mesh(2.0f, 2.0f, 3.0f, CUBE);
 
 }
 
