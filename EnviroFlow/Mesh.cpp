@@ -22,7 +22,7 @@ void Mesh::GenerateQuadColors(int quad)
 {
 	GLubyte r, g, b;
 
-	mLog.writeLog("Generating Quad #"+std::to_string(quad+1)+" Color");
+	//mLog.writeLog("Generating Quad #"+std::to_string(quad+1)+" Color");
 	r = rand() * 256 / RAND_MAX;
 	g = rand() * 256 / RAND_MAX;
 	b = rand() * 256 / RAND_MAX;
@@ -32,7 +32,7 @@ void Mesh::GenerateQuadColors(int quad)
 		g = rand() * 256 / RAND_MAX;
 		b = rand() * 256 / RAND_MAX;
 	}
-	mLog.writeLog("[" + std::to_string(r)+", "+std::to_string(g)+", "+std::to_string(b)+"]");
+	//mLog.writeLog("[" + std::to_string(r)+", "+std::to_string(g)+", "+std::to_string(b)+"]");
 	q[quad].setColor(r, g, b, 0);
 }
 
@@ -56,8 +56,8 @@ void Mesh::GenerateMeshColors(int mesh)
 	rgba[1] = g;
 	rgba[2] = b;
 
-	mLog.writeLog("Generating Mesh " + std::to_string(mesh) + " Color");
-	mLog.writeLog("[" + std::to_string(r) + ", " + std::to_string(g) + ", " + std::to_string(b) + "]");
+	//mLog.writeLog("Generating Mesh " + std::to_string(mesh) + " Color");
+	//mLog.writeLog("[" + std::to_string(r) + ", " + std::to_string(g) + ", " + std::to_string(b) + "]");
 }
 
 
@@ -72,29 +72,29 @@ Mesh::Mesh(GLfloat sx, GLfloat sy, GLfloat sz,int type)
 		num_quads = 6;
 		q = new Quad[num_quads];
 
-		mLog = AppLog("log.txt", true);
-		mLog.writeLog("\nQuad 1");
+		//mLog = AppLog("log.txt", true);
+		//mLog.writeLog("\nQuad 1");
 		q[0] = Quad(Vertex(sx,-sy,sz),Vertex(sx, sy, sz),  Vertex(sx, sy, -sz),  Vertex(sx, -sy, -sz));
 		q[0].setPos(0.0f, 0.0f,0.0f );
-		mLog.writeLog("\nQuad 2");
+		//mLog.writeLog("\nQuad 2");
 		q[1] = Quad(Vertex(sx, -sy, -sz), Vertex(-sx,-sy, -sz), Vertex(-sx, -sy,sz), Vertex(sx, -sy, sz));
 		q[1].setPos(0.0f, 0.0f, 0.0f);
-		mLog.writeLog("\nQuad 3");
+		//mLog.writeLog("\nQuad 3");
 		q[2] = Quad(Vertex(sx, -sy, sz), Vertex(sx, sy, sz), Vertex(-sx, sy, sz), Vertex(-sx, -sy, sz));
 		q[2].setPos(0.0f, 0.0f, 0.0f);
-		mLog.writeLog("\nQuad 4");
+		//mLog.writeLog("\nQuad 4");
 		q[3] = Quad(Vertex(-sx, -sy, sz), Vertex(-sx, -sy, -sz), Vertex(-sx, sy, -sz), Vertex(-sx, sy, sz));
 		q[3].setPos(0.0f, 0.0f, 0.0f);
-		mLog.writeLog("\nQuad 5");
+		//mLog.writeLog("\nQuad 5");
 		q[4] = Quad(Vertex(-sx, sy, sz), Vertex(sx, sy, sz), Vertex(sx, sy, -sz), Vertex(-sx, sy, -sz));
 		q[4].setPos(0.0f, 0.0f, 0.0f);
-		mLog.writeLog("\nQuad 6");
+		//mLog.writeLog("\nQuad 6");
 		q[5] = Quad(Vertex(-sx, sy, -sz), Vertex(-sx, -sy, -sz), Vertex(sx, -sy, -sz), Vertex(sx, sy, -sz));
 		q[5].setPos(0.0f, 0.0f, 0.0f);
 
 		for (int i = 0; i < num_quads; i++) {
 			GenerateQuadColors(i);
-			mLog.writeLog("Creating Quad " + std::to_string(i + 1) + " Buffer");
+			//mLog.writeLog("Creating Quad " + std::to_string(i + 1) + " Buffer");
 			q[i].CreateBuffers();
 		}
 
@@ -103,7 +103,7 @@ Mesh::Mesh(GLfloat sx, GLfloat sy, GLfloat sz,int type)
 		quad_mode = true;
 		mesh_mode = false;
 		GenerateMeshColors(header.numMesh);
-		mLog.writeLog("Mesh Type: CUBE");
+		//mLog.writeLog("Mesh Type: CUBE");
 	}break;
 
 	}

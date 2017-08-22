@@ -28,8 +28,8 @@ Vertex::Vertex(GLfloat x, GLfloat y, GLfloat z) {
 
 
 
-	log = AppLog("log.txt",true);
-	log.writeLog("[" +to_string(x)+" , "+ to_string(y)+ ", "+to_string(z)+"]");
+	//log = AppLog("log.txt",true);
+	//log.writeLog("[" +to_string(x)+" , "+ to_string(y)+ ", "+to_string(z)+"]");
 }
 
 Vertex::~Vertex()

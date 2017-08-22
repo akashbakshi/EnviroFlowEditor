@@ -36,14 +36,14 @@ Quad::Quad(Vertex p1, Vertex p2,Vertex p3, Vertex p4) {
 Quad::Quad(GLfloat sx, GLfloat sy,GLfloat sz) {
 
 
-	qLog = AppLog("log.txt", true);
-	qLog.writeLog("Vertex 1");
+	//qLog = AppLog("log.txt", true);
+	//qLog.writeLog("Vertex 1");
 	v[0] = Vertex(1.0f, 0.0f, 0.0f);
-	qLog.writeLog("Vertex 2");
+	//qLog.writeLog("Vertex 2");
 	v[1] = Vertex(0.0f, 1.0f, 0.0f);
-	qLog.writeLog("Vertex 3");
+	//qLog.writeLog("Vertex 3");
 	v[2] = Vertex(1.0f, 1.0f, 0.0f);
-	qLog.writeLog("Vertex 4");
+	//qLog.writeLog("Vertex 4");
 	v[3] = Vertex(1.0f, 0.0f, 0.0f);
 
 	indices_num = 0;
@@ -172,10 +172,10 @@ void Quad::CreateBuffers() {
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*vertices.size(), &vertices[0], GL_STATIC_DRAW);
 
-	qLog.writeLog(" VBO Pass OK");
+	//qLog.writeLog(" VBO Pass OK");
 
 	glGenBuffers(1, &vio);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vio);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint)*indices.size(), &indices[0], GL_STATIC_DRAW);
-	qLog.writeLog(" VIO Pass OK");
+	//qLog.writeLog(" VIO Pass OK");
 }

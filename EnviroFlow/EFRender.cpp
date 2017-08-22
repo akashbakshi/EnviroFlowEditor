@@ -3,13 +3,13 @@
 #include "Input.h"
 #include "Mesh.h"
 
-Mesh mesh[2];
+Mesh mesh[500];
 Cam Camera;
 bool GetKey[256];
 
 bool MeshColorCheck(GLubyte r, GLubyte g, GLubyte b)
 {
-	std::cout << "this one";
+	//std::cout << "this one";
 	bool exists = false;
 	for (int i = 0; i <header.numMesh; i++)
 	{
@@ -34,16 +34,13 @@ EFRender::~EFRender()
 void EFRender::Init() {
 	glewInit();
 	glEnable(GL_DEPTH_TEST);
+	float x_amnt = 8.0f;
 
-	mesh[0] = Mesh(2.0f, 2.0f, 2.0f, CUBE);
-	mesh[0].q[0].setPos(-5.0f, 0.0f, 0.0f);
-	mesh[0].q[1].setPos(-5.0f, 0.0f, 0.0f);
-	mesh[0].q[2].setPos(-5.0f, 0.0f, 0.0f);
-	mesh[0].q[3].setPos(-5.0f, 0.0f, 0.0f);
-	mesh[0].q[4].setPos(-5.0f, 0.0f, 0.0f);
-	mesh[0].q[5].setPos(-5.0f, 0.0f, 0.0f);
-	mesh[1] = Mesh(2.0f, 2.0f, 3.0f, CUBE);
-
+	for (int i = 0; i < 500; i++) {
+		mesh[i] = Mesh(2.0f, 2.0f, 2.0f, CUBE);
+		for (int c = 0; c < mesh[i].num_quads; c++)
+			mesh[i].q[c].setPos(i*x_amnt, 0.0f, 0.0f);
+	}
 }
 
 void RenderTri(int num) {
@@ -195,5 +192,5 @@ void EFRender::Render() {
 	DisplayGrid();
 	DrawXYZ();
 
-	RenderTri(2);
+	RenderTri(500);
 }
