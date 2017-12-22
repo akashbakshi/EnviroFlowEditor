@@ -7,13 +7,13 @@ Mesh mesh[500];
 Cam Camera;
 bool GetKey[256];
 
-bool MeshColorCheck(GLubyte r, GLubyte g, GLubyte b)
+bool MeshColorCheck(Mesh m, GLubyte r, GLubyte g, GLubyte b)
 {
 	//std::cout << "this one";
 	bool exists = false;
 	for (int i = 0; i <header.numMesh; i++)
 	{
-		if (mesh[i].getColor('r') == r && mesh[i].getColor('g') == g && mesh[i].getColor('b') == b)
+		if (getColor('r', mesh[i]) == r && mesh[i].getColor('g', mesh[i]) == g && mesh[i].getColor('b', mesh[i]) == b)
 			exists = true;
 		else
 			exists = false;

@@ -1,65 +1,43 @@
 #include "Vertex.h"
 
 using namespace std;
-Vertex::Vertex()
-{
-	//Initialize values to a default values
-	for (int i = 0; i < 3; i++)
-	{
-		xyz[i] = 0.0f;
-		pos[i] = 0.0f;
-	}
-	for (GLfloat i = 0; i < 4; i++)
-		rgba[4] = 0.0f;
 
+Vertex CreateVertex(GLfloat x, GLfloat y, GLfloat z) {
+	Vertex tmpVert;
 
+	tmpVert.xyz[0] = x;
+	tmpVert.xyz[1] = y;
+	tmpVert.xyz[2] = z;
+
+	return tmpVert;
 }
 
-Vertex::Vertex(GLfloat x, GLfloat y, GLfloat z) {
-	AppLog log;
+GLfloat * setXYZ(Vertex *v,GLfloat x, GLfloat y, GLfloat z)
+{
+	GLfloat xyz[3];
 	xyz[0] = x;
 	xyz[1] = y;
 	xyz[2] = z;
 
-	for (int i = 0; i < 3; i++)
-		pos[i] = 0.0f;
-	for (int i = 0; i < 4; i++)
-		rgba[4] = 0.0f;
-
-
-
-	//log = AppLog("log.txt",true);
-	//log.writeLog("[" +to_string(x)+" , "+ to_string(y)+ ", "+to_string(z)+"]");
+	return xyz;
 }
 
-Vertex::~Vertex()
+GLfloat * setPos(GLfloat x, GLfloat y, GLfloat z)
 {
-
-}
-
-void Vertex::setXYZ(GLfloat x, GLfloat y, GLfloat z)
-{
-	xyz[0] = x;
-	xyz[1] = y;
-	xyz[2] = z;
-}
-
-void Vertex::setPos(GLfloat x, GLfloat y, GLfloat z)
-{
+	GLfloat pos[3];
 	pos[0] = x;
 	pos[1] = y;
 	pos[2] = z;
+	return pos;
 }
 
-void Vertex::setColor(GLfloat r, GLfloat g, GLfloat b, GLfloat a)
+GLfloat *setColor(GLfloat r, GLfloat g, GLfloat b, GLfloat a)
 {
+	GLfloat rgba[4];
 	rgba[0] = r;
 	rgba[1] = g;
 	rgba[2] = b;
 	rgba[3] = a;
+	return rgba;
 }
 
-GLfloat Vertex::getCoordinates(int num)
-{
-	return xyz[num];
-}
