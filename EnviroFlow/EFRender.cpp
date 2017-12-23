@@ -457,6 +457,8 @@ void RenderArrows(int obj)
 void EFRender::Init() {
 
 	glEnable(GL_DEPTH_TEST);
+
+	//Create->CreateCube(0, 2.0f, 2.0f, 2.0f);
 	
 }
 
@@ -534,7 +536,28 @@ void DisplayGrid()
 
 }
 
-void EFRender::Render() {
+void EFRender::SetUpViewport(int winWidth, int winHeight) {
+	//Basic OpenGL Viewport stuff
+
+	glViewport(0, 0, (GLsizei)winWidth, (GLsizei)winHeight);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+
+	gluPerspective(52.0f, float(winWidth) / float(winHeight), 1.0f, 1000.0f);
+
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClearColor(0.2f, 0.2f, 0.2f, 0.0f);
+	glLoadIdentity();
+
+	gluLookAt(-0.5, 1.0, 7.0, 0.0, 0.0, -10.0, 0.0, 1.0, 0.0);
+}
+
+void EFRender::Render(int renderWidth,int renderHeight) {
 	//Camera Key Binding
 	if (GetKey[LEFT_ARROW])
 	{
@@ -551,7 +574,6 @@ void EFRender::Render() {
 	}
 	if (GetKey[SPACEBAR])
 	{
-
 	}
 	if (GetKey[W])
 	{
@@ -594,24 +616,7 @@ void EFRender::Render() {
 	}
 
 	
-	//Basic OpenGL Viewport stuff
-
-	glViewport(0, 0, (GLsizei)1440, (GLsizei)900);
-	
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-
-	gluPerspective(52.0f, float(1440) / float(900), 1.0f, 1000.0f);
-
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.2f, 0.2f, 0.2f, 0.0f);
-	glLoadIdentity();
-
-	gluLookAt(-0.5, 1.0, 7.0, 0.0, 0.0, -10.0, 0.0, 1.0, 0.0);
+	this->SetUpViewport(renderWidth, renderHeight);
 	//Initialize Camera Render
 	Camera.Render();
 	camY = Camera.RotatedY;

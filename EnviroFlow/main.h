@@ -46,3 +46,16 @@ extern GLfloat camY;
 extern void CalcXYZPos();
 extern void WMCommand(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 extern LRESULT CALLBACK CreateCubeDialog(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+extern int window_height, window_width;
+
+typedef struct EFOBJ_HEADER {
+	int version = 1;
+	int revision = 0;
+	
+	long numOfObjects;
+	long numOfMeshes;
+	long numOfTriangles;
+	long numOfVertices;
+};
+
+extern EFOBJ_HEADER header;

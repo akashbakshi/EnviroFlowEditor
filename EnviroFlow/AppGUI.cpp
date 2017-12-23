@@ -8,6 +8,11 @@ EFCreationSystem *Gen = NULL;
 
 AppGUI::AppGUI()
 {
+	this->render_window_height = window_height*0.7;
+	this->render_window_width = window_width*0.7;
+
+	this->prop_toolbar_height = window_height;
+	this->prop_toolbar_width = window_width * 0.2;
 }
 
 
@@ -280,7 +285,7 @@ void WMCommand(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 
 
 	//Buttons
-	if (lParam == (LPARAM)Toolbar[0]) {
+	if (lParam == (LPARAM)Toolbar[0] && header.numOfObjects > 0) {
 
 		sel_scale = false;
 		sel_trans = true;
@@ -325,7 +330,7 @@ void WMCommand(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		CalcXYZPos();
 		SetFocus(MainWindow);
 	}
-	if (lParam == (LPARAM)Toolbar[1]) {
+	if (lParam == (LPARAM)Toolbar[1] && header.numOfObjects > 0) {
 
 		sel_scale = true;
 		sel_trans = false;
@@ -471,7 +476,7 @@ void AppGUI::CreateToolbars()
 	SecWin[0] = CreateDialog(hInst, MAKEINTRESOURCE(IDD_PROPERTIES), MainWindow, (DLGPROC)PropertiesToolbar);
 	
 	//Set Child Window Position
-	SetWindowPos(SecWin[0], HWND_TOPMOST,1546,50,352,300,SWP_SHOWWINDOW);
+	SetWindowPos(SecWin[0], HWND_TOPMOST,this->getWindowWidth("render")+100,50,this->getWindowWidth("properties"),this->getWindowHeight("properties"),SWP_SHOWWINDOW);
 	//Make Window Visible  and set parent window.
 	ShowWindow(SecWin[0], SW_SHOW);
 	SetParent(SecWin[0], MainWindow);
@@ -505,4 +510,27 @@ void AppGUI::ClearMeshProperties()
 	SendDlgItemMessage(SecWin[0], IDC_PROP_SCAX, WM_SETTEXT, 0, (LPARAM)" ");
 	SendDlgItemMessage(SecWin[0], IDC_PROP_SCAY, WM_SETTEXT, 0, (LPARAM)" ");
 	SendDlgItemMessage(SecWin[0], IDC_PROP_SCAZ, WM_SETTEXT, 0, (LPARAM)" ");
+}
+
+
+int AppGUI::getWindowHeight(string window) {
+	int win_height;
+
+	if (window == "render")
+		win_height = this->render_window_height;
+	else if (window == "properties")
+		win_height = this->prop_toolbar_height;
+
+	return win_height;
+}
+
+int AppGUI::getWindowWidth(string window){
+	int win_width;
+
+	if (window == "render")
+		win_width = this->render_window_width;
+	else if (window == "properties")
+		win_width = this->prop_toolbar_width;
+
+	return win_width;
 }

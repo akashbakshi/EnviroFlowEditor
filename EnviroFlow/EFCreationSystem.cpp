@@ -114,6 +114,8 @@ void EFCreationSystem::CreateVertex(int obj, GLfloat x, GLfloat y, GLfloat z)
 	quad[0].vert[quad[0].vert_count].xyz[1] = y;
 	quad[0].vert[quad[0].vert_count].xyz[2] = z;
 	quad[0].vert_count += 1;
+
+	header.numOfVertices += 1;
 }
 
 void EFCreationSystem::CreateTri(int obj,int tri, GLfloat x, GLfloat y, GLfloat z)
@@ -306,6 +308,7 @@ void EFCreationSystem::CreateCube(int obj,GLfloat size_x,GLfloat size_y, GLfloat
 	mesh[obj].m_quad[mesh[obj].quad_count].tex[0].TexID = LoadTGATexture("Right.tga");
 	SetTexCoord(obj, mesh[obj].quad_count, 0.0001f, 0.9999f);
 	mesh[obj].quad_count += 1;
+	header.numOfTriangles = 12;
 
 	GenerateColors(obj, mesh[obj].rgba[0], mesh[obj].rgba[1], mesh[obj].rgba[2]);
 
@@ -317,6 +320,7 @@ void EFCreationSystem::CreateCube(int obj,GLfloat size_x,GLfloat size_y, GLfloat
 	mesh[obj].scale[1] = 1.0f;
 	mesh[obj].scale[2] = 1.0f;
 	objects += 1;
+	header.numOfObjects++;
 }
 
 void EFCreationSystem::SetQuadCoordinates(GLfloat x1, GLfloat y1, GLfloat z1, GLfloat x2, GLfloat y2, GLfloat z2, GLfloat x3, GLfloat y3, GLfloat z3, GLfloat x4, GLfloat y4, GLfloat z4)

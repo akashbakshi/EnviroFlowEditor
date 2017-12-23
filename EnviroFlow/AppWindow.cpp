@@ -23,7 +23,7 @@ HGLRC hRC;
 
 // pointers for classes
 EFRender *Draw = NULL;
-AppGUI *GUI = NULL;
+AppGUI *GUI = new AppGUI();
 HMENU Menu;
 HMENU Popup;
 
@@ -92,7 +92,7 @@ void Selection(HWND hWnd)
 
 	gluUnProject(winX, winY, winZ, modelview, projection, viewport, &posX, &posY, &posZ);
 
-	glReadPixels(mouse.x, 900 - 1 - mouse.y, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, &pixel[0]);
+	glReadPixels(mouse.x, GUI->getWindowHeight("render") - 1 - mouse.y, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, &pixel[0]);
 	cout << "r:" << (int)pixel[0] << endl;
 	cout << "g:" << (int)pixel[1] << endl;
 	cout << "b:" << (int)pixel[2] << endl;
@@ -183,12 +183,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 
 		}break;
 		case WM_LBUTTONDOWN:
-		
+		if(header.numOfObjects > 0)
 			Selection(RenderWindow);
 			
 
 			break;
 		case WM_LBUTTONUP:
+			if(sel_trans == true || sel_scale == true)
+				GUI->UpdateMeshProperties();
+
 			init_click = false;
 			xaxis = false;
 			init_mouse_x = 0;
@@ -203,11 +206,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 						get_y = GET_Y_LPARAM(lParam);
 						if (sel_trans == true) {
 							GUI->CalcMouseTrans(xaxis, yaxis, zaxis, get_x, get_y);
-							GUI->UpdateMeshProperties();
 						}
 						if (sel_scale == true) {
 							GUI->CalcMouseScale(xaxis, yaxis, zaxis, get_x, get_y);
-							GUI->UpdateMeshProperties();
+							
 						}
 					}
 				}
@@ -320,7 +322,7 @@ int AppWindow::CreateWindows(string name, int width, int height)
 	}
 
 	//Create Child Window inside Main Window to render to
-	RenderWindow = CreateWindow("STATIC", " ", WS_CHILD | WS_VISIBLE, 100, 50, 1440, 900, MainWindow, NULL, hInst, NULL);
+	RenderWindow = CreateWindow("STATIC", " ", WS_CHILD | WS_VISIBLE, 100, 50, GUI->getWindowWidth("render"), GUI->getWindowHeight("render"), MainWindow, NULL, hInst, NULL);
 
 	if (!RenderWindow) {
 		MessageBox(NULL, "Fatal Error: Cannot Create Render Window, Try Restarting The Application", "FATAL ERROR!", MB_OK);
@@ -356,7 +358,7 @@ int AppWindow::WinLoop(MSG msg)
 		else
 		{
 			//Render Loop plus swapping buffers
-			Draw->Render();
+			Draw->Render(GUI->getWindowWidth("render"),GUI->getWindowHeight("render"));
 			SwapBuffers(hDC);
 		}
 	}

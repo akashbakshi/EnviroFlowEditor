@@ -8,7 +8,8 @@ public:
 	~EFRender();
 
 	void Init();
-	void Render();
+	void SetUpViewport(int winWidth, int winHeight);
+	void Render(int renderWidth, int renderHeight);
 
 	void RenderMesh(int obj);
 };
