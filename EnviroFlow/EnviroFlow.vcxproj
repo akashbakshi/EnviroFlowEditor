@@ -156,6 +156,7 @@
   <ItemGroup>
     <ClInclude Include="AppGUI.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="EFBMPLoader.h" />
     <ClInclude Include="EFCreationSystem.h" />
     <ClInclude Include="EFRender.h" />
     <ClInclude Include="EFTGALoader.h" />
@@ -167,6 +168,7 @@
   <ItemGroup>
     <ClCompile Include="AppGUI.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="EFBMPLoader.cpp" />
     <ClCompile Include="EFCreationSystem.cpp" />
     <ClCompile Include="EFRender.cpp" />
     <ClCompile Include="EFTGALoader.cpp" />
