@@ -40,9 +40,6 @@ void GenerateColors(int obj, GLubyte &r, GLubyte &g, GLubyte &b)
 	one = r;
 	two = g;
 	three = b;
-	cout << "R:" << one << endl;
-	cout << "G:" << two << endl;
-	cout << "B:" << three << endl;
 }
 
 

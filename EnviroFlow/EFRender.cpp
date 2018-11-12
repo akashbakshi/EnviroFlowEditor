@@ -458,7 +458,31 @@ void EFRender::Init() {
 
 	glEnable(GL_DEPTH_TEST);
 
-	//Create->CreateCube(0, 2.0f, 2.0f, 2.0f);
+	/* create 5 objects test
+	for (int i = 0; i < 5; i++) {
+		Create->CreateCube(i, 2.0f, 2.0f, 2.0f);
+		mesh[i].pos[0] = 3.0f * i;
+
+
+	}*/
+
+	/* create 500 objects test*/
+	for (int i = 0; i < 500; i++) {
+		Create->CreateCube(i, 2.0f, 2.0f, 2.0f);
+		mesh[i].pos[0] = 3.0f * i;
+
+
+	}
+
+	/* create 5000 objects test
+	for (int i = 0; i < 2500; i++) {
+		Create->CreateCube(i, 2.0f, 2.0f, 2.0f);
+		mesh[i].pos[0] = 3.0f * i;
+
+
+	}
+	*/
+
 	
 }
 

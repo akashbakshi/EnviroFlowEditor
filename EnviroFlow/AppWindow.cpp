@@ -8,6 +8,8 @@
 #include <shlobj.h>   
 #include <windowsx.h>
 #include <algorithm>
+#include <ctime>
+
 using namespace std;
 
 PFNWGLCREATECONTEXTATTRIBSARBPROC wglCreateContextAttribsARB = NULL;
@@ -43,6 +45,11 @@ bool sel_trans = true, sel_scale = false, sel_rot = false;
 
 int get_x = 0;
 int get_y = 0;
+
+
+clock_t current_ticks, delta_ticks;
+clock_t fps = 0;
+
 AppWindow::AppWindow()
 {
 }
@@ -348,6 +355,7 @@ int AppWindow::WinLoop(MSG msg)
 {
 	while (running)
 	{
+		current_ticks = clock();
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
 			if (msg.message == WM_QUIT) break;
@@ -360,6 +368,11 @@ int AppWindow::WinLoop(MSG msg)
 			//Render Loop plus swapping buffers
 			Draw->Render(GUI->getWindowWidth("render"),GUI->getWindowHeight("render"));
 			SwapBuffers(hDC);
+			delta_ticks = clock() - current_ticks; //the time, in ms, that took to render the scene
+			if (delta_ticks > 0)
+				fps = CLOCKS_PER_SEC / delta_ticks;
+			cout << fps << endl;
+
 		}
 	}
 
